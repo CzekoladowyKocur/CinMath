@@ -71,7 +71,7 @@ namespace CinMath {
 	{
 		QuaternionBase<float> result;
 
-		const float norm{ std::sqrtf(
+		const float norm{ std::sqrt(
 			+ lhs.raw[0] * lhs.raw[0]
 			+ lhs.raw[1] * lhs.raw[1]
 			+ lhs.raw[2] * lhs.raw[2]
