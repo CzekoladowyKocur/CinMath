@@ -106,7 +106,11 @@
 #endif
 
 #if defined(__clang__) || defined(__GNUC__)
-#define CIN_MATH_INLINE		inline
+#include <cmath>
+#endif
+
+#if defined(__clang__) || defined(__GNUC__)
+#define CIN_MATH_INLINE		inline __attribute__((always_inline))
 #else
 #define CIN_MATH_INLINE  	__forceinline
 #endif

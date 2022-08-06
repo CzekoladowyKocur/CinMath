@@ -618,10 +618,10 @@ namespace CinMath {
 			{
 				QuaternionBase<float> result;
 
-				result.raw[0] = std::cosf(radianAngle * 0.5f);
-				result.raw[1] = axisAngle.raw[0] * std::sinf(radianAngle * 0.5f);
-				result.raw[2] = axisAngle.raw[1] * std::sinf(radianAngle * 0.5f);
-				result.raw[3] = axisAngle.raw[2] * std::sinf(radianAngle * 0.5f);
+				result.raw[0] = std::cos(radianAngle * 0.5f);
+				result.raw[1] = axisAngle.raw[0] * std::sin(radianAngle * 0.5f);
+				result.raw[2] = axisAngle.raw[1] * std::sin(radianAngle * 0.5f);
+				result.raw[3] = axisAngle.raw[2] * std::sin(radianAngle * 0.5f);
 
 				return result;
 			}
@@ -630,9 +630,9 @@ namespace CinMath {
 			{
 				QuaternionBase<float> result;
 				const float halfTheta{ axisAngle.w * 0.5f };
-				const float sinHalfTheta{ std::sinf(halfTheta) };
+				const float sinHalfTheta{ std::sin(halfTheta) };
 
-				result.raw[0] = std::cosf(halfTheta);
+				result.raw[0] = std::cos(halfTheta);
 				result.raw[1] = axisAngle.raw[0] * sinHalfTheta;
 				result.raw[2] = axisAngle.raw[1] * sinHalfTheta;
 				result.raw[3] = axisAngle.raw[2] * sinHalfTheta;
@@ -647,8 +647,8 @@ namespace CinMath {
 			CIN_MATH_INLINE static Vector<4, float> implementation(const QuaternionBase<float>& quaternion) noexcept
 			{
 				Vector<4, float> result;
-				const float theta{ 2.0f * std::acosf(quaternion.raw[0]) };
-				const float sinHalfTheta{ std::sinf(theta) * 0.5f };
+				const float theta{ 2.0f * std::acos(quaternion.raw[0]) };
+				const float sinHalfTheta{ std::sin(theta) * 0.5f };
 
 				result.raw[0] = quaternion.raw[1] / sinHalfTheta;
 				result.raw[1] = quaternion.raw[2] / sinHalfTheta;
