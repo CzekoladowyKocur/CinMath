@@ -2,51 +2,70 @@
 
 namespace CinMath {
 	template<typename ValueType>
-	class Matrix<4, 4, ValueType> final
+	class alignas(32) Matrix<4, 4, ValueType> final
 	{
 	public:
 		using UnderlyingType = ValueType;
 	public:
-		explicit Matrix<4, 4, ValueType>() noexcept
-		{
-			raw[0] = static_cast<ValueType>(0);
-			raw[1] = static_cast<ValueType>(0);
-			raw[2] = static_cast<ValueType>(0);
-			raw[3] = static_cast<ValueType>(0);
-			raw[4] = static_cast<ValueType>(0);
-			raw[5] = static_cast<ValueType>(0);
-			raw[5] = static_cast<ValueType>(0);
-			raw[6] = static_cast<ValueType>(0);
-			raw[7] = static_cast<ValueType>(0);
-			raw[8] = static_cast<ValueType>(0);
-			raw[9] = static_cast<ValueType>(0);
-			raw[10] = static_cast<ValueType>(0);
-			raw[11] = static_cast<ValueType>(0);
-			raw[12] = static_cast<ValueType>(0);
-			raw[13] = static_cast<ValueType>(0);
-			raw[14] = static_cast<ValueType>(0);
-			raw[15] = static_cast<ValueType>(0);
-		}
+		consteval explicit Matrix<4, 4, ValueType>() noexcept
+			:
+			m11(static_cast<ValueType>(0)),
+			m12(static_cast<ValueType>(0)),
+			m13(static_cast<ValueType>(0)),
+			m14(static_cast<ValueType>(0)),
+			m21(static_cast<ValueType>(0)),
+			m22(static_cast<ValueType>(0)),
+			m23(static_cast<ValueType>(0)),
+			m24(static_cast<ValueType>(0)),
+			m31(static_cast<ValueType>(0)),
+			m32(static_cast<ValueType>(0)),
+			m33(static_cast<ValueType>(0)),
+			m34(static_cast<ValueType>(0)),
+			m41(static_cast<ValueType>(0)),
+			m42(static_cast<ValueType>(0)),
+			m43(static_cast<ValueType>(0)),
+			m44(static_cast<ValueType>(0))
+		{}
+
+		consteval explicit Matrix<4, 4, ValueType>(const ValueType value, [[maybe_unused]] ConstevalConstructorProxy&&) noexcept
+			:
+			m11(value),
+			m12(static_cast<ValueType>(0)),
+			m13(static_cast<ValueType>(0)),
+			m14(static_cast<ValueType>(0)),
+			m21(static_cast<ValueType>(0)),
+			m22(value),
+			m23(static_cast<ValueType>(0)),
+			m24(static_cast<ValueType>(0)),
+			m31(static_cast<ValueType>(0)),
+			m32(static_cast<ValueType>(0)),
+			m33(value),
+			m34(static_cast<ValueType>(0)),
+			m41(static_cast<ValueType>(0)),
+			m42(static_cast<ValueType>(0)),
+			m43(static_cast<ValueType>(0)),
+			m44(value)
+		{}
 
 		explicit Matrix<4, 4, ValueType>(const ValueType value) noexcept
-		{
-			raw[0] = value;
-			raw[1] = static_cast<ValueType>(0);
-			raw[2] = static_cast<ValueType>(0);
-			raw[3] = static_cast<ValueType>(0);
-			raw[4] = static_cast<ValueType>(0);
-			raw[5] = value;
-			raw[6] = static_cast<ValueType>(0);
-			raw[7] = static_cast<ValueType>(0);
-			raw[8] = static_cast<ValueType>(0);
-			raw[9] = static_cast<ValueType>(0);
-			raw[10] = value;
-			raw[11] = static_cast<ValueType>(0);
-			raw[12] = static_cast<ValueType>(0);
-			raw[13] = static_cast<ValueType>(0);
-			raw[14] = static_cast<ValueType>(0);
-			raw[15] = value;
-		}
+			:
+			m11(value),
+			m12(static_cast<ValueType>(0)),
+			m13(static_cast<ValueType>(0)),
+			m14(static_cast<ValueType>(0)),
+			m21(static_cast<ValueType>(0)),
+			m22(value),
+			m23(static_cast<ValueType>(0)),
+			m24(static_cast<ValueType>(0)),
+			m31(static_cast<ValueType>(0)),
+			m32(static_cast<ValueType>(0)),
+			m33(value),
+			m34(static_cast<ValueType>(0)),
+			m41(static_cast<ValueType>(0)),
+			m42(static_cast<ValueType>(0)),
+			m43(static_cast<ValueType>(0)),
+			m44(value)
+		{}
 
 		explicit Matrix<4, 4, ValueType>(
 			const ValueType value1,
@@ -65,44 +84,44 @@ namespace CinMath {
 			const ValueType value14,
 			const ValueType value15,
 			const ValueType value16) noexcept
-		{
-			raw[0] = value1;
-			raw[1] = value2;
-			raw[2] = value3;
-			raw[3] = value4;
-			raw[4] = value5;
-			raw[5] = value6;
-			raw[6] = value7;
-			raw[7] = value8;
-			raw[8] = value9;
-			raw[9] = value10;
-			raw[10] = value11;
-			raw[11] = value12;
-			raw[12] = value13;
-			raw[13] = value14;
-			raw[14] = value15;
-			raw[15] = value16;
-		}
+			:
+			m11(value1),
+			m12(value2),
+			m13(value3),
+			m14(value4),
+			m21(value5),
+			m22(value6),
+			m23(value7),
+			m24(value8),
+			m31(value9),
+			m32(value10),
+			m33(value11),
+			m34(value12),
+			m41(value13),
+			m42(value14),
+			m43(value15),
+			m44(value16)
+		{}
 
 		explicit Matrix<4, 4, ValueType>(std::array<ValueType, 4 * 4>&& values) noexcept
-		{
-			raw[0] = values[0];
-			raw[1] = values[1];
-			raw[2] = values[2];
-			raw[3] = values[3];
-			raw[4] = values[4];
-			raw[5] = values[5];
-			raw[6] = values[6];
-			raw[7] = values[7];
-			raw[8] = values[8];
-			raw[9] = values[9];
-			raw[10] = values[10];
-			raw[11] = values[11];
-			raw[12] = values[12];
-			raw[13] = values[13];
-			raw[14] = values[14];
-			raw[15] = values[15];
-		}
+			:
+			m11(values[0]),
+			m12(values[1]),
+			m13(values[2]),
+			m14(values[3]),
+			m21(values[4]),
+			m22(values[5]),
+			m23(values[6]),
+			m24(values[7]),
+			m31(values[8]),
+			m32(values[9]),
+			m33(values[10]),
+			m34(values[11]),
+			m41(values[12]),
+			m42(values[13]),
+			m43(values[14]),
+			m44(values[15])
+		{}
 
 		constexpr operator ValueType* () noexcept
 		{
@@ -158,7 +177,21 @@ namespace CinMath {
 			{
 				ValueType raw[4 * 4];
 			};
+
+			struct
+			{
+				ValueType m11, m12, m13, m14;
+				ValueType m21, m22, m23, m24;
+				ValueType m31, m32, m33, m34;
+				ValueType m41, m42, m43, m44;
+			};
 		};
+
+		consteval static Matrix<4, 4, ValueType> Identity() noexcept
+		{
+			constexpr Matrix<4, 4, ValueType> result(static_cast<ValueType>(1), ConstevalConstructorProxy{});
+			return result;
+		}
 	};
 
 	typedef Matrix<4, 4, float>		Matrix4x4, Matrix4;

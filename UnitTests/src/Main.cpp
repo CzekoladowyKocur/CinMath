@@ -2,11 +2,11 @@
 #include "UnitTests.h"
 #include <cstring>
 #include <iostream>
-#define UNIT_TEST
+#define UNIT_TEST 0
 
 int main(const char argc, const char** argv)
 {
-#ifdef UNIT_TEST
+#if UNIT_TEST
 	(void)argc;
 	(void)argv;
 	return UnitTests();

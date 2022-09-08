@@ -171,6 +171,245 @@ namespace CinMath {
 		return arg;
 	}
 
+	/* Used to signal consteval constructor */
+	struct ConstevalConstructorProxy {};
+
+	/* Swizzling */
+	template<typename Type, std::size_t Index>
+	struct ScalarSwizzle final
+	{
+		Type View[1];
+
+		CIN_MATH_INLINE Type& operator=(const Type x) noexcept
+		{
+			View[Index] = x;
+			return View[Index];
+		}
+
+		CIN_MATH_INLINE operator Type() const noexcept
+		{
+			return View[Index];
+		}
+
+		CIN_MATH_INLINE Type operator++(const int) noexcept
+		{
+			return View[Index]++;
+		}
+
+		CIN_MATH_INLINE Type operator++() noexcept
+		{
+			return ++View[Index];
+		}
+
+		CIN_MATH_INLINE Type operator--(const int) noexcept
+		{
+			return View[Index]--;
+		}
+
+		CIN_MATH_INLINE Type operator--() noexcept
+		{
+			return --View[Index];
+		}
+	};
+
+	template<typename Type, typename VectorType, std::size_t SwizzleFirst, std::size_t SwizzleSecond>
+	struct Vector2Swizzle final
+	{
+		Type View[2];
+
+		CIN_MATH_INLINE VectorType operator=(const Type scalar) noexcept
+		{
+			return VectorType(View[SwizzleFirst] = scalar, View[SwizzleSecond] = scalar);
+		}
+
+		CIN_MATH_INLINE VectorType operator+(const Type scalar) noexcept
+		{
+			return VectorType(View[SwizzleFirst] + scalar, View[SwizzleSecond] + scalar);
+		}
+
+		CIN_MATH_INLINE VectorType operator-(const Type scalar) noexcept
+		{
+			return VectorType(View[SwizzleFirst] - scalar, View[SwizzleSecond] - scalar);
+		}
+
+		CIN_MATH_INLINE VectorType operator*(const Type scalar) noexcept
+		{
+			return VectorType(View[SwizzleFirst] * scalar, View[SwizzleSecond] * scalar);
+		}
+
+		CIN_MATH_INLINE VectorType operator+=(const Type scalar) noexcept
+		{
+			return VectorType(View[SwizzleFirst] += scalar, View[SwizzleSecond] += scalar);
+		}
+
+		CIN_MATH_INLINE VectorType operator-=(const Type scalar) noexcept
+		{
+			return VectorType(View[SwizzleFirst] -= scalar, View[SwizzleSecond] -= scalar);
+		}
+
+		CIN_MATH_INLINE VectorType operator*=(const Type scalar) noexcept
+		{
+			return VectorType(View[SwizzleFirst] *= scalar, View[SwizzleSecond] *= scalar);
+		}
+
+		CIN_MATH_INLINE VectorType operator=(const VectorType& vector) noexcept
+		{
+			return VectorType(View[SwizzleFirst] = vector.x, View[SwizzleSecond] = vector.y);
+		}
+
+		CIN_MATH_INLINE VectorType operator+=(const VectorType& vector) noexcept
+		{
+			return VectorType(View[SwizzleFirst] += vector.x, View[SwizzleSecond] += vector.y);
+		}
+
+		CIN_MATH_INLINE VectorType operator-=(const VectorType& vector) noexcept
+		{
+			return VectorType(View[SwizzleFirst] -= vector.x, View[SwizzleSecond] -= vector.y);
+		}
+
+		CIN_MATH_INLINE VectorType operator*=(const VectorType& vector) noexcept
+		{
+			return VectorType(View[SwizzleFirst] *= vector.x, View[SwizzleSecond] *= vector.y);
+		}
+
+		CIN_MATH_INLINE operator VectorType() noexcept
+		{
+			return VectorType(View[SwizzleFirst], View[SwizzleSecond]);
+		}
+	};
+
+	template<typename Type, typename VectorType, std::size_t SwizzleFirst, std::size_t SwizzleSecond, std::size_t SwizzleThird>
+	struct Vector3Swizzle final
+	{
+		Type View[3];
+
+		CIN_MATH_INLINE VectorType operator=(const Type scalar) noexcept
+		{
+			return VectorType(View[SwizzleFirst] = scalar, View[SwizzleSecond] = scalar, View[SwizzleThird] = scalar);
+		}
+
+		CIN_MATH_INLINE VectorType operator+(const Type scalar) noexcept
+		{
+			return VectorType(View[SwizzleFirst] + scalar, View[SwizzleSecond] + scalar, View[SwizzleThird] + scalar);
+		}
+
+		CIN_MATH_INLINE VectorType operator-(const Type scalar) noexcept
+		{
+			return VectorType(View[SwizzleFirst] - scalar, View[SwizzleSecond] - scalar, View[SwizzleThird] - scalar);
+		}
+
+		CIN_MATH_INLINE VectorType operator*(const Type scalar) noexcept
+		{
+			return VectorType(View[SwizzleFirst] * scalar, View[SwizzleSecond] * scalar, View[SwizzleThird] * scalar);
+		}
+
+		CIN_MATH_INLINE VectorType operator+=(const Type scalar) noexcept
+		{
+			return VectorType(View[SwizzleFirst] += scalar, View[SwizzleSecond] += scalar, View[SwizzleThird] += scalar);
+		}
+
+		CIN_MATH_INLINE VectorType operator-=(const Type scalar) noexcept
+		{
+			return VectorType(View[SwizzleFirst] -= scalar, View[SwizzleSecond] -= scalar, View[SwizzleThird] -= scalar);
+		}
+
+		CIN_MATH_INLINE VectorType operator*=(const Type scalar) noexcept
+		{
+			return VectorType(View[SwizzleFirst] *= scalar, View[SwizzleSecond] *= scalar, View[SwizzleThird] *= scalar);
+		}
+
+		CIN_MATH_INLINE VectorType operator=(const VectorType& vector) noexcept
+		{
+			return VectorType(View[SwizzleFirst] = vector.x, View[SwizzleSecond] = vector.y, View[SwizzleThird] = vector.z);
+		}
+
+		CIN_MATH_INLINE VectorType operator+=(const VectorType& vector) noexcept
+		{
+			return VectorType(View[SwizzleFirst] += vector.x, View[SwizzleSecond] += vector.y, View[SwizzleThird] += vector.z);
+		}
+
+		CIN_MATH_INLINE VectorType operator-=(const VectorType& vector) noexcept
+		{
+			return VectorType(View[SwizzleFirst] -= vector.x, View[SwizzleSecond] -= vector.y), View[SwizzleThird] -= vector.z;
+		}
+
+		CIN_MATH_INLINE VectorType operator*=(const VectorType& vector) noexcept
+		{
+			return VectorType(View[SwizzleFirst] *= vector.x, View[SwizzleSecond] *= vector.y, View[SwizzleThird] *= vector.z);
+		}
+
+		CIN_MATH_INLINE operator VectorType() noexcept
+		{
+			return VectorType(View[SwizzleFirst], View[SwizzleSecond], View[SwizzleThird]);
+		}
+	};
+
+	template<typename Type, typename VectorType, std::size_t SwizzleFirst, std::size_t SwizzleSecond, std::size_t SwizzleThird, std::size_t SwizzleFourth>
+	struct Vector4Swizzle final
+	{
+		Type View[4];
+	
+		CIN_MATH_INLINE VectorType operator=(const Type scalar) noexcept
+		{
+			return VectorType(View[SwizzleFirst] = scalar, View[SwizzleSecond] = scalar, View[SwizzleThird] = scalar, View[SwizzleFourth] = scalar);
+		}
+		
+		CIN_MATH_INLINE VectorType operator+(const Type scalar) noexcept
+		{
+			return VectorType(View[SwizzleFirst] + scalar, View[SwizzleSecond] + scalar, View[SwizzleThird] + scalar, View[SwizzleFourth] + scalar);
+		}
+		
+		CIN_MATH_INLINE VectorType operator-(const Type scalar) noexcept
+		{
+			return VectorType(View[SwizzleFirst] - scalar, View[SwizzleSecond] - scalar, View[SwizzleThird] - scalar, View[SwizzleFourth] - scalar);
+		}
+		
+		CIN_MATH_INLINE VectorType operator*(const Type scalar) noexcept
+		{
+			return VectorType(View[SwizzleFirst] * scalar, View[SwizzleSecond] * scalar, View[SwizzleThird] * scalar, View[SwizzleFourth] * scalar);
+		}
+		
+		CIN_MATH_INLINE VectorType operator+=(const Type scalar) noexcept
+		{
+			return VectorType(View[SwizzleFirst] += scalar, View[SwizzleSecond] += scalar, View[SwizzleThird] += scalar, View[SwizzleFourth] += scalar);
+		}
+		
+		CIN_MATH_INLINE VectorType operator-=(const Type scalar) noexcept
+		{
+			return VectorType(View[SwizzleFirst] -= scalar, View[SwizzleSecond] -= scalar, View[SwizzleThird] -= scalar, View[SwizzleFourth] -= scalar);
+		}
+		
+		CIN_MATH_INLINE VectorType operator*=(const Type scalar) noexcept
+		{
+			return VectorType(View[SwizzleFirst] *= scalar, View[SwizzleSecond] *= scalar, View[SwizzleThird] *= scalar, View[SwizzleFourth] *= scalar);
+		}
+		
+		CIN_MATH_INLINE VectorType operator=(const VectorType& vector) noexcept
+		{
+			return VectorType(View[SwizzleFirst] = vector.x, View[SwizzleSecond] = vector.y, View[SwizzleThird] = vector.z, View[SwizzleFourth] = vector.w);
+		}
+		
+		CIN_MATH_INLINE VectorType operator+=(const VectorType& vector) noexcept
+		{
+			return VectorType(View[SwizzleFirst] += vector.x, View[SwizzleSecond] += vector.y, View[SwizzleThird] += vector.z, View[SwizzleFourth] += vector.w);
+		}
+		
+		CIN_MATH_INLINE VectorType operator-=(const VectorType& vector) noexcept
+		{
+			return VectorType(View[SwizzleFirst] -= vector.x, View[SwizzleSecond] -= vector.y, View[SwizzleThird] -= vector.z, View[SwizzleFourth] -= vector.w);
+		}
+		
+		CIN_MATH_INLINE VectorType operator*=(const VectorType& vector) noexcept
+		{
+			return VectorType(View[SwizzleFirst] *= vector.x, View[SwizzleSecond] *= vector.y, View[SwizzleThird] *= vector.z, View[SwizzleFourth] *= vector.w);
+		}
+		
+		CIN_MATH_INLINE operator VectorType() noexcept
+		{
+			return VectorType(View[SwizzleFirst], View[SwizzleSecond], View[SwizzleThird], View[SwizzleFourth]);
+		}
+	};
+
 	/* Template type parameters */
 	typedef float DefaultPrecision;
 	typedef double DoublePrecision;
@@ -258,7 +497,7 @@ namespace CinMath {
 
 	/* Vector 4 */
 	template<>
-	struct Storage<4, float> final
+	struct Storage<4, float> final 
 	{
 		typedef CinnamonFloat32Vector4_t Container;
 	};

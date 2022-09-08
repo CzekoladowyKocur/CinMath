@@ -73,5 +73,25 @@ int main()
 
 	operator+(operator+(ma1, mat2), ma1);
 
+	/* Zero initialized matrix */
+	constexpr Matrix4 test;
+
+	float value{ 2.0f };
+	Matrix4 test2(value);
+
+	constexpr auto constexprValue{ Matrix4::Identity() };
+
+	/* Swizzling */
+	Vector4 swizzleVector;
+	swizzleVector.x += 1.0f; 
+	swizzleVector.xy += 1.0f; 
+	swizzleVector.xyz += 1.0f; 
+	swizzleVector.xyzw += 1.0f; 
+
+	swizzleVector.xy *= 2.0f;
+	swizzleVector.zw *= 5.0f;
+
+	std::cout << swizzleVector << '\n';
+
 	return 0;
 }

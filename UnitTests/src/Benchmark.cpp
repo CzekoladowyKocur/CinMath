@@ -6,13 +6,13 @@
 #ifndef GLM_SILENT_WARNINGS
 #define GLM_SILENT_WARNINGS
 #endif
-#define GLM_FORCE_AVX
+#define GLM_FORCE_SSE
 #define GLM_FORCE_ALIGNED
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
 
-#define CIN_USE_AVX
+#define CIN_USE_SSE
 #include "CinMath/CinMath.h"
 
 #define FORCE_LINKING(x) { [[maybe_unused]] volatile void* volatile dummy = &x; }

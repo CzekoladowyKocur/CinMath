@@ -13,14 +13,80 @@ namespace CinMath {
 		return radians * AtCompileTime(static_cast<ValueType>(180U) / Constants::PI<ValueType>);
 	}
 
+	template<Length_t length, typename ValueType>
+	CIN_MATH_INLINE ValueType Length(const Vector<length, ValueType>& vector) noexcept;
+
+	template<Length_t length, typename ValueType>
+	CIN_MATH_INLINE Vector<length, ValueType> Normalize(const Vector<length, ValueType>& vector) noexcept;
+
+	template<Length_t length, typename ValueType>
+	CIN_MATH_INLINE ValueType Dot(const Vector<length, ValueType>& lhs, const Vector<length, ValueType>& rhs) noexcept;
+
+	template<Length_t length, typename ValueType>
+	CIN_MATH_INLINE Vector<length, ValueType> Cross(const Vector<length, ValueType>& lhs, const Vector<length, ValueType>& rhs) noexcept;
+
+	template<Length_t rows, Length_t columns, typename ValueType>
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> Transpose(const Matrix<rows, columns, ValueType>& matrix) noexcept;
+
+	template<Length_t rows, Length_t columns, typename ValueType>
+	CIN_MATH_INLINE ValueType Determinant(const Matrix<rows, columns, ValueType>& matrix) noexcept;
+
+	template<Length_t rows, Length_t columns, typename ValueType>
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> Inverse(const Matrix<rows, columns, ValueType>& matrix) noexcept;
+
+	template<typename ValueType>
+	CIN_MATH_INLINE QuaternionBase<ValueType> Conjugate(const QuaternionBase<ValueType>& quaternion) noexcept;
+
+	template<typename ValueType>
+	CIN_MATH_INLINE ValueType Norm(const QuaternionBase<ValueType>& quaternion) noexcept;
+
+	template<typename ValueType>
+	CIN_MATH_INLINE ValueType NormSquared(const QuaternionBase<ValueType>& quaternion) noexcept;
+
+	template<typename ValueType>
+	CIN_MATH_INLINE QuaternionBase<ValueType> Normalize(const QuaternionBase<ValueType>& quaternion) noexcept;
+
+	template<typename ValueType>
+	CIN_MATH_INLINE QuaternionBase<ValueType> Inverse(const QuaternionBase<ValueType>& quaternion) noexcept;
+
+	template<typename ValueType>
+	CIN_MATH_INLINE Vector<3, ValueType> Rotate(const Vector<3, ValueType>& vector, const QuaternionBase<ValueType>& rotation) noexcept;
+
+	template<typename ValueType>
+	CIN_MATH_INLINE QuaternionBase<ValueType> AxisAngleToQuaternion(const Vector<3, ValueType>& vector, const ValueType angle) noexcept;
+
+	template<typename ValueType>
+	CIN_MATH_INLINE QuaternionBase<ValueType> AxisAngleToQuaternion(const Vector<4, ValueType>& vector) noexcept;
+
+	template<typename ValueType>
+	CIN_MATH_INLINE Vector<4, ValueType> QuaternionToAxisAngle(const QuaternionBase<ValueType>& quaternion) noexcept;
+
+	template<Length_t rows, Length_t columns, typename ValueType>
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> Translate(const Matrix<rows, columns, ValueType>& matrix, const Vector<3, ValueType>& translation) noexcept;
+
+	template<Length_t rows, Length_t columns, typename ValueType>
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> Translate(const Matrix<rows, columns, ValueType>& matrix, const Vector<4, ValueType>& translation) noexcept;
+
+	template<Length_t rows, Length_t columns, typename ValueType>
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> TranslateIdentity(const Vector<3, ValueType>& translation) noexcept;
+
+	template<Length_t rows, Length_t columns, typename ValueType>
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> TranslateIdentity(const Vector<4, ValueType>& translation) noexcept;
+
+	template<typename ValueType>
+	CIN_MATH_INLINE Matrix<4, 4, ValueType> PerspectiveProjection(const ValueType FOV, const ValueType aspectRatio, const ValueType nearClip, const ValueType farClip) noexcept;
+
 	namespace Implementation {
 		/* Vectors */
 		template<Length_t length, typename ValueType>
 		struct VectorLength;
 
 		template<Length_t length, typename ValueType>
-		struct VectorDot;
+		struct VectorNormalize;
 
+		template<Length_t length, typename ValueType>
+		struct VectorDot;
+		
 		template<Length_t length, typename ValueType>
 		struct VectorCross;
 
@@ -67,7 +133,7 @@ namespace CinMath {
 
 		/* Vector length */
 		template<typename ValueType>
-		struct VectorLength<2, ValueType>
+		struct VectorLength<2, ValueType> final
 		{
 			CIN_MATH_INLINE static ValueType implementation(const Vector<2, ValueType>& vector) noexcept
 			{
@@ -76,7 +142,7 @@ namespace CinMath {
 		};
 
 		template<typename ValueType>
-		struct VectorLength<3, ValueType>
+		struct VectorLength<3, ValueType> final
 		{
 			CIN_MATH_INLINE static ValueType implementation(const Vector<3, ValueType>& vector) noexcept
 			{
@@ -85,7 +151,7 @@ namespace CinMath {
 		};
 
 		template<typename ValueType>
-		struct VectorLength<4, ValueType>
+		struct VectorLength<4, ValueType> final
 		{
 			CIN_MATH_INLINE static ValueType implementation(const Vector<4, ValueType>& vector) noexcept
 			{
@@ -93,9 +159,37 @@ namespace CinMath {
 			}
 		};
 
+		/* Vector normalize */
+		template<typename ValueType>
+		struct VectorNormalize<2, ValueType> final
+		{
+			CIN_MATH_INLINE static Vector<2, ValueType> implementation(const Vector<2, ValueType>& vector) noexcept
+			{
+				return vector / Length(vector);
+			}
+		};
+
+		template<typename ValueType>
+		struct VectorNormalize<3, ValueType> final
+		{
+			CIN_MATH_INLINE static Vector<3, ValueType> implementation(const Vector<3, ValueType>& vector) noexcept
+			{
+				return vector / Length(vector);
+			}
+		};
+
+		template<typename ValueType>
+		struct VectorNormalize<4, ValueType> final
+		{
+			CIN_MATH_INLINE static Vector<4, ValueType> implementation(const Vector<4, ValueType>& vector) noexcept
+			{
+				return vector / Length(vector);
+			}
+		};
+
 		/* Dot product */
 		template<typename ValueType>
-		struct VectorDot<2, ValueType>
+		struct VectorDot<2, ValueType> final
 		{
 			CIN_MATH_INLINE static ValueType implementation(const Vector<2, ValueType>& lhs, const Vector<2, ValueType>& rhs) noexcept
 			{
@@ -104,7 +198,7 @@ namespace CinMath {
 		};
 
 		template<typename ValueType>
-		struct VectorDot<3, ValueType>
+		struct VectorDot<3, ValueType> final
 		{
 			CIN_MATH_INLINE static ValueType implementation(const Vector<3, ValueType>& lhs, const Vector<3, ValueType>& rhs) noexcept
 			{
@@ -113,7 +207,7 @@ namespace CinMath {
 		};
 
 		template<typename ValueType>
-		struct VectorDot<4, ValueType>
+		struct VectorDot<4, ValueType> final
 		{
 			CIN_MATH_INLINE static ValueType implementation(const Vector<4, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept
 			{
@@ -141,7 +235,7 @@ namespace CinMath {
 
 		/* Cross product */
 		template<typename ValueType>
-		struct VectorCross<3, ValueType>
+		struct VectorCross<3, ValueType> final
 		{
 			CIN_MATH_INLINE static Vector<3, float> implementation(const Vector<3, float>& lhs, const Vector<3, float>& rhs) noexcept
 			{
@@ -156,7 +250,7 @@ namespace CinMath {
 		};
 
 		template<typename ValueType>
-		struct VectorCross<4, ValueType>
+		struct VectorCross<4, ValueType> final
 		{
 			CIN_MATH_INLINE static Vector<4, float> implementation(const Vector<4, float>& lhs, const Vector<4, float>& rhs) noexcept
 			{
@@ -175,7 +269,7 @@ namespace CinMath {
 		};
 
 		template<typename ValueType>
-		struct MatrixTranslate<4, 4, ValueType>
+		struct MatrixTranslate<4, 4, ValueType> final
 		{
 			CIN_MATH_INLINE static Matrix<4, 4, float> implementation(const Matrix<4, 4, float>& matrix, const Vector<3, float>& translation)
 			{
@@ -201,7 +295,7 @@ namespace CinMath {
 		};
 
 		template<typename ValueType>
-		struct MatrixTranslateIdentity<4, 4, ValueType>
+		struct MatrixTranslateIdentity<4, 4, ValueType> final
 		{
 			CIN_MATH_INLINE static Matrix<4, 4, float> implementation(const Vector<3, float>& translation)
 			{
@@ -226,7 +320,7 @@ namespace CinMath {
 		};
 
 		template<typename ValueType>
-		struct MatrixTranspose<2, 2, ValueType>
+		struct MatrixTranspose<2, 2, ValueType> final
 		{
 			CIN_MATH_INLINE static Matrix<2, 2, float> implementation(const Matrix<2, 2, float>& matrix) noexcept
 			{
@@ -246,7 +340,7 @@ namespace CinMath {
 		};
 
 		template<typename ValueType>
-		struct MatrixTranspose<4, 4, ValueType>
+		struct MatrixTranspose<4, 4, ValueType> final
 		{
 			CIN_MATH_INLINE static Matrix<4, 4, float> implementation(const Matrix<4, 4, float>& matrix) noexcept
 			{
@@ -318,7 +412,7 @@ namespace CinMath {
 		};
 
 		template<typename ValueType>
-		struct MatrixDeterminant<2, 2, ValueType>
+		struct MatrixDeterminant<2, 2, ValueType> final
 		{
 			CIN_MATH_INLINE static float implementation(const Matrix<2, 2, float>& matrix) noexcept
 			{
@@ -327,7 +421,7 @@ namespace CinMath {
 		};
 
 		template<typename ValueType>
-		struct MatrixDeterminant<3, 3, ValueType>
+		struct MatrixDeterminant<3, 3, ValueType> final
 		{
 			CIN_MATH_INLINE static float implementation(const Matrix<3, 3, float>& matrix) noexcept
 			{
@@ -339,7 +433,7 @@ namespace CinMath {
 		};
 
 		template<typename ValueType>
-		struct MatrixDeterminant<4, 4, ValueType>
+		struct MatrixDeterminant<4, 4, ValueType> final
 		{
 			CIN_MATH_INLINE static float implementation(const Matrix<4, 4, float>& matrix) noexcept
 			{
@@ -362,7 +456,7 @@ namespace CinMath {
 		};
 
 		template<typename ValueType>
-		struct MatrixInverse<2, 2, ValueType>
+		struct MatrixInverse<2, 2, ValueType> final
 		{
 			CIN_MATH_INLINE static Matrix<2, 2, float> implementation(const Matrix<2, 2, float>& matrix) noexcept
 			{
@@ -379,7 +473,7 @@ namespace CinMath {
 		};
 
 		template<typename ValueType>
-		struct MatrixInverse<3, 3, ValueType>
+		struct MatrixInverse<3, 3, ValueType> final
 		{
 			CIN_MATH_INLINE static Matrix<3, 3, float> implementation(const Matrix<3, 3, float>& matrix) noexcept
 			{
@@ -403,7 +497,7 @@ namespace CinMath {
 		};
 
 		template<typename ValueType>
-		struct MatrixInverse<4, 4, ValueType>
+		struct MatrixInverse<4, 4, ValueType> final
 		{
 			CIN_MATH_INLINE static Matrix<4, 4, float> implementation(const Matrix<4, 4, float>& matrix) noexcept
 			{
@@ -535,7 +629,7 @@ namespace CinMath {
 		};
 
 		template<typename ValueType>
-		struct QuaternionConugate
+		struct QuaternionConugate final
 		{
 			CIN_MATH_INLINE static QuaternionBase<ValueType> implementation(const QuaternionBase<ValueType>& quaternion) noexcept
 			{
@@ -551,7 +645,7 @@ namespace CinMath {
 		};
 
 		template<typename ValueType>
-		struct QuaternionNorm
+		struct QuaternionNorm final
 		{
 			CIN_MATH_INLINE static ValueType implementation(const QuaternionBase<ValueType>& quaternion) noexcept
 			{
@@ -564,7 +658,7 @@ namespace CinMath {
 		};
 
 		template<typename ValueType>
-		struct QuaternionNormSquared
+		struct QuaternionNormSquared final
 		{
 			CIN_MATH_INLINE static ValueType implementation(const QuaternionBase<ValueType>& quaternion) noexcept
 			{
@@ -577,7 +671,7 @@ namespace CinMath {
 		};
 
 		template<typename ValueType>
-		struct QuaternionNormalize
+		struct QuaternionNormalize final
 		{
 			CIN_MATH_INLINE static QuaternionBase<ValueType> implementation(const QuaternionBase<ValueType>& quaternion) noexcept
 			{
@@ -594,7 +688,7 @@ namespace CinMath {
 		};
 
 		template<typename ValueType>
-		struct QuaternionInverse
+		struct QuaternionInverse final
 		{
 			CIN_MATH_INLINE static QuaternionBase<ValueType> implementation(const QuaternionBase<ValueType>& quaternion) noexcept
 			{
@@ -603,7 +697,7 @@ namespace CinMath {
 		};
 
 		template<typename ValueType>
-		struct QuaternionRotate
+		struct QuaternionRotate final
 		{
 			CIN_MATH_INLINE static QuaternionBase<float> implementation(const Vector<3, float>& vector, const QuaternionBase<float>& rotation) noexcept
 			{
@@ -612,7 +706,7 @@ namespace CinMath {
 		};
 
 		template<typename ValueType>
-		struct QuaternionAxisAngleToQuaternion
+		struct QuaternionAxisAngleToQuaternion final
 		{
 			CIN_MATH_INLINE static QuaternionBase<float> implementation(const Vector<3, float>& axisAngle, const float radianAngle) noexcept
 			{
@@ -642,7 +736,7 @@ namespace CinMath {
 		};
 
 		template<typename ValueType>
-		struct QuaternionToAxisAngle
+		struct QuaternionToAxisAngle final
 		{
 			CIN_MATH_INLINE static Vector<4, float> implementation(const QuaternionBase<float>& quaternion) noexcept
 			{
@@ -660,11 +754,21 @@ namespace CinMath {
 		};
 
 		template<typename ValueType>
-		struct PerspectiveProjection
+		struct PerspectiveProjection final
 		{
 			CIN_MATH_INLINE static Matrix<4, 4, float> implementation(const ValueType FOV, const ValueType aspectRatio, const ValueType nearClip, const ValueType farClip) noexcept
 			{
 				Matrix<4, 4, float> result;
+
+				const float tangentHalfFOV{ std::tan(FOV * 0.5f) };
+				const float nearClipMinusFarClip{ nearClip - farClip };
+
+				result[0] = 1.0f / (tangentHalfFOV * aspectRatio);
+				result[5] = 1.0f / (tangentHalfFOV);
+				result[10] = (farClip + nearClip) / nearClipMinusFarClip;
+				result[11] = -1.0f;
+				result[14] = 2.0f * farClip * nearClip / nearClipMinusFarClip;
+
 				return result;
 			}
 		};
@@ -674,6 +778,12 @@ namespace CinMath {
 	CIN_MATH_INLINE ValueType Length(const Vector<length, ValueType>& vector) noexcept
 	{
 		return Implementation::VectorLength<length, ValueType>::implementation(vector);
+	}
+
+	template<Length_t length, typename ValueType>
+	CIN_MATH_INLINE Vector<length, ValueType> Normalize(const Vector<length, ValueType>& vector) noexcept
+	{
+		return Implementation::VectorNormalize<length, ValueType>::implementation(vector);
 	}
 
 	template<Length_t length, typename ValueType>
@@ -760,12 +870,6 @@ namespace CinMath {
 		return Implementation::QuaternionToAxisAngle<ValueType>::implementation(quaternion);
 	}
 
-	template<typename ValueType>
-	CIN_MATH_INLINE Matrix<4, 4, ValueType> PerspectiveProjection(const ValueType FOV, const ValueType aspectRatio, const ValueType nearClip, const ValueType farClip) noexcept
-	{
-		return Implementation::PerspectiveProjection<ValueType>::implementation(FOV, aspectRatio, nearClip, farClip);
-	}
-
 	template<Length_t rows, Length_t columns, typename ValueType>
 	CIN_MATH_INLINE Matrix<rows, columns, ValueType> Translate(const Matrix<rows, columns, ValueType>& matrix, const Vector<3, ValueType>& translation) noexcept
 	{
@@ -788,5 +892,11 @@ namespace CinMath {
 	CIN_MATH_INLINE Matrix<rows, columns, ValueType> TranslateIdentity(const Vector<4, ValueType>& translation) noexcept
 	{
 		return Implementation::MatrixTranslateIdentity<rows, columns, ValueType>::implementation(translation);
+	}
+
+	template<typename ValueType>
+	CIN_MATH_INLINE Matrix<4, 4, ValueType> PerspectiveProjection(const ValueType FOV, const ValueType aspectRatio, const ValueType nearClip, const ValueType farClip) noexcept
+	{
+		return Implementation::PerspectiveProjection<ValueType>::implementation(FOV, aspectRatio, nearClip, farClip);
 	}
 }

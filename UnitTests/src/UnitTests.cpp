@@ -4,6 +4,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 //#define CIN_USE_DEFAULT_INSTRUCTION_SET
 #define CIN_USE_SSE
+//#define CIN_USE_AVX
 #include "CinMath/CinMath.h"
 
 std::ostream& operator<<(std::ostream& stream, const glm::mat4& matrix)
@@ -534,6 +535,160 @@ void TestVectors()
 	}
 }
 
+void TestMatrix2x2()
+{
+	/* Initialization tests */
+	{
+		CinMath::Matrix2 cinMath(1.0f);
+		glm::mat2 glm(1.0f);
+
+		IsMemoryEqual(cinMath, glm, "mat2 identity");
+	}
+
+	{
+		CinMath::Matrix2 cinMath(CinMath::Matrix2::Identity());
+		glm::mat2 glm(1.0f);
+
+		IsMemoryEqual(cinMath, glm, "mat2 identity #2");
+	}
+
+	{
+		CinMath::Matrix2 cinMath(1.0f, 2.0f, 3.0f, 4.0f);
+		glm::mat2 glm(1.0f, 2.0f, 3.0f, 4.0f);
+
+		IsMemoryEqual(cinMath, glm, "mat2 fill constructor");
+	}
+
+	{
+		CinMath::Matrix2 cinMath(std::array{ 1.0f, 2.0f, 3.0f, 4.0f });
+		glm::mat2 glm({ 1.0f, 2.0f, 3.0f, 4.0f });
+
+		IsMemoryEqual(cinMath, glm, "mat2 initializer list constructor");
+	}
+
+	float testNumbers1[4]{ RandomFloat(), RandomFloat(), RandomFloat(), RandomFloat() };
+	float testNumbers2[4]{ RandomFloat(), RandomFloat(), RandomFloat(), RandomFloat() };
+
+	CinMath::Matrix2 cinMath1;
+	CinMath::Matrix2 cinMath2;
+	glm::mat2 glm1(0.0f);
+	glm::mat2 glm2(0.0f);
+
+	CopyDataTo(testNumbers1, cinMath1, glm1);
+	CopyDataTo(testNumbers2, cinMath2, glm2);
+
+	IsMemoryEqual(cinMath1, glm1, "Memcpy failed");
+	IsMemoryEqual(cinMath2, glm2, "Memcpy failed");
+
+	{
+		auto cinMathTemp1{ -cinMath1 };
+		auto cinMathTemp2{ -cinMath2 };
+
+		auto glmTemp1{ -glm1 };
+		auto glmTemp2{ -glm2 };
+
+		/* -0.0f isnt the same as 0.0f in memory but it's technically the same */
+		assert(cinMathTemp1.raw[0] == glmTemp1[0][0] || cinMathTemp1.raw[0] == 0.0f || cinMathTemp1.raw[0] == -0.0f);
+		assert(cinMathTemp1.raw[1] == glmTemp1[0][1] || cinMathTemp1.raw[1] == 0.0f || cinMathTemp1.raw[1] == -0.0f);
+		assert(cinMathTemp1.raw[2] == glmTemp1[1][0] || cinMathTemp1.raw[2] == 0.0f || cinMathTemp1.raw[2] == -0.0f);
+		assert(cinMathTemp1.raw[3] == glmTemp1[1][1] || cinMathTemp1.raw[3] == 0.0f || cinMathTemp1.raw[3] == -0.0f);
+
+		assert(cinMathTemp2.raw[0] == glmTemp2[0][0] || cinMathTemp2.raw[0] == 0.0f || cinMathTemp2.raw[0] == -0.0f);
+		assert(cinMathTemp2.raw[1] == glmTemp2[0][1] || cinMathTemp2.raw[1] == 0.0f || cinMathTemp2.raw[1] == -0.0f);
+		assert(cinMathTemp2.raw[2] == glmTemp2[1][0] || cinMathTemp2.raw[2] == 0.0f || cinMathTemp2.raw[2] == -0.0f);
+		assert(cinMathTemp2.raw[3] == glmTemp2[1][1] || cinMathTemp2.raw[3] == 0.0f || cinMathTemp2.raw[3] == -0.0f);
+	}
+	
+	{
+		auto scalar1 = RandomFloat();
+		auto scalar2 = RandomFloat();
+		auto cinResult1 = cinMath1 + scalar1;
+		auto cinResult2 = cinMath2 + scalar2;
+		auto glmResult1 = glm1 + scalar1;
+		auto glmResult2 = glm2 + scalar2;
+
+		IsMemoryEqual(cinResult1, glmResult1, "mat2 add scalar");
+		IsMemoryEqual(cinResult2, glmResult2, "mat2 add scalar");
+	}
+
+	{
+		auto scalar1 = RandomFloat();
+		auto scalar2 = RandomFloat();
+		auto cinResult1 = cinMath1 - scalar1;
+		auto cinResult2 = cinMath2 - scalar2;
+		auto glmResult1 = glm1 - scalar1;
+		auto glmResult2 = glm2 - scalar2;
+
+		IsMemoryEqual(cinResult1, glmResult1, "mat2 sub scalar");
+		IsMemoryEqual(cinResult2, glmResult2, "mat2 sub scalar");
+	}
+
+	{
+		auto scalar1 = RandomFloat();
+		auto scalar2 = RandomFloat();
+		auto cinResult1 = cinMath1 * scalar1;
+		auto cinResult2 = cinMath2 * scalar2;
+		auto glmResult1 = glm1 * scalar1;
+		auto glmResult2 = glm2 * scalar2;
+
+		IsMemoryEqual(cinResult1, glmResult1, "mat2 mul scalar");
+		IsMemoryEqual(cinResult2, glmResult2, "mat2 mul scalar");
+	}
+
+	{
+		auto scalar1 = RandomFloat();
+		auto scalar2 = RandomFloat();
+		auto cinResult1 = cinMath1 / scalar1;
+		auto cinResult2 = cinMath2 / scalar2;
+		auto glmResult1 = glm1 / scalar1;
+		auto glmResult2 = glm2 / scalar2;
+
+		IsMemoryEqual(cinResult1, glmResult1, "mat2 div scalar");
+		IsMemoryEqual(cinResult2, glmResult2, "mat2 div scalar");
+	}
+
+#if 0
+	{
+		CinMath::Vector4 cinVector1{ RandomFloat(), RandomFloat(), RandomFloat(), RandomFloat() };
+		CinMath::Vector4 cinVector2{ RandomFloat(), RandomFloat(), RandomFloat(), RandomFloat() };
+		glm::vec4 glmVector1{ RandomFloat(), RandomFloat(), RandomFloat(), RandomFloat() };
+		glm::vec4 glmVector2{ RandomFloat(), RandomFloat(), RandomFloat(), RandomFloat() };
+
+		cinMath1 += cinVector1;
+		cinMath2 += cinVector2;
+		glm1 += glmVector1;
+		glm2 += glmVector1;
+
+		IsMemoryEqual(cinMath1, glm1, "mat2 add vector4");
+		IsMemoryEqual(cinMath2, glm2, "mat2 add vector4");
+	}
+
+	{
+		auto scalar1 = RandomFloat();
+		auto scalar2 = RandomFloat();
+		auto cinResult1 = cinMath1 / scalar1;
+		auto cinResult2 = cinMath2 / scalar2;
+		auto glmResult1 = glm1 / scalar1;
+		auto glmResult2 = glm2 / scalar2;
+
+		IsMemoryEqual(cinResult1, glmResult1, "mat2 sub vector4");
+		IsMemoryEqual(cinResult2, glmResult2, "mat2 sub vector4");
+	}
+
+	{
+		auto scalar1 = RandomFloat();
+		auto scalar2 = RandomFloat();
+		auto cinResult1 = cinMath1 / scalar1;
+		auto cinResult2 = cinMath2 / scalar2;
+		auto glmResult1 = glm1 / scalar1;
+		auto glmResult2 = glm2 / scalar2;
+
+		IsMemoryEqual(cinResult1, glmResult1, "mat2 mul vector4");
+		IsMemoryEqual(cinResult2, glmResult2, "mat2 mul vector4");
+	}
+#endif
+}
+
 void TestMatrices()
 {
 	for (uint32_t i{ 0 }; i < g_TestCount; ++i)
@@ -561,6 +716,13 @@ void TestMatrices()
 			mat _result({ 1.0f });
 
 			IsMemoryEqual(cinResult, _result, "mat2 identity");
+		}
+		/* Identity #2 */
+		{
+			constexpr Cin cinResult(Cin::Identity());
+			mat _result({ 1.0f });
+
+			IsMemoryEqual(cinResult, _result, "mat2 identity #2");
 		}
 		/* Negation */
 		{
@@ -1187,7 +1349,49 @@ void TestShared()
 			//
 			//IsMemoryEqual(_result, cinResult, "mat4 translate");
 		}
+		/* Perspective projection */
+		{
+			constexpr float FOV{ 60.0f };
+			constexpr float AspectRatio{ 16.0f / 9.0f };
+			constexpr float NearClip{ 0.01f };
+			constexpr float FarClip{ 1000.0f };
+
+			auto cinProjection{ CinMath::PerspectiveProjection(FOV, AspectRatio, NearClip, FarClip) };
+			auto glmProjection{ glm::perspective(FOV, AspectRatio, NearClip, FarClip) };
+			IsMemoryEqual(cinProjection, glmProjection, "Perspective projection");
+		}
 	}
+}
+
+void TestSwizzling()
+{
+	using namespace CinMath;
+
+	{
+		Vector2 vector;
+		vector.xy = Vector2{ 1.0f, 2.0f };
+		assert(vector.x == 1.0f && vector.y == 2.0f);
+	}
+
+	{
+		Vector2 vector;
+		vector.yx = Vector2{ 1.0f, 2.0f };
+		assert(vector.y == 1.0f  && vector.x == 2.0f);
+	}
+
+	{
+		Vector2 vector(2.0f, 4.0f);
+		vector.xy *= Vector2{ 5.0f, 2.0f };
+		assert(vector.x == 5.0f * 2.0f && vector.y == 4.0f * 2.0f);
+	}
+
+	{
+		Vector2 vector(2.0f, 4.0f);
+		vector.yx *= Vector2{ 5.0f, 2.0f };
+		assert(vector.y == 5.0f * 4.0f && vector.x == 2.0f * 2.0f);
+	}
+
+	/* TODO: Expand */
 }
 
 int UnitTests()
@@ -1204,6 +1408,10 @@ int UnitTests()
 
 		std::cout << "Testing shared. . .\n";
 		TestShared();
+		std::cout << "success\n";
+
+		std::cout << "Testing swizzling. . .\n";
+		TestSwizzling();
 		std::cout << "success\n";
 	}
 	catch (const std::runtime_error& error)

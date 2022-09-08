@@ -7,7 +7,7 @@ namespace CinMath {
 	public:
 		using UnderlyingType = ValueType;
 	public:
-		explicit Vector<4, ValueType>() noexcept
+		consteval explicit Vector<4, ValueType>() noexcept
 			:
 			x(static_cast<ValueType>(0)),
 			y(static_cast<ValueType>(0)),
@@ -102,6 +102,35 @@ namespace CinMath {
 			{
 				ValueType r, g, b, a;
 			};
+
+			/* 2-Element swizzle */
+			Vector2Swizzle<ValueType, Vector<2, ValueType>, 0, 1> xy;
+			Vector2Swizzle<ValueType, Vector<2, ValueType>, 1, 0> yx;
+
+			Vector2Swizzle<ValueType, Vector<2, ValueType>, 1, 2> yz;
+			Vector2Swizzle<ValueType, Vector<2, ValueType>, 2, 1> zy;
+
+			Vector2Swizzle<ValueType, Vector<2, ValueType>, 2, 3> zw;
+			Vector2Swizzle<ValueType, Vector<2, ValueType>, 3, 2> wz;
+
+			Vector2Swizzle<ValueType, Vector<2, ValueType>, 3, 0> wx;
+			Vector2Swizzle<ValueType, Vector<2, ValueType>, 0, 3> xw;
+
+			/* 3-Element swizzle */
+			Vector3Swizzle<ValueType, Vector<3, ValueType>, 0, 1, 2> xyz;
+			Vector3Swizzle<ValueType, Vector<3, ValueType>, 2, 1, 0> zyx;
+
+			Vector3Swizzle<ValueType, Vector<3, ValueType>, 1, 2, 3> yzw;
+			Vector3Swizzle<ValueType, Vector<3, ValueType>, 3, 2, 1> wzy;
+
+			Vector3Swizzle<ValueType, Vector<3, ValueType>, 2, 3, 0> zwx;
+			Vector3Swizzle<ValueType, Vector<3, ValueType>, 0, 3, 2> xwz;
+
+			Vector3Swizzle<ValueType, Vector<3, ValueType>, 3, 0, 1> wxy;
+			Vector3Swizzle<ValueType, Vector<3, ValueType>, 1, 0, 3> yxw;
+			/* 4-Element swizzle */
+			Vector4Swizzle<ValueType, Vector<4, ValueType>, 0, 1, 2, 3> xyzw;
+			Vector4Swizzle<ValueType, Vector<4, ValueType>, 3, 2, 1, 0> wzyx;
 		};
 	};
 

@@ -7,7 +7,7 @@ namespace CinMath {
 	public:
 		using UnderlyingType = ValueType;
 	public:
-		explicit Vector<3, ValueType>() noexcept
+		consteval explicit Vector<3, ValueType>() noexcept
 			:
 			x(static_cast<ValueType>(0)),
 			y(static_cast<ValueType>(0)),
@@ -96,6 +96,20 @@ namespace CinMath {
 			{
 				ValueType r, g, b;
 			};
+
+			/* 2-Element swizzle */
+			Vector2Swizzle<ValueType, Vector<2, ValueType>, 0, 1> xy;
+			Vector2Swizzle<ValueType, Vector<2, ValueType>, 1, 0> yx;
+			
+			Vector2Swizzle<ValueType, Vector<2, ValueType>, 1, 2> yz;
+			Vector2Swizzle<ValueType, Vector<2, ValueType>, 2, 1> zy;
+
+			Vector2Swizzle<ValueType, Vector<2, ValueType>, 2, 0> zx;
+			Vector2Swizzle<ValueType, Vector<2, ValueType>, 0, 2> xz;
+
+			/* 3-Element swizzle */
+			Vector3Swizzle<ValueType, Vector<3, ValueType>, 0, 1, 2> xyz;
+			Vector3Swizzle<ValueType, Vector<3, ValueType>, 2, 1, 0> zyx;
 		};
 	};
 

@@ -7,46 +7,49 @@ namespace CinMath {
 	public:
 		using UnderlyingType = ValueType;
 	public:
-		explicit Matrix<2, 2, ValueType>() noexcept
-		{
-			raw[0] = static_cast<ValueType>(0);
-			raw[1] = static_cast<ValueType>(0);
-			raw[2] = static_cast<ValueType>(0);
-			raw[3] = static_cast<ValueType>(0);
-		}
+		consteval explicit Matrix<2, 2, ValueType>() noexcept
+			:
+			m11(static_cast<ValueType>(0)),
+			m12(static_cast<ValueType>(0)),
+			m21(static_cast<ValueType>(0)),
+			m22(static_cast<ValueType>(0))
+		{}
+
+		consteval explicit Matrix<2, 2, ValueType>(const ValueType value, [[maybe_unused]] ConstevalConstructorProxy&&) noexcept
+			:
+			m11(value),
+			m12(static_cast<ValueType>(0)),
+			m21(static_cast<ValueType>(0)),
+			m22(value)
+		{}
 
 		explicit Matrix<2, 2, ValueType>(const ValueType value) noexcept
-		{
-			raw[0] = value;
-			raw[1] = static_cast<ValueType>(0);
-			raw[2] = static_cast<ValueType>(0);
-			raw[3] = value;
-		}
+			:
+			m11(value),
+			m12(static_cast<ValueType>(0)),
+			m21(static_cast<ValueType>(0)),
+			m22(value)
+		{}
 
 		explicit Matrix<2, 2, ValueType>(
 			const ValueType value1,
 			const ValueType value2,
 			const ValueType value3,
-			const ValueType value4,
-			const ValueType value5,
-			const ValueType value6,
-			const ValueType value7,
-			const ValueType value8,
-			const ValueType value9) noexcept
-		{
-			raw[0] = value1;
-			raw[1] = value2;
-			raw[2] = value3;
-			raw[3] = value4;
-		}
+			const ValueType value4) noexcept
+			:
+			m11(value1),
+			m12(value2),
+			m21(value3),
+			m22(value4)
+		{}
 
-		explicit Matrix<2, 2, ValueType>(std::array<ValueType, 3 * 3>&& values) noexcept
-		{
-			raw[0] = values[0];
-			raw[1] = values[1];
-			raw[2] = values[2];
-			raw[3] = values[3];
-		}
+		explicit Matrix<2, 2, ValueType>(std::array<ValueType, 2 * 2>&& values) noexcept
+			:
+			m11(values[0]),
+			m12(values[1]),
+			m21(values[2]),
+			m22(values[3])
+		{}
 
 		constexpr operator ValueType* () noexcept
 		{
@@ -100,7 +103,19 @@ namespace CinMath {
 			{
 				ValueType raw[2 * 2];
 			};
+
+			struct
+			{
+				ValueType m11, m12;
+				ValueType m21, m22;
+			};
 		};
+
+		consteval static Matrix<2, 2, ValueType> Identity() noexcept
+		{
+			constexpr Matrix<2, 2, ValueType> result(static_cast<ValueType>(1), ConstevalConstructorProxy{});
+			return result;
+		}
 	};
 
 	typedef Matrix<2, 2, float>		Matrix2x2, Matrix2;
