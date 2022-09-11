@@ -14,6 +14,23 @@
 #define CIN_USE_AVX // For avx instructions
 #include "CinMath/CinMath.h"
 ```
+#### Swizzling
+##### The library supports swizzling for vector types
+```cpp
+#include "CinMath/CinMath.h"
+
+int main(const int argc, const char** argv)
+{
+	using namespace CinMath;
+
+	Vector4 vector{ 0.0f, 0.0f, 0.0f, 0.0f };
+	vector.xyz = { 1.0f, 1.0f, 1.0f };
+	vector.z = 2.0f;
+	vector.xy *= 1.0f;
+
+	return 0;
+}
+```
 
 ### Cloning the repository (contains glm submodule for unit testing):
 `git clone --recursive https://github.com/CzekoladowyKocur/CinMath.git`
