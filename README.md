@@ -8,9 +8,12 @@
 ```cpp
 #define CIN_USE_SSE // For sse instructions
 #include "CinMath/CinMath.h"
+```
+
 ```cpp
 #define CIN_USE_AVX // For avx instructions
 #include "CinMath/CinMath.h"
+```
 
 ### Cloning the repository (contains glm submodule for unit testing):
 `git clone --recursive https://github.com/CzekoladowyKocur/CinMath.git`
