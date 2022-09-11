@@ -81,6 +81,8 @@ namespace CinMath {
 			m33(values[8])
 		{}
 
+		constexpr ~Matrix<3, 3, ValueType>() noexcept = default;
+
 		constexpr operator ValueType* () noexcept
 		{
 			return raw;
@@ -101,8 +103,8 @@ namespace CinMath {
 			return raw[index];
 		}
 
-		friend Matrix<3, 3, ValueType> CIN_CALL operator+(const Matrix<3, 3, ValueType>& vector) noexcept;
-		friend Matrix<3, 3, ValueType> CIN_CALL operator-(const Matrix<3, 3, ValueType>& vector) noexcept;
+		[[nodiscard]] friend Matrix<3, 3, ValueType> CIN_CALL operator+(const Matrix<3, 3, ValueType>& vector) noexcept;
+		[[nodiscard]] friend Matrix<3, 3, ValueType> CIN_CALL operator-(const Matrix<3, 3, ValueType>& vector) noexcept;
 
 		friend void CIN_CALL operator+=(Matrix<3, 3, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
 		friend void CIN_CALL operator-=(Matrix<3, 3, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
@@ -113,14 +115,14 @@ namespace CinMath {
 		friend void CIN_CALL operator*=(Matrix<3, 3, ValueType>& lhs, const ValueType scalar) noexcept;
 		friend void CIN_CALL operator/=(Matrix<3, 3, ValueType>& lhs, const ValueType scalar) noexcept;
 
-		friend Matrix<3, 3, ValueType> CIN_CALL operator+(const Matrix<3, 3, ValueType>& lhs, const Matrix<3, 3, ValueType>& rhs) noexcept;
-		friend Matrix<3, 3, ValueType> CIN_CALL operator-(const Matrix<3, 3, ValueType>& lhs, const Matrix<3, 3, ValueType>& rhs) noexcept;
-		friend Matrix<3, 3, ValueType> CIN_CALL operator*(const Matrix<3, 3, ValueType>& lhs, const Matrix<3, 3, ValueType>& rhs) noexcept;
+		[[nodiscard]] friend Matrix<3, 3, ValueType> CIN_CALL operator+(const Matrix<3, 3, ValueType>& lhs, const Matrix<3, 3, ValueType>& rhs) noexcept;
+		[[nodiscard]] friend Matrix<3, 3, ValueType> CIN_CALL operator-(const Matrix<3, 3, ValueType>& lhs, const Matrix<3, 3, ValueType>& rhs) noexcept;
+		[[nodiscard]] friend Matrix<3, 3, ValueType> CIN_CALL operator*(const Matrix<3, 3, ValueType>& lhs, const Matrix<3, 3, ValueType>& rhs) noexcept;
 
-		friend Matrix<3, 3, ValueType> CIN_CALL operator+(const Matrix<3, 3, ValueType>& lhs, const ValueType scalar) noexcept;
-		friend Matrix<3, 3, ValueType> CIN_CALL operator-(const Matrix<3, 3, ValueType>& lhs, const ValueType scalar) noexcept;
-		friend Matrix<3, 3, ValueType> CIN_CALL operator*(const Matrix<3, 3, ValueType>& lhs, const ValueType scalar) noexcept;
-		friend Matrix<3, 3, ValueType> CIN_CALL operator/(const Matrix<3, 3, ValueType>& lhs, const ValueType scalar) noexcept;
+		[[nodiscard]] friend Matrix<3, 3, ValueType> CIN_CALL operator+(const Matrix<3, 3, ValueType>& lhs, const ValueType scalar) noexcept;
+		[[nodiscard]] friend Matrix<3, 3, ValueType> CIN_CALL operator-(const Matrix<3, 3, ValueType>& lhs, const ValueType scalar) noexcept;
+		[[nodiscard]] friend Matrix<3, 3, ValueType> CIN_CALL operator*(const Matrix<3, 3, ValueType>& lhs, const ValueType scalar) noexcept;
+		[[nodiscard]] friend Matrix<3, 3, ValueType> CIN_CALL operator/(const Matrix<3, 3, ValueType>& lhs, const ValueType scalar) noexcept;
 	public:
 		union
 		{
@@ -142,7 +144,7 @@ namespace CinMath {
 			};
 		};
 
-		consteval static Matrix<3, 3, ValueType> Identity() noexcept
+		[[nodiscard]] consteval static Matrix<3, 3, ValueType> Identity() noexcept
 		{
 			constexpr Matrix<3, 3, ValueType> result(static_cast<ValueType>(1), ConstevalConstructorProxy{});
 			return result;

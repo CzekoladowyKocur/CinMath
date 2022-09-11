@@ -28,28 +28,30 @@ namespace CinMath {
 			y(y)
 		{}
 
-		CIN_MATH_INLINE operator ValueType* () noexcept
+		constexpr ~Vector<2, ValueType>() noexcept = default;
+
+		constexpr operator ValueType* () noexcept
 		{
 			return raw;
 		}
 
-		CIN_MATH_INLINE operator const ValueType* () const noexcept
+		constexpr  operator const ValueType* () const noexcept
 		{
 			return raw;
 		}
 
-		CIN_MATH_INLINE ValueType& operator[](const Length_t index) noexcept
+		constexpr  ValueType& operator[](const Length_t index) noexcept
 		{
 			return raw[index];
 		}
 
-		CIN_MATH_INLINE const ValueType operator[](const Length_t index) const noexcept
+		constexpr  const ValueType operator[](const Length_t index) const noexcept
 		{
 			return raw[index];
 		}
 
-		friend Vector<2, ValueType> CIN_CALL operator+(const Vector<2, ValueType>& vector) noexcept;
-		friend Vector<2, ValueType> CIN_CALL operator-(const Vector<2, ValueType>& vector) noexcept;
+		[[nodiscard]] friend Vector<2, ValueType> CIN_CALL operator+(const Vector<2, ValueType>& vector) noexcept;
+		[[nodiscard]] friend Vector<2, ValueType> CIN_CALL operator-(const Vector<2, ValueType>& vector) noexcept;
 
 		friend void CIN_CALL operator+=(Vector<2, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
 		friend void CIN_CALL operator-=(Vector<2, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
@@ -61,15 +63,15 @@ namespace CinMath {
 		friend void CIN_CALL operator*=(Vector<2, ValueType>& lhs, const ValueType scalar) noexcept;
 		friend void CIN_CALL operator/=(Vector<2, ValueType>& lhs, const ValueType scalar) noexcept;
 
-		friend Vector<2, ValueType> CIN_CALL operator+(const Vector<2, ValueType>& lhs, const Vector<2, ValueType>& rhs) noexcept;
-		friend Vector<2, ValueType> CIN_CALL operator-(const Vector<2, ValueType>& lhs, const Vector<2, ValueType>& rhs) noexcept;
-		friend Vector<2, ValueType> CIN_CALL operator*(const Vector<2, ValueType>& lhs, const Vector<2, ValueType>& rhs) noexcept;
-		friend Vector<2, ValueType> CIN_CALL operator/(const Vector<2, ValueType>& lhs, const Vector<2, ValueType>& rhs) noexcept;
+		[[nodiscard]] friend Vector<2, ValueType> CIN_CALL operator+(const Vector<2, ValueType>& lhs, const Vector<2, ValueType>& rhs) noexcept;
+		[[nodiscard]] friend Vector<2, ValueType> CIN_CALL operator-(const Vector<2, ValueType>& lhs, const Vector<2, ValueType>& rhs) noexcept;
+		[[nodiscard]] friend Vector<2, ValueType> CIN_CALL operator*(const Vector<2, ValueType>& lhs, const Vector<2, ValueType>& rhs) noexcept;
+		[[nodiscard]] friend Vector<2, ValueType> CIN_CALL operator/(const Vector<2, ValueType>& lhs, const Vector<2, ValueType>& rhs) noexcept;
 
-		friend Vector<2, ValueType> CIN_CALL operator+(const Vector<2, ValueType>& lhs, const ValueType scalar) noexcept;
-		friend Vector<2, ValueType> CIN_CALL operator-(const Vector<2, ValueType>& lhs, const ValueType scalar) noexcept;
-		friend Vector<2, ValueType> CIN_CALL operator*(const Vector<2, ValueType>& lhs, const ValueType scalar) noexcept;
-		friend Vector<2, ValueType> CIN_CALL operator/(const Vector<2, ValueType>& lhs, const ValueType scalar) noexcept;
+		[[nodiscard]] friend Vector<2, ValueType> CIN_CALL operator+(const Vector<2, ValueType>& lhs, const ValueType scalar) noexcept;
+		[[nodiscard]] friend Vector<2, ValueType> CIN_CALL operator-(const Vector<2, ValueType>& lhs, const ValueType scalar) noexcept;
+		[[nodiscard]] friend Vector<2, ValueType> CIN_CALL operator*(const Vector<2, ValueType>& lhs, const ValueType scalar) noexcept;
+		[[nodiscard]] friend Vector<2, ValueType> CIN_CALL operator/(const Vector<2, ValueType>& lhs, const ValueType scalar) noexcept;
 	public:
 		union
 		{

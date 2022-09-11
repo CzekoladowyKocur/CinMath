@@ -1,97 +1,37 @@
+#define CIN_USE_SSE
 #include "CinMath/CinMath.h"
-
-template<typename T> 
-void TestFunc()
-{
-	T lhs;
-	T rhs;
-
-	float scalar{ 1.0f };
-
-	rhs += lhs;
-	rhs -= lhs;
-	rhs *= lhs;
-	rhs /= lhs;
-
-	auto res1 = lhs * rhs;
-	auto res2 = lhs / rhs;
-	auto res3 = lhs + rhs;
-	auto res4 = lhs - rhs;
-
-	rhs += scalar;
-	rhs -= scalar;
-	rhs *= scalar;
-	rhs /= scalar;
-
-	auto res1_scalar = lhs * scalar;
-	auto res2_scalar = lhs / scalar;
-	auto res3_scalar = lhs + scalar;
-	auto res4_scalar = lhs - scalar;
-}
-
-template<typename T> 
-void TestFuncMat()
-{
-	T lhs;
-	T rhs;
-
-	float scalar{ 1.0f };
-
-	rhs += lhs;
-	rhs -= lhs;
-	rhs *= lhs;
-
-	auto res1 = lhs * rhs;
-	auto res3 = lhs + rhs;
-	auto res4 = lhs - rhs;
-
-	rhs += scalar;
-	rhs -= scalar;
-	rhs *= scalar;
-	rhs /= scalar;
-
-	auto res1_scalar = lhs * scalar;
-	auto res2_scalar = lhs / scalar;
-	auto res3_scalar = lhs + scalar;
-	auto res4_scalar = lhs - scalar;
-}
 
 int main()
 {
 	using namespace CinMath;
-	TestFunc<Vector2>();
-	TestFunc<Vector3>();
-	TestFunc<Vector4>();
 
-	TestFuncMat<Matrix2>();
-	TestFuncMat<Matrix3>();
-	TestFuncMat<Matrix4>();
+	Vector4 v4; /* 0 initialized vector */
+	std::cout << v4 << '\n';
 
-	Matrix4 ma1, mat2, mat3;
-	auto result =  ma1 * mat2 * mat3;
+	v4.xyzw = { 1.0f, 1.0f, 1.0f, 1.0f };
+	v4.xy *= 2.0f;
 
+	std::cout << v4 << '\n';
 
-	operator+(operator+(ma1, mat2), ma1);
+	constexpr Matrix4 identityMatrix{ Matrix4::Identity() };
+	std::cout << identityMatrix << '\n';
 
-	/* Zero initialized matrix */
-	constexpr Matrix4 test;
+	Matrix4 matrix{ identityMatrix };
+	matrix = TranslateIdentity<4, 4, float>(Vector3{ 1.0f, 2.0f, 0.0f });
 
-	float value{ 2.0f };
-	Matrix4 test2(value);
+	std::cout << matrix << '\n';
 
-	constexpr auto constexprValue{ Matrix4::Identity() };
+	Vector3 axis{ 0.0f, 0.0f, 1.0f };
+	const float angle{ ToRadians(45.0f) };
+	std::cout << "Angle: " << angle << '\n';
 
-	/* Swizzling */
-	Vector4 swizzleVector;
-	swizzleVector.x += 1.0f; 
-	swizzleVector.xy += 1.0f; 
-	swizzleVector.xyz += 1.0f; 
-	swizzleVector.xyzw += 1.0f; 
+	Quaternion quaternion{ AxisAngleToQuaternion(angle, axis) };
+	matrix = Rotate(Matrix4x4::Identity(), quaternion);
 
-	swizzleVector.xy *= 2.0f;
-	swizzleVector.zw *= 5.0f;
+	std::cout << matrix << '\n';
 
-	std::cout << swizzleVector << '\n';
+	auto axisAngle{ QuaternionToAxisAngle(quaternion) };
+	std::cout << axisAngle << '\n';
 
 	return 0;
 }

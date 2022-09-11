@@ -171,9 +171,16 @@ namespace CinMath {
 		return arg;
 	}
 
-	/* Used to signal consteval constructor */
+	/* Used to signal constant evaluation constructors */
 	struct ConstevalConstructorProxy {};
-
+	/* Buffer out of warning (swizzles are unions) */
+#if _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 6201)
+#pragma warning(disable: 6385)
+#elif __GNUC__
+#elif __clang__
+#endif
 	/* Swizzling */
 	template<typename Type, std::size_t Index>
 	struct ScalarSwizzle final
@@ -217,22 +224,22 @@ namespace CinMath {
 	{
 		Type View[2];
 
-		CIN_MATH_INLINE VectorType operator=(const Type scalar) noexcept
+		CIN_MATH_INLINE VectorType operator=(const Type scalar) const noexcept
 		{
 			return VectorType(View[SwizzleFirst] = scalar, View[SwizzleSecond] = scalar);
 		}
 
-		CIN_MATH_INLINE VectorType operator+(const Type scalar) noexcept
+		CIN_MATH_INLINE VectorType operator+(const Type scalar) const noexcept
 		{
 			return VectorType(View[SwizzleFirst] + scalar, View[SwizzleSecond] + scalar);
 		}
 
-		CIN_MATH_INLINE VectorType operator-(const Type scalar) noexcept
+		CIN_MATH_INLINE VectorType operator-(const Type scalar) const noexcept
 		{
 			return VectorType(View[SwizzleFirst] - scalar, View[SwizzleSecond] - scalar);
 		}
 
-		CIN_MATH_INLINE VectorType operator*(const Type scalar) noexcept
+		CIN_MATH_INLINE VectorType operator*(const Type scalar) const noexcept
 		{
 			return VectorType(View[SwizzleFirst] * scalar, View[SwizzleSecond] * scalar);
 		}
@@ -272,7 +279,7 @@ namespace CinMath {
 			return VectorType(View[SwizzleFirst] *= vector.x, View[SwizzleSecond] *= vector.y);
 		}
 
-		CIN_MATH_INLINE operator VectorType() noexcept
+		CIN_MATH_INLINE operator VectorType() const noexcept
 		{
 			return VectorType(View[SwizzleFirst], View[SwizzleSecond]);
 		}
@@ -338,7 +345,7 @@ namespace CinMath {
 			return VectorType(View[SwizzleFirst] *= vector.x, View[SwizzleSecond] *= vector.y, View[SwizzleThird] *= vector.z);
 		}
 
-		CIN_MATH_INLINE operator VectorType() noexcept
+		CIN_MATH_INLINE operator VectorType() const noexcept
 		{
 			return VectorType(View[SwizzleFirst], View[SwizzleSecond], View[SwizzleThird]);
 		}
@@ -349,22 +356,22 @@ namespace CinMath {
 	{
 		Type View[4];
 	
-		CIN_MATH_INLINE VectorType operator=(const Type scalar) noexcept
+		CIN_MATH_INLINE VectorType operator=(const Type scalar) const noexcept
 		{
 			return VectorType(View[SwizzleFirst] = scalar, View[SwizzleSecond] = scalar, View[SwizzleThird] = scalar, View[SwizzleFourth] = scalar);
 		}
 		
-		CIN_MATH_INLINE VectorType operator+(const Type scalar) noexcept
+		CIN_MATH_INLINE VectorType operator+(const Type scalar) const noexcept
 		{
 			return VectorType(View[SwizzleFirst] + scalar, View[SwizzleSecond] + scalar, View[SwizzleThird] + scalar, View[SwizzleFourth] + scalar);
 		}
 		
-		CIN_MATH_INLINE VectorType operator-(const Type scalar) noexcept
+		CIN_MATH_INLINE VectorType operator-(const Type scalar) const noexcept
 		{
 			return VectorType(View[SwizzleFirst] - scalar, View[SwizzleSecond] - scalar, View[SwizzleThird] - scalar, View[SwizzleFourth] - scalar);
 		}
 		
-		CIN_MATH_INLINE VectorType operator*(const Type scalar) noexcept
+		CIN_MATH_INLINE VectorType operator*(const Type scalar) const noexcept
 		{
 			return VectorType(View[SwizzleFirst] * scalar, View[SwizzleSecond] * scalar, View[SwizzleThird] * scalar, View[SwizzleFourth] * scalar);
 		}
@@ -404,19 +411,25 @@ namespace CinMath {
 			return VectorType(View[SwizzleFirst] *= vector.x, View[SwizzleSecond] *= vector.y, View[SwizzleThird] *= vector.z, View[SwizzleFourth] *= vector.w);
 		}
 		
-		CIN_MATH_INLINE operator VectorType() noexcept
+		CIN_MATH_INLINE operator VectorType() const noexcept
 		{
 			return VectorType(View[SwizzleFirst], View[SwizzleSecond], View[SwizzleThird], View[SwizzleFourth]);
 		}
 	};
-
+#if _MSC_VER
+#pragma warning(pop)
+#elif __GNUC__
+#pragma GCC diagnostic pop
+#elif __clang__
+#pragma clang diagnostic pop
+#endif
 	/* Template type parameters */
 	typedef float DefaultPrecision;
 	typedef double DoublePrecision;
 
-	typedef std::uint64_t Rows_t;
-	typedef std::uint64_t Columns_t;
-	typedef std::uint64_t Length_t;
+	typedef std::size_t Rows_t;
+	typedef std::size_t Columns_t;
+	typedef std::size_t Length_t;
 
 	/* SIMD and basic types */
 #if (CIN_INSTRUCTION_SET) == (CIN_INSTRUCTION_SET_DEFAULT_BIT)

@@ -3,7 +3,7 @@ namespace CinMath {
 	class QuaternionBase final
 	{
 	public:
-		explicit QuaternionBase() noexcept
+		consteval explicit QuaternionBase() noexcept
 			:
 			a(static_cast<ValueType>(0)),
 			b(static_cast<ValueType>(0)),
@@ -30,6 +30,34 @@ namespace CinMath {
 			scalar(scalar),
 			vector(vector)
 		{}
+
+		CIN_MATH_INLINE operator ValueType* () noexcept
+		{
+			return raw;
+		}
+
+		CIN_MATH_INLINE operator const ValueType* () const noexcept
+		{
+			return raw;
+		}
+
+		CIN_MATH_INLINE ValueType& operator[](const Length_t index) noexcept
+		{
+			return raw[index];
+		}
+
+		CIN_MATH_INLINE const ValueType operator[](const Length_t index) const noexcept
+		{
+			return raw[index];
+		}
+
+		CIN_MATH_INLINE constexpr operator Vector<4, ValueType>() const noexcept
+		{
+			return Vector<4, ValueType>
+			{
+				raw[0], raw[1], raw[2], raw[3],
+			};
+		}
 
 		friend QuaternionBase<ValueType> CIN_CALL operator+(const QuaternionBase<ValueType>& quaternion) noexcept;
 		friend QuaternionBase<ValueType> CIN_CALL operator-(const QuaternionBase<ValueType>& quaternion) noexcept;

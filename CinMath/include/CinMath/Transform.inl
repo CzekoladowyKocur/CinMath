@@ -1,78 +1,309 @@
 #pragma once
 
 namespace CinMath {
+	/**
+	 * Converts an angle in degrees to radians
+	 * 
+	 * @param input degrees
+	 * @return angle in radians
+	 */
 	template<typename ValueType>
 	CIN_MATH_INLINE ValueType ToRadians(const ValueType degrees) noexcept
 	{
+		static_assert(std::is_floating_point_v<ValueType>, "Floating point conversion only is supported");
 		return degrees * AtCompileTime(Constants::PI<ValueType> / static_cast<ValueType>(180U));
 	}
-	
+
+	/**
+	 * Converts an angle in radians to degrees
+	 * 
+	 * @param input radians
+	 * @return angle in degrees
+	 */
 	template<typename ValueType>
 	CIN_MATH_INLINE ValueType ToDegrees(const ValueType radians) noexcept
 	{
+		static_assert(std::is_floating_point_v<ValueType>, "Floating point conversion only is supported");
 		return radians * AtCompileTime(static_cast<ValueType>(180U) / Constants::PI<ValueType>);
 	}
 
+	/**
+	 * Calculates the length of a given vector
+	 * 
+	 * @param input vector
+	 * @return length of the input vector
+	 */
 	template<Length_t length, typename ValueType>
 	CIN_MATH_INLINE ValueType Length(const Vector<length, ValueType>& vector) noexcept;
 
+	/**
+	 * Normalizes a given vector
+	 * 
+	 * @param input vector
+	 * @return normalized input vector
+	 */
 	template<Length_t length, typename ValueType>
 	CIN_MATH_INLINE Vector<length, ValueType> Normalize(const Vector<length, ValueType>& vector) noexcept;
 
+	/**
+	 * Calculates the dot product of two vectors
+	 * 
+	 * @param lhs 
+	 * @param rhs
+	 * @return dot product of input vectors
+	 */
 	template<Length_t length, typename ValueType>
 	CIN_MATH_INLINE ValueType Dot(const Vector<length, ValueType>& lhs, const Vector<length, ValueType>& rhs) noexcept;
 
+	/**
+	 * Calculates the cross product of two vectors
+	 * 
+	 * @param lhs
+	 * @param rhs
+	 * @return cross product of input vectors
+	 */
 	template<Length_t length, typename ValueType>
 	CIN_MATH_INLINE Vector<length, ValueType> Cross(const Vector<length, ValueType>& lhs, const Vector<length, ValueType>& rhs) noexcept;
 
+	/**
+	 * Transposes a given matrix. In linear algebra, the transpose of a matrix is an operator which flips a matrix over its diagonal;
+	 * that is, it switches the row and column indices of the matrix A by producing another matrix, often denoted by A^T
+	 * https://en.wikipedia.org/wiki/Transpose
+	 * 
+	 * @param input matrix
+	 * @return transposed input matrix
+	 */
 	template<Length_t rows, Length_t columns, typename ValueType>
 	CIN_MATH_INLINE Matrix<rows, columns, ValueType> Transpose(const Matrix<rows, columns, ValueType>& matrix) noexcept;
 
+	/**
+	 * Calculates the determinant of a given matrix
+	 * 
+	 * @param input matrix
+	 * @return determinant value of input matrix
+	 */
 	template<Length_t rows, Length_t columns, typename ValueType>
 	CIN_MATH_INLINE ValueType Determinant(const Matrix<rows, columns, ValueType>& matrix) noexcept;
 
+	/**
+	 * Calculates the inverse of a given matrix
+	 * 
+	 * @param input matrix
+	 * @return inverse of input matrix
+	 */
 	template<Length_t rows, Length_t columns, typename ValueType>
 	CIN_MATH_INLINE Matrix<rows, columns, ValueType> Inverse(const Matrix<rows, columns, ValueType>& matrix) noexcept;
 
+	/**
+	 * Calculates the conjugate of a given quaternion
+	 * 
+	 * @param input quaternion
+	 * @return conjugate of input quaternion
+	 */
 	template<typename ValueType>
 	CIN_MATH_INLINE QuaternionBase<ValueType> Conjugate(const QuaternionBase<ValueType>& quaternion) noexcept;
 
+	/**
+	 * Calculates the norm (length) of a given quaternion
+	 * 
+	 * @param input quaternion
+	 * @return norm of input quaternion
+	 */
 	template<typename ValueType>
 	CIN_MATH_INLINE ValueType Norm(const QuaternionBase<ValueType>& quaternion) noexcept;
 
+	/**
+	 * Calculates the squared norm (length) of a given quaternion
+	 * 
+	 * @param input quaternion
+	 * @return squared norm of input quaternion
+	 */
 	template<typename ValueType>
 	CIN_MATH_INLINE ValueType NormSquared(const QuaternionBase<ValueType>& quaternion) noexcept;
 
+	/**
+	 * Normalizes a given quaternion
+	 * 
+	 * @param input quaternion
+	 * @return Normalized input quaternion
+	 */
 	template<typename ValueType>
 	CIN_MATH_INLINE QuaternionBase<ValueType> Normalize(const QuaternionBase<ValueType>& quaternion) noexcept;
 
+	/**
+	 * Calculates the inverse of a given quaternion
+	 * 
+	 * @param input quaternion
+	 * @return inverse of input quaternion
+	 */
 	template<typename ValueType>
 	CIN_MATH_INLINE QuaternionBase<ValueType> Inverse(const QuaternionBase<ValueType>& quaternion) noexcept;
 
+	/**
+	 * Rotates the vector by a given quaternion (in unit form)
+	 * 
+	 * @param input vector to be rotated
+	 * @param input quaternion
+	 * @return rotated input vector by input quaternion
+	 */
 	template<typename ValueType>
 	CIN_MATH_INLINE Vector<3, ValueType> Rotate(const Vector<3, ValueType>& vector, const QuaternionBase<ValueType>& rotation) noexcept;
 
+	/**
+	 * Calculates quaternion in unit form based off an axis and angle in radians.
+	 * 
+	 * @param input vector, an arbitrary axis of rotation
+	 * @param input angle, the angle of rotation
+	 * @return quaternion of rotation in unit form
+	 */
 	template<typename ValueType>
-	CIN_MATH_INLINE QuaternionBase<ValueType> AxisAngleToQuaternion(const Vector<3, ValueType>& vector, const ValueType angle) noexcept;
+	CIN_MATH_INLINE QuaternionBase<ValueType> AxisAngleToQuaternion(const ValueType angle, const Vector<3, ValueType>& vector) noexcept;
 
+	/**
+	 * Calculates quaternion in unit form based off an axis angle. The function reads the x element of the vector as the rotation angle (in radians)
+	 * and the y, z, w components as the arbitrary axis.
+	 *
+	 * @param input vector, vector.x -> angle in radians, vector.yzw -> an arbitrary axis of rotation
+	 * @return quaternion of rotation in unit form
+	 */
 	template<typename ValueType>
 	CIN_MATH_INLINE QuaternionBase<ValueType> AxisAngleToQuaternion(const Vector<4, ValueType>& vector) noexcept;
 
+	/**
+	 * Converts a given unit form quaternion to an axis angle
+	 * 
+	 * @param input quaternion
+	 * @return axis angle vector, vector.x -> angle in radians, vector.yzw -> an arbitrary axis of rotation
+	 */
 	template<typename ValueType>
 	CIN_MATH_INLINE Vector<4, ValueType> QuaternionToAxisAngle(const QuaternionBase<ValueType>& quaternion) noexcept;
 
+	/**
+	 * Translates a given matrix by a vector
+	 * 
+	 * @param input matrix
+	 * @param input vector (translation)
+	 * @return Translated input matrix by the given input vector
+	 */
 	template<Length_t rows, Length_t columns, typename ValueType>
 	CIN_MATH_INLINE Matrix<rows, columns, ValueType> Translate(const Matrix<rows, columns, ValueType>& matrix, const Vector<3, ValueType>& translation) noexcept;
 
+	/**
+	 * Translates a given matrix by a vector
+	 *
+	 * @param input matrix
+	 * @param input vector (translation)
+	 * @return Translated input matrix by the given input vector
+	 * @note The w component of translation component should be equal to 0
+	 */
 	template<Length_t rows, Length_t columns, typename ValueType>
 	CIN_MATH_INLINE Matrix<rows, columns, ValueType> Translate(const Matrix<rows, columns, ValueType>& matrix, const Vector<4, ValueType>& translation) noexcept;
 
+	/**
+	 * Translates an identity matrix by a vector
+	 *
+	 * @param input vector (translation)
+	 * @return Translated identity matrix by the given input vector
+	 */
 	template<Length_t rows, Length_t columns, typename ValueType>
 	CIN_MATH_INLINE Matrix<rows, columns, ValueType> TranslateIdentity(const Vector<3, ValueType>& translation) noexcept;
 
+	/**
+	 * Translates an identity matrix by a vector
+	 *
+	 * @param input vector (translation)
+	 * @return Translated identity matrix by the given input vector
+	 * @note The w component of translation component should be equal to 0
+	 */
 	template<Length_t rows, Length_t columns, typename ValueType>
 	CIN_MATH_INLINE Matrix<rows, columns, ValueType> TranslateIdentity(const Vector<4, ValueType>& translation) noexcept;
 
+	/**
+	 * Rotates a given matrix by an angle (in radians) around an arbitrary axis
+	 * 
+	 * @param input matrix
+	 * @param input axis
+	 * @param input angle (in radians)
+	 * @return Rotated input matrix by the input angle around the input axis
+	 */
+	template<Length_t rows, Length_t columns, typename ValueType>
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> Rotate(const Matrix<rows, columns, ValueType>& matrix, const Vector<3, ValueType>& axis, const ValueType rotation) noexcept;
+
+	/**
+	 * Rotates an identity matrix by an angle (in radians) around an arbitrary axis
+	 *
+	 * @param input axis
+	 * @param input angle (in radians)
+	 * @return Rotated identity matrix by the input angle around the input axis
+	 */
+	template<Length_t rows, Length_t columns, typename ValueType>
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateIdentity(const Vector<3, ValueType>& axis, const ValueType rotation) noexcept;
+
+	/**
+	 * Rotates a given matrix by an angle (in radians) around the x axis
+	 *
+	 * @param input matrix
+	 * @param input angle (in radians)
+	 * @return Rotated input matrix by the input angle around the x axis
+	 */
+	template<Length_t rows, Length_t columns, typename ValueType>
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateX(const Matrix<rows, columns, ValueType>& matrix, const ValueType rotation) noexcept;
+
+	/**
+	 * Rotates an identity matrix by an angle (in radians) around the x axis
+	 *
+	 * @param input angle (in radians)
+	 * @return Rotated identity matrix by the input angle around the x axis
+	 */
+	template<Length_t rows, Length_t columns, typename ValueType>
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateXIdentity(const ValueType rotation) noexcept;
+
+	/**
+	 * Rotates a given matrix by an angle (in radians) around the y axis
+	 *
+	 * @param input matrix
+	 * @param input angle (in radians)
+	 * @return Rotated input matrix by the input angle around the y axis
+	 */
+	template<Length_t rows, Length_t columns, typename ValueType>
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateY(const Matrix<rows, columns, ValueType>& matrix, const ValueType rotation) noexcept;
+
+	/**
+	 * Rotates an identity matrix by an angle (in radians) around the y axis
+	 *
+	 * @param input angle (in radians)
+	 * @return Rotated identity matrix by the input angle around the y axis
+	 */
+	template<Length_t rows, Length_t columns, typename ValueType>
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateYIdentity(const ValueType rotation) noexcept;
+
+	/**
+	 * Rotates a given matrix by an angle (in radians) around the z axis
+	 *
+	 * @param input matrix
+	 * @param input angle (in radians)
+	 * @return Rotated input matrix by the input angle around the z axis
+	 */
+	template<Length_t rows, Length_t columns, typename ValueType>
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateZ(const Matrix<rows, columns, ValueType>& matrix, const ValueType rotation) noexcept;
+
+	/**
+	 * Rotates an identity matrix by an angle (in radians) around the z axis
+	 *
+	 * @param input angle (in radians)
+	 * @return Rotated identity matrix by the input angle around the z axis
+	 */
+	template<Length_t rows, Length_t columns, typename ValueType>
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateZIdentity(const ValueType rotation) noexcept;
+
+	/**
+	 * Calculates the perspective projection
+	 * 
+	 * @param FOV Field of view
+	 * @param aspectRatio Aspect ratio
+	 * @param nearClip The near clip space
+	 * @param farClip The far clip space
+	 */
 	template<typename ValueType>
 	CIN_MATH_INLINE Matrix<4, 4, ValueType> PerspectiveProjection(const ValueType FOV, const ValueType aspectRatio, const ValueType nearClip, const ValueType farClip) noexcept;
 
@@ -86,7 +317,7 @@ namespace CinMath {
 
 		template<Length_t length, typename ValueType>
 		struct VectorDot;
-		
+
 		template<Length_t length, typename ValueType>
 		struct VectorCross;
 
@@ -96,6 +327,33 @@ namespace CinMath {
 
 		template<Length_t rows, Length_t columns, typename ValueType>
 		struct MatrixTranslateIdentity;
+
+		template<Length_t rows, Length_t columns, typename ValueType>
+		struct MatrixRotate;
+
+		template<Length_t rows, Length_t columns, typename ValueType>
+		struct MatrixRotateIdentity;
+
+		template<Length_t rows, Length_t columns, typename ValueType>
+		struct MatrixRotateX;
+
+		template<Length_t rows, Length_t columns, typename ValueType>
+		struct MatrixRotateXIdentity;
+
+		template<Length_t rows, Length_t columns, typename ValueType>
+		struct MatrixRotateY;
+
+		template<Length_t rows, Length_t columns, typename ValueType>
+		struct MatrixRotateYIdentity;
+
+		template<Length_t rows, Length_t columns, typename ValueType>
+		struct MatrixRotateZ;
+
+		template<Length_t rows, Length_t columns, typename ValueType>
+		struct MatrixRotateZIdentity;
+
+		template<Length_t rows, Length_t columns, typename ValueType>
+		struct MatrixScale;
 
 		template<Length_t rows, Length_t columns, typename ValueType>
 		struct MatrixTranspose;
@@ -127,6 +385,9 @@ namespace CinMath {
 
 		template<typename ValueType>
 		struct QuaternionAxisAngleToQuaternion;
+
+		template<typename ValueType>
+		struct QuaternionQuaternionToAxisAngle;
 
 		template<typename ValueType>
 		struct PerspectiveProjection;
@@ -289,7 +550,7 @@ namespace CinMath {
 				result.raw[12] += translation.raw[0] * result.raw[0];
 				result.raw[13] += translation.raw[1] * result.raw[10];
 				result.raw[14] += translation.raw[2] * result.raw[15];
-				
+
 				return result;
 			}
 		};
@@ -312,10 +573,238 @@ namespace CinMath {
 				assert(translation.w == 0.0f);
 				return Matrix<4, 4, float> {
 					1.0f, 0.0f, 0.0f, 0.0f,
-					0.0f, 1.0f, 0.0f, 0.0f,
-					0.0f, 0.0f, 1.0f, 0.0f,
-					translation.raw[0], translation.raw[1], translation.raw[2], 1.0f
+						0.0f, 1.0f, 0.0f, 0.0f,
+						0.0f, 0.0f, 1.0f, 0.0f,
+						translation.raw[0], translation.raw[1], translation.raw[2], 1.0f
 				};
+			}
+		};
+
+		template<typename ValueType>
+		struct MatrixRotate<4, 4, ValueType> final
+		{
+			CIN_MATH_INLINE static Matrix<4, 4, float> implementation(const Matrix<4, 4, float>& matrix, const Vector<3, float>& axis, const float rotation) noexcept
+			{
+				const Vector<3, float> a{ Normalize(axis) };
+
+				const float s{ std::sin(rotation) };
+				const float c{ std::cos(rotation) };
+
+				/*
+					c + (1 - c)x^2, (1 - c)xy - sz, (1 - c)xz + sy,
+					(1 - c)xy + sz, c + (1 - c)y^2, (1 - c)yz - sx,
+					(1 - c)xz - sy, (1 - c)yz + sx, c + (1 - c)z^2
+				*/
+				return Matrix<4, 4, float>
+				{
+					{					
+						c + (1.0f - c) * (a.x * a.x), (1.0f - c) * a.x * a.y - s * a.z, (1.0f - c) * a.x * a.z + s * a.y, 0.0f,
+						(1.0f - c) * a.x * a.y + s * a.z, c + (1.0f - c) * (a.y * a.y), (1.0f - c) * a.y * a.z - s * a.x, 0.0f,
+						(1.0f - c) * a.x * a.z - s * a.y, (1.0f - c) * a.y * a.z + s * a.x, c + (1.0f - c) * (a.z * a.z), 0.0f,
+						0.0f, 0.0f, 0.0f, 1.0f
+					}
+				} * matrix;
+			}
+
+			CIN_MATH_INLINE static Matrix<4, 4, float> implementation(const Matrix<4, 4, float>& matrix, const QuaternionBase<float>& quaternion) noexcept
+			{
+				const auto normalizedQuaternion{ Normalize(quaternion) };
+
+				const float x{ normalizedQuaternion.vector.x };
+				const float y{ normalizedQuaternion.vector.y };
+				const float z{ normalizedQuaternion.vector.z };
+				const float w{ normalizedQuaternion.scalar };
+
+				return Matrix<4, 4, float>
+				{
+					{
+						1.0f - 2.0f * (y * y) - 2.0f * (z * z), 2.0f * x * y - 2.0f * w * z, 2.0f * x * z + 2.0f * w * y, 0.0f,
+						2.0f * x * y + 2.0f * w * z, 1.0f - 2.0f * (x * x) - 2.0f* (z * z), 2.0f * y * z - 2.0f * w * x, 0.0f,
+						2.0f * x * z - 2.0f * w * y, 2.0f * y * z + 2.0f * w * x, 1.0f - 2.0f * (x * x) - 2.0f * (y * y), 0.0f,
+						0.0f, 0.0f, 0.0f, 1.0f
+					}
+				} * matrix;
+			}
+		};
+
+		template<typename ValueType>
+		struct MatrixRotateIdentity<4, 4, ValueType> final
+		{
+			CIN_MATH_INLINE static Matrix<4, 4, float> implementation(const Vector<3, ValueType>& axis, const ValueType rotation) noexcept
+			{
+				const Vector<3, float> a{ Normalize(axis) };
+				const float s{ std::sin(rotation) };
+				const float c{ std::cos(rotation) };
+				/*
+					c + (1 - c)x^2, (1 - c)xy - sz, (1 - c)xz + sy,
+					(1 - c)xy + sz, c + (1 - c)y^2, (1 - c)yz - sx,
+					(1 - c)xz - sy, (1 - c)yz + sx, c + (1 - c)z^2
+				*/
+				return Matrix<4, 4, float>
+				{
+					{
+						c + (1.0f - c) * (a.x * a.x), (1.0f - c)* a.x* a.y - s * a.z, (1.0f - c)* a.x* a.z + s * a.y, 0.0f,
+						(1.0f - c)* a.x* a.y + s * a.z, c + (1.0f - c) * (a.y * a.y), (1.0f - c)* a.y* a.z - s * a.x, 0.0f,
+						(1.0f - c)* a.x* a.z - s * a.y, (1.0f - c)* a.y* a.z + s * a.x, c + (1.0f - c) * (a.z * a.z), 0.0f,
+						0.0f, 0.0f, 0.0f, 1.0f
+					}
+				};
+			}
+		};
+
+		template<Length_t rows, Length_t columns, typename ValueType>
+		struct MatrixRotateX final
+		{
+			CIN_MATH_INLINE static Matrix<4, 4, float> implementation(const Matrix<4, 4, ValueType>& matrix, const ValueType rotation) noexcept
+			{
+				const float s{ std::sin(rotation) };
+				const float c{ std::cos(rotation) };
+
+				return Matrix<4, 4, float>
+				{
+					{
+						1.0f, 0.0f, 0.0f, 0.0f,
+						0.0f, c, -s, 0.0f,
+						0.0f, s, c, 0.0f,
+						0.0f, 0.0f, 0.0f, 1.0f
+					}
+				} * matrix;
+			}
+		};
+
+		template<Length_t rows, Length_t columns, typename ValueType>
+		struct MatrixRotateXIdentity final
+		{
+			CIN_MATH_INLINE static Matrix<4, 4, float> implementation(const ValueType rotation) noexcept
+			{
+				const float s{ std::sin(rotation) };
+				const float c{ std::cos(rotation) };
+
+				return Matrix<4, 4, float>
+				{
+					{
+						1.0f, 0.0f, 0.0f, 0.0f,
+						0.0f, c,	-s,	  0.0f,
+						0.0f, s,	 c,	  0.0f,
+						0.0f, 0.0f, 0.0f, 1.0f
+					}
+				};
+			}
+		};
+
+		template<Length_t rows, Length_t columns, typename ValueType>
+		struct MatrixRotateY final
+		{
+			CIN_MATH_INLINE static Matrix<4, 4, float> implementation(const Matrix<4, 4, ValueType>& matrix, const ValueType rotation) noexcept
+			{
+				const float s{ std::sin(rotation) };
+				const float c{ std::cos(rotation) };
+
+				return Matrix<4, 4, float>
+				{
+					{
+						c, 0.0f, s, 0.0f,
+						0.0f, 1.0f, 0.0f, 0.0f,
+						-s, 0.0f, c, 0.0f,
+						0.0f, 0.0f, 0.0f, 1.0f
+					}
+				} *matrix;
+			}
+		};
+
+		template<Length_t rows, Length_t columns, typename ValueType>
+		struct MatrixRotateYIdentity final
+		{
+			CIN_MATH_INLINE static Matrix<4, 4, float> implementation(const ValueType rotation) noexcept
+			{
+				const float s{ std::sin(rotation) };
+				const float c{ std::cos(rotation) };
+
+				return Matrix<4, 4, float>
+				{
+					{
+						c, 0.0f, s, 0.0f,
+						0.0f, 1.0f, 0.0f, 0.0f,
+						-s, 0.0f, c, 0.0f,
+						0.0f, 0.0f, 0.0f, 1.0f
+					}
+				};
+			}
+		};
+
+		template<Length_t rows, Length_t columns, typename ValueType>
+		struct MatrixRotateZ final
+		{
+			CIN_MATH_INLINE static Matrix<4, 4, float> implementation(const Matrix<4, 4, ValueType>& matrix, const ValueType rotation) noexcept
+			{
+				const float s{ std::sin(rotation) };
+				const float c{ std::cos(rotation) };
+
+				return Matrix<4, 4, float>
+				{
+					{
+						c, -s, 0.0f, 0.0f,
+						s, c, 0.0f, 0.0f,
+						0.0f, 0.0f, 1.0f, 0.0f,
+						0.0f, 0.0f, 0.0f, 1.0f,
+					}
+				} * matrix;
+			}
+		};
+
+		template<Length_t rows, Length_t columns, typename ValueType>
+		struct MatrixRotateZIdentity final
+		{
+			CIN_MATH_INLINE static Matrix<4, 4, float> implementation(const ValueType rotation) noexcept
+			{
+				const float s{ std::sin(rotation) };
+				const float c{ std::cos(rotation) };
+
+				return Matrix<4, 4, float>
+				{
+					{
+						c, -s, 0.0f, 0.0f,
+						s, c, 0.0f, 0.0f,
+						0.0f, 0.0f, 1.0f, 0.0f,
+						0.0f, 0.0f, 0.0f, 1.0f,
+					}
+				};
+			}
+		};
+
+		template<Length_t rows, Length_t columns, typename ValueType>
+		struct MatrixScale final
+		{
+			CIN_MATH_INLINE static Matrix<4, 4, float> implementation(const Matrix<4, 4, float>& matrix, const Vector<3, float>& scale) noexcept
+			{
+				Matrix<4, 4, float> result;
+#if (CIN_INSTRUCTION_SET) & (CIN_INSTRUCTION_SET_SSE)
+				result.data[0] = _mm_mul_ps(matrix.data[0], _mm_set_ps(scale.x, scale.x, scale.x, scale.x));
+				result.data[1] = _mm_mul_ps(matrix.data[1], _mm_set_ps(scale.y, scale.y, scale.y, scale.y));
+				result.data[2] = _mm_mul_ps(matrix.data[2], _mm_set_ps(scale.z, scale.z, scale.z, scale.z));
+				result.data[3] = matrix.data[3];
+#else
+				result.raw[0] = matrix.raw[0] * scale.x;
+				result.raw[1] = matrix.raw[1] * scale.x;
+				result.raw[2] = matrix.raw[2] * scale.x;
+				result.raw[3] = matrix.raw[3] * scale.x;
+
+				result.raw[4] = matrix.raw[4] * scale.y;
+				result.raw[5] = matrix.raw[5] * scale.y;
+				result.raw[6] = matrix.raw[6] * scale.y;
+				result.raw[7] = matrix.raw[7] * scale.y;
+
+				result.raw[8] = matrix.raw[8] * scale.z;
+				result.raw[9] = matrix.raw[9] * scale.z;
+				result.raw[10] = matrix.raw[10] * scale.z;
+				result.raw[11] = matrix.raw[11] * scale.z;
+
+				result.raw[12] = matrix.raw[12];
+				result.raw[13] = matrix.raw[13];
+				result.raw[14] = matrix.raw[14];
+				result.raw[15] = matrix.raw[15];
+#endif
+				return result;
 			}
 		};
 
@@ -650,7 +1139,7 @@ namespace CinMath {
 			CIN_MATH_INLINE static ValueType implementation(const QuaternionBase<ValueType>& quaternion) noexcept
 			{
 				return std::sqrt(
-					+quaternion.raw[0] * quaternion.raw[0]
+					+ quaternion.raw[0] * quaternion.raw[0]
 					+ quaternion.raw[1] * quaternion.raw[1]
 					+ quaternion.raw[2] * quaternion.raw[2]
 					+ quaternion.raw[3] * quaternion.raw[3]);
@@ -708,46 +1197,56 @@ namespace CinMath {
 		template<typename ValueType>
 		struct QuaternionAxisAngleToQuaternion final
 		{
-			CIN_MATH_INLINE static QuaternionBase<float> implementation(const Vector<3, float>& axisAngle, const float radianAngle) noexcept
+			CIN_MATH_INLINE static QuaternionBase<float> implementation(const float radianAngle, const Vector<3, float>& axisAngle) noexcept
 			{
-				QuaternionBase<float> result;
+				const float halfRadianAngle{ radianAngle * 0.5f };
 
-				result.raw[0] = std::cos(radianAngle * 0.5f);
-				result.raw[1] = axisAngle.raw[0] * std::sin(radianAngle * 0.5f);
-				result.raw[2] = axisAngle.raw[1] * std::sin(radianAngle * 0.5f);
-				result.raw[3] = axisAngle.raw[2] * std::sin(radianAngle * 0.5f);
+				QuaternionBase<float> result;
+				result.scalar = std::cos(halfRadianAngle);
+				result.vector = Normalize(axisAngle) * std::sin(halfRadianAngle);
 
 				return result;
 			}
 
 			CIN_MATH_INLINE static QuaternionBase<float> implementation(const Vector<4, float>& axisAngle) noexcept
 			{
-				QuaternionBase<float> result;
-				const float halfTheta{ axisAngle.w * 0.5f };
-				const float sinHalfTheta{ std::sin(halfTheta) };
+				const float halfTheta{ axisAngle.x * 0.5f };
 
-				result.raw[0] = std::cos(halfTheta);
-				result.raw[1] = axisAngle.raw[0] * sinHalfTheta;
-				result.raw[2] = axisAngle.raw[1] * sinHalfTheta;
-				result.raw[3] = axisAngle.raw[2] * sinHalfTheta;
+				QuaternionBase<float> result;
+				result.scalar = std::cos(halfTheta);
+				result.vector = (Normalize<3, float>(axisAngle.yzw) * std::sin(halfTheta));
 
 				return result;
 			}
 		};
 
 		template<typename ValueType>
-		struct QuaternionToAxisAngle final
+		struct QuaternionQuaternionToAxisAngle final
 		{
 			CIN_MATH_INLINE static Vector<4, float> implementation(const QuaternionBase<float>& quaternion) noexcept
 			{
-				Vector<4, float> result;
-				const float theta{ 2.0f * std::acos(quaternion.raw[0]) };
-				const float sinHalfTheta{ std::sin(theta) * 0.5f };
+				const float theta{ 2.0f * std::acos(quaternion.scalar) };
+				const float halfSinTheta{ std::sin(theta) * 0.5f };
 
-				result.raw[0] = quaternion.raw[1] / sinHalfTheta;
-				result.raw[1] = quaternion.raw[2] / sinHalfTheta;
-				result.raw[2] = quaternion.raw[3] / sinHalfTheta;
-				result.raw[3] = theta;
+				Vector<4, float> result;
+				result.x = theta;
+				result.yzw = quaternion.vector.xyz / halfSinTheta;
+
+				return result;
+			}
+		};
+
+		template<typename ValueType>
+		struct QuaternionUnitForm final
+		{
+			CIN_MATH_INLINE static QuaternionBase<float> implementation(const QuaternionBase<float>& quaternion) noexcept
+			{
+				const float halfAngle{ quaternion.scalar * 0.5f };
+				const Vector<3, float> normalizedAxis{ Normalize(quaternion.vector) };
+				
+				QuaternionBase<float> result;
+				result.scalar = std::cos(halfAngle);
+				result.vector = normalizedAxis * std::sin(halfAngle);
 
 				return result;
 			}
@@ -853,9 +1352,9 @@ namespace CinMath {
 	}
 
 	template<typename ValueType>
-	CIN_MATH_INLINE QuaternionBase<ValueType> AxisAngleToQuaternion(const Vector<3, ValueType>& vector, const ValueType angle) noexcept
+	CIN_MATH_INLINE QuaternionBase<ValueType> AxisAngleToQuaternion(const ValueType angle, const Vector<3, ValueType>& vector) noexcept
 	{
-		return Implementation::QuaternionAxisAngleToQuaternion<ValueType>::implementation(vector, angle);
+		return Implementation::QuaternionAxisAngleToQuaternion<ValueType>::implementation(angle, vector);
 	}
 
 	template<typename ValueType>
@@ -867,7 +1366,7 @@ namespace CinMath {
 	template<typename ValueType>
 	CIN_MATH_INLINE Vector<4, ValueType> QuaternionToAxisAngle(const QuaternionBase<ValueType>& quaternion) noexcept
 	{
-		return Implementation::QuaternionToAxisAngle<ValueType>::implementation(quaternion);
+		return Implementation::QuaternionQuaternionToAxisAngle<ValueType>::implementation(quaternion);
 	}
 
 	template<Length_t rows, Length_t columns, typename ValueType>
@@ -892,6 +1391,66 @@ namespace CinMath {
 	CIN_MATH_INLINE Matrix<rows, columns, ValueType> TranslateIdentity(const Vector<4, ValueType>& translation) noexcept
 	{
 		return Implementation::MatrixTranslateIdentity<rows, columns, ValueType>::implementation(translation);
+	}
+
+	template<Length_t rows, Length_t columns, typename ValueType>
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> Rotate(const Matrix<rows, columns, ValueType>& matrix, const Vector<3, ValueType>& axis, const ValueType rotation) noexcept
+	{
+		return Implementation::MatrixRotate<rows, columns, ValueType>::implementation(matrix, axis, rotation);
+	}
+
+	template<Length_t rows, Length_t columns, typename ValueType>
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> Rotate(const Matrix<rows, columns, ValueType>& matrix, const QuaternionBase<ValueType>& quaternion) noexcept
+	{
+		return Implementation::MatrixRotate<rows, columns, ValueType>::implementation(matrix, quaternion);
+	}
+
+	template<Length_t rows, Length_t columns, typename ValueType>
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateIdentity(const Vector<3, ValueType>& axis, const ValueType rotation) noexcept
+	{
+		return Implementation::MatrixRotateIdentity<rows, columns, ValueType>::implementation(axis, rotation);
+	}
+
+	template<Length_t rows, Length_t columns, typename ValueType>
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateX(const Matrix<rows, columns, ValueType>& matrix, const ValueType rotation) noexcept
+	{
+		return Implementation::MatrixRotateX<rows, columns, ValueType>::implementation(matrix, rotation);
+	}
+
+	template<Length_t rows, Length_t columns, typename ValueType>
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateXIdentity(const ValueType rotation) noexcept
+	{
+		return Implementation::MatrixRotateXIdentity<rows, columns, ValueType>::implementation(rotation);
+	}
+
+	template<Length_t rows, Length_t columns, typename ValueType>
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateY(const Matrix<rows, columns, ValueType>& matrix, const ValueType rotation) noexcept
+	{
+		return Implementation::MatrixRotateY<rows, columns, ValueType>::implementation(matrix, rotation);
+	}
+
+	template<Length_t rows, Length_t columns, typename ValueType>
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateYIdentity(const ValueType rotation) noexcept
+	{
+		return Implementation::MatrixRotateYIdentity<rows, columns, ValueType>::implementation(rotation);
+	}
+
+	template<Length_t rows, Length_t columns, typename ValueType>
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateZ(const Matrix<rows, columns, ValueType>& matrix, const ValueType rotation) noexcept
+	{
+		return Implementation::MatrixRotateZ<rows, columns, ValueType>::implementation(rotation);
+	}
+
+	template<Length_t rows, Length_t columns, typename ValueType>
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateZIdentity(const ValueType rotation) noexcept
+	{
+		return Implementation::MatrixRotateZIdentity<rows, columns, ValueType>::implementation(rotation);
+	}
+
+	template<Length_t rows, Length_t columns, typename ValueType>
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> Scale(const Matrix<rows, columns, ValueType>& matrix, const Vector<3, ValueType>& scale) noexcept
+	{
+		return Implementation::MatrixScale<rows, columns, ValueType>::implementation(matrix, scale);
 	}
 
 	template<typename ValueType>

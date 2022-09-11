@@ -2,7 +2,7 @@
 
 namespace CinMath {
 	template<typename ValueType>
-	class alignas(32) Matrix<4, 4, ValueType> final
+	class Matrix<4, 4, ValueType> final
 	{
 	public:
 		using UnderlyingType = ValueType;
@@ -123,6 +123,8 @@ namespace CinMath {
 			m44(values[15])
 		{}
 
+		constexpr ~Matrix<4, 4, ValueType>() noexcept = default;
+
 		constexpr operator ValueType* () noexcept
 		{
 			return raw;
@@ -143,8 +145,8 @@ namespace CinMath {
 			return raw[index];
 		}
 
-		friend Matrix<4, 4, ValueType> CIN_CALL operator+(const Matrix<4, 4, ValueType>& vector) noexcept;
-		friend Matrix<4, 4, ValueType> CIN_CALL operator-(const Matrix<4, 4, ValueType>& vector) noexcept;
+		[[nodiscard]] friend Matrix<4, 4, ValueType> CIN_CALL operator+(const Matrix<4, 4, ValueType>& vector) noexcept;
+		[[nodiscard]] friend Matrix<4, 4, ValueType> CIN_CALL operator-(const Matrix<4, 4, ValueType>& vector) noexcept;
 
 		friend void CIN_CALL operator+=(Matrix<4, 4, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
 		friend void CIN_CALL operator-=(Matrix<4, 4, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
@@ -155,16 +157,16 @@ namespace CinMath {
 		friend void CIN_CALL operator*=(Matrix<4, 4, ValueType>& lhs, const ValueType scalar) noexcept;
 		friend void CIN_CALL operator/=(Matrix<4, 4, ValueType>& lhs, const ValueType scalar) noexcept;
 
-		friend Matrix<4, 4, ValueType> CIN_CALL operator+(const Matrix<4, 4, ValueType>& lhs, const Matrix<4, 4, ValueType>& rhs) noexcept;
-		friend Matrix<4, 4, ValueType> CIN_CALL operator-(const Matrix<4, 4, ValueType>& lhs, const Matrix<4, 4, ValueType>& rhs) noexcept;
-		friend Matrix<4, 4, ValueType> CIN_CALL operator*(const Matrix<4, 4, ValueType>& lhs, const Matrix<4, 4, ValueType>& rhs) noexcept;
+		[[nodiscard]] friend Matrix<4, 4, ValueType> CIN_CALL operator+(const Matrix<4, 4, ValueType>& lhs, const Matrix<4, 4, ValueType>& rhs) noexcept;
+		[[nodiscard]] friend Matrix<4, 4, ValueType> CIN_CALL operator-(const Matrix<4, 4, ValueType>& lhs, const Matrix<4, 4, ValueType>& rhs) noexcept;
+		[[nodiscard]] friend Matrix<4, 4, ValueType> CIN_CALL operator*(const Matrix<4, 4, ValueType>& lhs, const Matrix<4, 4, ValueType>& rhs) noexcept;
 
-		friend Matrix<4, 4, ValueType> CIN_CALL operator+(const Matrix<4, 4, ValueType>& lhs, const ValueType scalar) noexcept;
-		friend Matrix<4, 4, ValueType> CIN_CALL operator-(const Matrix<4, 4, ValueType>& lhs, const ValueType scalar) noexcept;
-		friend Matrix<4, 4, ValueType> CIN_CALL operator*(const Matrix<4, 4, ValueType>& lhs, const ValueType scalar) noexcept;
-		friend Matrix<4, 4, ValueType> CIN_CALL operator/(const Matrix<4, 4, ValueType>& lhs, const ValueType scalar) noexcept;
+		[[nodiscard]] friend Matrix<4, 4, ValueType> CIN_CALL operator+(const Matrix<4, 4, ValueType>& lhs, const ValueType scalar) noexcept;
+		[[nodiscard]] friend Matrix<4, 4, ValueType> CIN_CALL operator-(const Matrix<4, 4, ValueType>& lhs, const ValueType scalar) noexcept;
+		[[nodiscard]] friend Matrix<4, 4, ValueType> CIN_CALL operator*(const Matrix<4, 4, ValueType>& lhs, const ValueType scalar) noexcept;
+		[[nodiscard]] friend Matrix<4, 4, ValueType> CIN_CALL operator/(const Matrix<4, 4, ValueType>& lhs, const ValueType scalar) noexcept;
 
-		friend Vector<4, ValueType> CIN_CALL operator*(const Matrix<4, 4, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
+		[[nodiscard]] friend Vector<4, ValueType> CIN_CALL operator*(const Matrix<4, 4, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
 	public:
 		union
 		{
@@ -187,7 +189,7 @@ namespace CinMath {
 			};
 		};
 
-		consteval static Matrix<4, 4, ValueType> Identity() noexcept
+		[[nodiscard]] consteval static Matrix<4, 4, ValueType> Identity() noexcept
 		{
 			constexpr Matrix<4, 4, ValueType> result(static_cast<ValueType>(1), ConstevalConstructorProxy{});
 			return result;

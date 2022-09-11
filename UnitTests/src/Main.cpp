@@ -2,7 +2,7 @@
 #include "UnitTests.h"
 #include <cstring>
 #include <iostream>
-#define UNIT_TEST 0
+#define UNIT_TEST 1
 
 int main(const char argc, const char** argv)
 {

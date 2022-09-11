@@ -32,28 +32,30 @@ namespace CinMath {
 			z(z)
 		{}
 
-		CIN_MATH_INLINE operator ValueType* () noexcept
+		constexpr ~Vector<3, ValueType>() noexcept = default;
+
+		constexpr operator ValueType* () noexcept
 		{
 			return raw;
 		}
 
-		CIN_MATH_INLINE operator const ValueType* () const noexcept
+		constexpr operator const ValueType* () const noexcept
 		{
 			return raw;
 		}
 
-		CIN_MATH_INLINE ValueType& operator[](const Length_t index) noexcept
+		constexpr ValueType& operator[](const Length_t index) noexcept
 		{
 			return raw[index];
 		}
 
-		CIN_MATH_INLINE const ValueType operator[](const Length_t index) const noexcept
+		constexpr const ValueType operator[](const Length_t index) const noexcept
 		{
 			return raw[index];
 		}
 
-		friend Vector<3, ValueType> CIN_CALL operator+(const Vector<3, ValueType>& vector) noexcept;
-		friend Vector<3, ValueType> CIN_CALL operator-(const Vector<3, ValueType>& vector) noexcept;
+		[[nodiscard]] friend Vector<3, ValueType> CIN_CALL operator+(const Vector<3, ValueType>& vector) noexcept;
+		[[nodiscard]] friend Vector<3, ValueType> CIN_CALL operator-(const Vector<3, ValueType>& vector) noexcept;
 
 		friend void CIN_CALL operator+=(Vector<3, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
 		friend void CIN_CALL operator-=(Vector<3, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
@@ -65,15 +67,15 @@ namespace CinMath {
 		friend void CIN_CALL operator*=(Vector<3, ValueType>& lhs, const ValueType scalar) noexcept;
 		friend void CIN_CALL operator/=(Vector<3, ValueType>& lhs, const ValueType scalar) noexcept;
 
-		friend Vector<3, ValueType> CIN_CALL operator+(const Vector<3, ValueType>& lhs, const Vector<3, ValueType>& rhs) noexcept;
-		friend Vector<3, ValueType> CIN_CALL operator-(const Vector<3, ValueType>& lhs, const Vector<3, ValueType>& rhs) noexcept;
-		friend Vector<3, ValueType> CIN_CALL operator*(const Vector<3, ValueType>& lhs, const Vector<3, ValueType>& rhs) noexcept;
-		friend Vector<3, ValueType> CIN_CALL operator/(const Vector<3, ValueType>& lhs, const Vector<3, ValueType>& rhs) noexcept;
+		[[nodiscard]] friend Vector<3, ValueType> CIN_CALL operator+(const Vector<3, ValueType>& lhs, const Vector<3, ValueType>& rhs) noexcept;
+		[[nodiscard]] friend Vector<3, ValueType> CIN_CALL operator-(const Vector<3, ValueType>& lhs, const Vector<3, ValueType>& rhs) noexcept;
+		[[nodiscard]] friend Vector<3, ValueType> CIN_CALL operator*(const Vector<3, ValueType>& lhs, const Vector<3, ValueType>& rhs) noexcept;
+		[[nodiscard]] friend Vector<3, ValueType> CIN_CALL operator/(const Vector<3, ValueType>& lhs, const Vector<3, ValueType>& rhs) noexcept;
 
-		friend Vector<3, ValueType> CIN_CALL operator+(const Vector<3, ValueType>& lhs, const ValueType scalar) noexcept;
-		friend Vector<3, ValueType> CIN_CALL operator-(const Vector<3, ValueType>& lhs, const ValueType scalar) noexcept;
-		friend Vector<3, ValueType> CIN_CALL operator*(const Vector<3, ValueType>& lhs, const ValueType scalar) noexcept;
-		friend Vector<3, ValueType> CIN_CALL operator/(const Vector<3, ValueType>& lhs, const ValueType scalar) noexcept;
+		[[nodiscard]] friend Vector<3, ValueType> CIN_CALL operator+(const Vector<3, ValueType>& lhs, const ValueType scalar) noexcept;
+		[[nodiscard]] friend Vector<3, ValueType> CIN_CALL operator-(const Vector<3, ValueType>& lhs, const ValueType scalar) noexcept;
+		[[nodiscard]] friend Vector<3, ValueType> CIN_CALL operator*(const Vector<3, ValueType>& lhs, const ValueType scalar) noexcept;
+		[[nodiscard]] friend Vector<3, ValueType> CIN_CALL operator/(const Vector<3, ValueType>& lhs, const ValueType scalar) noexcept;
 	public:
 		union
 		{
@@ -100,12 +102,6 @@ namespace CinMath {
 			/* 2-Element swizzle */
 			Vector2Swizzle<ValueType, Vector<2, ValueType>, 0, 1> xy;
 			Vector2Swizzle<ValueType, Vector<2, ValueType>, 1, 0> yx;
-			
-			Vector2Swizzle<ValueType, Vector<2, ValueType>, 1, 2> yz;
-			Vector2Swizzle<ValueType, Vector<2, ValueType>, 2, 1> zy;
-
-			Vector2Swizzle<ValueType, Vector<2, ValueType>, 2, 0> zx;
-			Vector2Swizzle<ValueType, Vector<2, ValueType>, 0, 2> xz;
 
 			/* 3-Element swizzle */
 			Vector3Swizzle<ValueType, Vector<3, ValueType>, 0, 1, 2> xyz;
