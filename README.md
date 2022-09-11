@@ -5,15 +5,19 @@
 
 ### Using the library
 ##### All of the library functionalities come in a single header (CinMath.h). The library can be configured to either use SSE or AVX instruction sets with a single define, above the main header:
-`#define CIN_USE_SSE` for SSE or `#define CIN_USE_AVX` for AVX optimizations.
+```cpp
+#define CIN_USE_SSE // For sse instructions
+#include "CinMath/CinMath.h"
+```cpp
+#define CIN_USE_AVX // For avx instructions
+#include "CinMath/CinMath.h"
 
-### Cloning the repository
-##### To clone the repository: (contains glm submodule for unit testing)
+### Cloning the repository (contains glm submodule for unit testing):
 `git clone --recursive https://github.com/CzekoladowyKocur/CinMath.git`
 
 ### Building
-#### The library can be used on windows and linux.
+#### The header library can be used on both windows and linux.
 ##### Project building (unit tests + benchmark): currently windows only. To build the project, simply run the GenerateWindowsProject.bat file. 
 
 ### Unit testing
-##### The project comes with unit tests defined for most of the available functionality. The test results are compared against glm (https://github.com/g-truc/glm). 
+##### The project comes with unit tests defined for most of the available functionality. The test results are compared against glm (https://github.com/g-truc/glm).
