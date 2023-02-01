@@ -23,7 +23,7 @@ namespace CinMath {
 			m22(value)
 		{}
 
-		explicit Matrix<2, 2, ValueType>(const ValueType value) noexcept
+		constexpr explicit Matrix<2, 2, ValueType>(const ValueType value) noexcept
 			:
 			m11(value),
 			m12(static_cast<ValueType>(0)),
@@ -31,7 +31,7 @@ namespace CinMath {
 			m22(value)
 		{}
 
-		explicit Matrix<2, 2, ValueType>(
+		constexpr explicit Matrix<2, 2, ValueType>(
 			const ValueType value1,
 			const ValueType value2,
 			const ValueType value3,
@@ -43,15 +43,13 @@ namespace CinMath {
 			m22(value4)
 		{}
 
-		explicit Matrix<2, 2, ValueType>(std::array<ValueType, 2 * 2>&& values) noexcept
+		constexpr explicit Matrix<2, 2, ValueType>(std::array<ValueType, 2 * 2>&& values) noexcept
 			:
 			m11(values[0]),
 			m12(values[1]),
 			m21(values[2]),
 			m22(values[3])
 		{}
-
-		constexpr ~Matrix<2, 2, ValueType>() noexcept = default;
 
 		constexpr operator ValueType* () noexcept
 		{
@@ -73,26 +71,66 @@ namespace CinMath {
 			return raw[index];
 		}
 
-		[[nodiscard]] friend Matrix<2, 2, ValueType> CIN_CALL operator+(const Matrix<2, 2, ValueType>& vector) noexcept;
-		[[nodiscard]] friend Matrix<2, 2, ValueType> CIN_CALL operator-(const Matrix<2, 2, ValueType>& vector) noexcept;
+		constexpr bool operator==(const Matrix<2, 2, ValueType>& other) const noexcept
+		{
+			return
+				m11 == other.m11 &&
+				m12 == other.m12 &&
+				m21 == other.m21 &&
+				m22 == other.m22;
+		}
 
-		friend void CIN_CALL operator+=(Matrix<2, 2, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
-		friend void CIN_CALL operator-=(Matrix<2, 2, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
-		friend void CIN_CALL operator*=(Matrix<2, 2, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
+		constexpr bool operator!=(const Matrix<2, 2, ValueType>& other) const noexcept
+		{
+			return
+				m11 != other.m11 ||
+				m12 != other.m12 ||
+				m21 != other.m21 ||
+				m22 != other.m22;
+		}
 
-		friend void CIN_CALL operator+=(Matrix<2, 2, ValueType>& lhs, const ValueType scalar) noexcept;
-		friend void CIN_CALL operator-=(Matrix<2, 2, ValueType>& lhs, const ValueType scalar) noexcept;
-		friend void CIN_CALL operator*=(Matrix<2, 2, ValueType>& lhs, const ValueType scalar) noexcept;
-		friend void CIN_CALL operator/=(Matrix<2, 2, ValueType>& lhs, const ValueType scalar) noexcept;
+		constexpr operator Matrix<2, 2, float>() const noexcept
+		{
+			return Matrix<2, 2, float>
+			{
+				static_cast<float>(m11),
+				static_cast<float>(m12),
+				static_cast<float>(m21),
+				static_cast<float>(m22)
+			};
+		}
 
-		[[nodiscard]] friend Matrix<2, 2, ValueType> CIN_CALL operator+(const Matrix<2, 2, ValueType>& lhs, const Matrix<2, 2, ValueType>& rhs) noexcept;
-		[[nodiscard]] friend Matrix<2, 2, ValueType> CIN_CALL operator-(const Matrix<2, 2, ValueType>& lhs, const Matrix<2, 2, ValueType>& rhs) noexcept;
-		[[nodiscard]] friend Matrix<2, 2, ValueType> CIN_CALL operator*(const Matrix<2, 2, ValueType>& lhs, const Matrix<2, 2, ValueType>& rhs) noexcept;
+		constexpr operator Matrix<2, 2, double>() const noexcept
+		{
+			return Matrix<2, 2, double>
+			{
+				static_cast<double>(m11),
+				static_cast<double>(m12),
+				static_cast<double>(m21),
+				static_cast<double>(m22)
+			};
+		}
 
-		[[nodiscard]] friend Matrix<2, 2, ValueType> CIN_CALL operator+(const Matrix<2, 2, ValueType>& lhs, const ValueType scalar) noexcept;
-		[[nodiscard]] friend Matrix<2, 2, ValueType> CIN_CALL operator-(const Matrix<2, 2, ValueType>& lhs, const ValueType scalar) noexcept;
-		[[nodiscard]] friend Matrix<2, 2, ValueType> CIN_CALL operator*(const Matrix<2, 2, ValueType>& lhs, const ValueType scalar) noexcept;
-		[[nodiscard]] friend Matrix<2, 2, ValueType> CIN_CALL operator/(const Matrix<2, 2, ValueType>& lhs, const ValueType scalar) noexcept;
+		[[nodiscard]] friend Matrix<2, 2, ValueType> CIN_MATH_CALL operator+(const Matrix<2, 2, ValueType>& vector) noexcept;
+		[[nodiscard]] friend Matrix<2, 2, ValueType> CIN_MATH_CALL operator-(const Matrix<2, 2, ValueType>& vector) noexcept;
+
+		friend void CIN_MATH_CALL operator+=(Matrix<2, 2, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
+		friend void CIN_MATH_CALL operator-=(Matrix<2, 2, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
+		friend void CIN_MATH_CALL operator*=(Matrix<2, 2, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
+
+		friend void CIN_MATH_CALL operator+=(Matrix<2, 2, ValueType>& lhs, const ValueType scalar) noexcept;
+		friend void CIN_MATH_CALL operator-=(Matrix<2, 2, ValueType>& lhs, const ValueType scalar) noexcept;
+		friend void CIN_MATH_CALL operator*=(Matrix<2, 2, ValueType>& lhs, const ValueType scalar) noexcept;
+		friend void CIN_MATH_CALL operator/=(Matrix<2, 2, ValueType>& lhs, const ValueType scalar) noexcept;
+
+		[[nodiscard]] friend Matrix<2, 2, ValueType> CIN_MATH_CALL operator+(const Matrix<2, 2, ValueType>& lhs, const Matrix<2, 2, ValueType>& rhs) noexcept;
+		[[nodiscard]] friend Matrix<2, 2, ValueType> CIN_MATH_CALL operator-(const Matrix<2, 2, ValueType>& lhs, const Matrix<2, 2, ValueType>& rhs) noexcept;
+		[[nodiscard]] friend Matrix<2, 2, ValueType> CIN_MATH_CALL operator*(const Matrix<2, 2, ValueType>& lhs, const Matrix<2, 2, ValueType>& rhs) noexcept;
+
+		[[nodiscard]] friend Matrix<2, 2, ValueType> CIN_MATH_CALL operator+(const Matrix<2, 2, ValueType>& lhs, const ValueType scalar) noexcept;
+		[[nodiscard]] friend Matrix<2, 2, ValueType> CIN_MATH_CALL operator-(const Matrix<2, 2, ValueType>& lhs, const ValueType scalar) noexcept;
+		[[nodiscard]] friend Matrix<2, 2, ValueType> CIN_MATH_CALL operator*(const Matrix<2, 2, ValueType>& lhs, const ValueType scalar) noexcept;
+		[[nodiscard]] friend Matrix<2, 2, ValueType> CIN_MATH_CALL operator/(const Matrix<2, 2, ValueType>& lhs, const ValueType scalar) noexcept;
 	public:
 		union
 		{
@@ -121,4 +159,5 @@ namespace CinMath {
 	};
 
 	typedef Matrix<2, 2, float>		Matrix2x2, Matrix2;
+	typedef Matrix<2, 2, double>	DMatrix2x2, DMatrix2;
 }

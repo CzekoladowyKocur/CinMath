@@ -15,7 +15,7 @@ namespace CinMath {
 			w(static_cast<ValueType>(0))
 		{}
 
-		explicit Vector<4, ValueType>(
+		constexpr explicit Vector<4, ValueType>(
 			const ValueType value) noexcept
 			:
 			x(value),
@@ -24,7 +24,7 @@ namespace CinMath {
 			w(value)
 		{}
 
-		explicit Vector<4, ValueType>(
+		constexpr explicit Vector<4, ValueType>(
 			const ValueType x,
 			const ValueType y,
 			const ValueType z,
@@ -35,8 +35,6 @@ namespace CinMath {
 			z(z),
 			w(w)
 		{}
-
-		constexpr ~Vector<4, ValueType>() noexcept = default;
 
 		constexpr operator ValueType* () noexcept
 		{
@@ -58,30 +56,50 @@ namespace CinMath {
 			return raw[index];
 		}
 
-		[[nodiscard]] friend Vector<4, ValueType> CIN_CALL operator+(const Vector<4, ValueType>& vector) noexcept;
-		[[nodiscard]] friend Vector<4, ValueType> CIN_CALL operator-(const Vector<4, ValueType>& vector) noexcept;
+		constexpr bool operator==(const Vector<4, ValueType>& other) const noexcept
+		{
+			return x == other.x && y == other.y && z == other.z && w == other.w;
+		}
+
+		constexpr bool operator!=(const Vector<4, ValueType>& other) const noexcept
+		{
+			return x != other.x || y != other.y || z != other.z || w != other.w;
+		}
+
+		constexpr operator Vector<4, float>() const noexcept
+		{
+			return Vector<4, float>{ static_cast<float>(x), static_cast<float>(y), static_cast<float>(z), static_cast<float>(w) };
+		}
+
+		constexpr operator Vector<4, double>() const noexcept
+		{
+			return Vector<4, double>{ static_cast<double>(x), static_cast<double>(y), static_cast<double>(z), static_cast<double>(w) };
+		}
+
+		[[nodiscard]] friend Vector<4, ValueType> CIN_MATH_CALL operator+(const Vector<4, ValueType>& vector) noexcept;
+		[[nodiscard]] friend Vector<4, ValueType> CIN_MATH_CALL operator-(const Vector<4, ValueType>& vector) noexcept;
 		
-		friend void CIN_CALL operator+=(Vector<4, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
-		friend void CIN_CALL operator-=(Vector<4, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
-		friend void CIN_CALL operator*=(Vector<4, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
-		friend void CIN_CALL operator/=(Vector<4, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
+		friend void CIN_MATH_CALL operator+=(Vector<4, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
+		friend void CIN_MATH_CALL operator-=(Vector<4, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
+		friend void CIN_MATH_CALL operator*=(Vector<4, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
+		friend void CIN_MATH_CALL operator/=(Vector<4, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
 
-		friend void CIN_CALL operator+=(Vector<4, ValueType>& lhs, const ValueType scalar) noexcept;
-		friend void CIN_CALL operator-=(Vector<4, ValueType>& lhs, const ValueType scalar) noexcept;
-		friend void CIN_CALL operator*=(Vector<4, ValueType>& lhs, const ValueType scalar) noexcept;
-		friend void CIN_CALL operator/=(Vector<4, ValueType>& lhs, const ValueType scalar) noexcept;
+		friend void CIN_MATH_CALL operator+=(Vector<4, ValueType>& lhs, const ValueType scalar) noexcept;
+		friend void CIN_MATH_CALL operator-=(Vector<4, ValueType>& lhs, const ValueType scalar) noexcept;
+		friend void CIN_MATH_CALL operator*=(Vector<4, ValueType>& lhs, const ValueType scalar) noexcept;
+		friend void CIN_MATH_CALL operator/=(Vector<4, ValueType>& lhs, const ValueType scalar) noexcept;
 
-		[[nodiscard]] friend Vector<4, ValueType> CIN_CALL operator+(const Vector<4, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
-		[[nodiscard]] friend Vector<4, ValueType> CIN_CALL operator-(const Vector<4, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
-		[[nodiscard]] friend Vector<4, ValueType> CIN_CALL operator*(const Vector<4, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
-		[[nodiscard]] friend Vector<4, ValueType> CIN_CALL operator/(const Vector<4, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
+		[[nodiscard]] friend Vector<4, ValueType> CIN_MATH_CALL operator+(const Vector<4, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
+		[[nodiscard]] friend Vector<4, ValueType> CIN_MATH_CALL operator-(const Vector<4, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
+		[[nodiscard]] friend Vector<4, ValueType> CIN_MATH_CALL operator*(const Vector<4, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
+		[[nodiscard]] friend Vector<4, ValueType> CIN_MATH_CALL operator/(const Vector<4, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
 		 
-		[[nodiscard]] friend Vector<4, ValueType> CIN_CALL operator+(const Vector<4, ValueType>& lhs, const ValueType scalar) noexcept;
-		[[nodiscard]] friend Vector<4, ValueType> CIN_CALL operator-(const Vector<4, ValueType>& lhs, const ValueType scalar) noexcept;
-		[[nodiscard]] friend Vector<4, ValueType> CIN_CALL operator*(const Vector<4, ValueType>& lhs, const ValueType scalar) noexcept;
-		[[nodiscard]] friend Vector<4, ValueType> CIN_CALL operator/(const Vector<4, ValueType>& lhs, const ValueType scalar) noexcept;
+		[[nodiscard]] friend Vector<4, ValueType> CIN_MATH_CALL operator+(const Vector<4, ValueType>& lhs, const ValueType scalar) noexcept;
+		[[nodiscard]] friend Vector<4, ValueType> CIN_MATH_CALL operator-(const Vector<4, ValueType>& lhs, const ValueType scalar) noexcept;
+		[[nodiscard]] friend Vector<4, ValueType> CIN_MATH_CALL operator*(const Vector<4, ValueType>& lhs, const ValueType scalar) noexcept;
+		[[nodiscard]] friend Vector<4, ValueType> CIN_MATH_CALL operator/(const Vector<4, ValueType>& lhs, const ValueType scalar) noexcept;
 		
-		[[nodiscard]] friend Vector<4, ValueType> CIN_CALL operator*(const Vector<4, ValueType>& lhs, const Matrix<4, 4, ValueType>& rhs) noexcept;
+		[[nodiscard]] friend Vector<4, ValueType> CIN_MATH_CALL operator*(const Vector<4, ValueType>& lhs, const Matrix<4, 4, ValueType>& rhs) noexcept;
 	public:
 		union
 		{
@@ -107,19 +125,23 @@ namespace CinMath {
 
 			/* 2-Element swizzle */
 			Vector2Swizzle<ValueType, Vector<2, ValueType>, 0, 1> xy;
-			Vector2Swizzle<ValueType, Vector<2, ValueType>, 1, 0> yx;
+			Vector2Swizzle<ValueType, Vector<2, ValueType>, 0, 2> xz;
+			Vector2Swizzle<ValueType, Vector<2, ValueType>, 0, 3> xw;
+
+			Vector2Swizzle<ValueType, Vector<2, ValueType>, 1, 2> yz;
+			Vector2Swizzle<ValueType, Vector<2, ValueType>, 1, 3> yw;
+
+			Vector2Swizzle<ValueType, Vector<2, ValueType>, 2, 3> zw;
 
 			/* 3-Element swizzle */
 			Vector3Swizzle<ValueType, Vector<3, ValueType>, 0, 1, 2> xyz;
-			Vector3Swizzle<ValueType, Vector<3, ValueType>, 2, 1, 0> zyx;
-
 			Vector3Swizzle<ValueType, Vector<3, ValueType>, 1, 2, 3> yzw;
-			Vector3Swizzle<ValueType, Vector<3, ValueType>, 3, 2, 1> wzy;
+
 			/* 4-Element swizzle */
 			Vector4Swizzle<ValueType, Vector<4, ValueType>, 0, 1, 2, 3> xyzw;
-			Vector4Swizzle<ValueType, Vector<4, ValueType>, 3, 2, 1, 0> wzyx;
 		};
 	};
 
-	typedef Vector<4, float> Vector4;
+	typedef Vector<4, float>	Vector4;
+	typedef Vector<4, double>	DVector4;
 }

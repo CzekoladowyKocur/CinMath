@@ -14,7 +14,7 @@ namespace CinMath {
 			z(static_cast<ValueType>(0))
 		{}
 
-		explicit Vector<3, ValueType>(
+		constexpr explicit Vector<3, ValueType>(
 			const ValueType value) noexcept
 			:
 			x(value),
@@ -22,7 +22,7 @@ namespace CinMath {
 			z(value)
 		{}
 
-		explicit Vector<3, ValueType>(
+		constexpr explicit Vector<3, ValueType>(
 			const ValueType x,
 			const ValueType y,
 			const ValueType z) noexcept
@@ -31,8 +31,6 @@ namespace CinMath {
 			y(y),
 			z(z)
 		{}
-
-		constexpr ~Vector<3, ValueType>() noexcept = default;
 
 		constexpr operator ValueType* () noexcept
 		{
@@ -54,28 +52,48 @@ namespace CinMath {
 			return raw[index];
 		}
 
-		[[nodiscard]] friend Vector<3, ValueType> CIN_CALL operator+(const Vector<3, ValueType>& vector) noexcept;
-		[[nodiscard]] friend Vector<3, ValueType> CIN_CALL operator-(const Vector<3, ValueType>& vector) noexcept;
+		constexpr bool operator==(const Vector<3, ValueType>& other) const noexcept
+		{
+			return x == other.x && y == other.y && z == other.z;
+		}
 
-		friend void CIN_CALL operator+=(Vector<3, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
-		friend void CIN_CALL operator-=(Vector<3, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
-		friend void CIN_CALL operator*=(Vector<3, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
-		friend void CIN_CALL operator/=(Vector<3, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
+		constexpr bool operator!=(const Vector<3, ValueType>& other) const noexcept
+		{
+			return x != other.x || y != other.y || z != other.z;
+		}
 
-		friend void CIN_CALL operator+=(Vector<3, ValueType>& lhs, const ValueType scalar) noexcept;
-		friend void CIN_CALL operator-=(Vector<3, ValueType>& lhs, const ValueType scalar) noexcept;
-		friend void CIN_CALL operator*=(Vector<3, ValueType>& lhs, const ValueType scalar) noexcept;
-		friend void CIN_CALL operator/=(Vector<3, ValueType>& lhs, const ValueType scalar) noexcept;
+		constexpr operator Vector<3, float>() const noexcept
+		{
+			return Vector<3, float>{ static_cast<float>(x), static_cast<float>(y), static_cast<float>(z) };
+		}
 
-		[[nodiscard]] friend Vector<3, ValueType> CIN_CALL operator+(const Vector<3, ValueType>& lhs, const Vector<3, ValueType>& rhs) noexcept;
-		[[nodiscard]] friend Vector<3, ValueType> CIN_CALL operator-(const Vector<3, ValueType>& lhs, const Vector<3, ValueType>& rhs) noexcept;
-		[[nodiscard]] friend Vector<3, ValueType> CIN_CALL operator*(const Vector<3, ValueType>& lhs, const Vector<3, ValueType>& rhs) noexcept;
-		[[nodiscard]] friend Vector<3, ValueType> CIN_CALL operator/(const Vector<3, ValueType>& lhs, const Vector<3, ValueType>& rhs) noexcept;
+		constexpr operator Vector<3, double>() const noexcept
+		{
+			return Vector<3, double>{ static_cast<double>(x), static_cast<double>(y), static_cast<double>(z) };
+		}
 
-		[[nodiscard]] friend Vector<3, ValueType> CIN_CALL operator+(const Vector<3, ValueType>& lhs, const ValueType scalar) noexcept;
-		[[nodiscard]] friend Vector<3, ValueType> CIN_CALL operator-(const Vector<3, ValueType>& lhs, const ValueType scalar) noexcept;
-		[[nodiscard]] friend Vector<3, ValueType> CIN_CALL operator*(const Vector<3, ValueType>& lhs, const ValueType scalar) noexcept;
-		[[nodiscard]] friend Vector<3, ValueType> CIN_CALL operator/(const Vector<3, ValueType>& lhs, const ValueType scalar) noexcept;
+		[[nodiscard]] friend Vector<3, ValueType> CIN_MATH_CALL operator+(const Vector<3, ValueType>& vector) noexcept;
+		[[nodiscard]] friend Vector<3, ValueType> CIN_MATH_CALL operator-(const Vector<3, ValueType>& vector) noexcept;
+
+		friend void CIN_MATH_CALL operator+=(Vector<3, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
+		friend void CIN_MATH_CALL operator-=(Vector<3, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
+		friend void CIN_MATH_CALL operator*=(Vector<3, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
+		friend void CIN_MATH_CALL operator/=(Vector<3, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
+
+		friend void CIN_MATH_CALL operator+=(Vector<3, ValueType>& lhs, const ValueType scalar) noexcept;
+		friend void CIN_MATH_CALL operator-=(Vector<3, ValueType>& lhs, const ValueType scalar) noexcept;
+		friend void CIN_MATH_CALL operator*=(Vector<3, ValueType>& lhs, const ValueType scalar) noexcept;
+		friend void CIN_MATH_CALL operator/=(Vector<3, ValueType>& lhs, const ValueType scalar) noexcept;
+
+		[[nodiscard]] friend Vector<3, ValueType> CIN_MATH_CALL operator+(const Vector<3, ValueType>& lhs, const Vector<3, ValueType>& rhs) noexcept;
+		[[nodiscard]] friend Vector<3, ValueType> CIN_MATH_CALL operator-(const Vector<3, ValueType>& lhs, const Vector<3, ValueType>& rhs) noexcept;
+		[[nodiscard]] friend Vector<3, ValueType> CIN_MATH_CALL operator*(const Vector<3, ValueType>& lhs, const Vector<3, ValueType>& rhs) noexcept;
+		[[nodiscard]] friend Vector<3, ValueType> CIN_MATH_CALL operator/(const Vector<3, ValueType>& lhs, const Vector<3, ValueType>& rhs) noexcept;
+
+		[[nodiscard]] friend Vector<3, ValueType> CIN_MATH_CALL operator+(const Vector<3, ValueType>& lhs, const ValueType scalar) noexcept;
+		[[nodiscard]] friend Vector<3, ValueType> CIN_MATH_CALL operator-(const Vector<3, ValueType>& lhs, const ValueType scalar) noexcept;
+		[[nodiscard]] friend Vector<3, ValueType> CIN_MATH_CALL operator*(const Vector<3, ValueType>& lhs, const ValueType scalar) noexcept;
+		[[nodiscard]] friend Vector<3, ValueType> CIN_MATH_CALL operator/(const Vector<3, ValueType>& lhs, const ValueType scalar) noexcept;
 	public:
 		union
 		{
@@ -101,13 +119,15 @@ namespace CinMath {
 
 			/* 2-Element swizzle */
 			Vector2Swizzle<ValueType, Vector<2, ValueType>, 0, 1> xy;
-			Vector2Swizzle<ValueType, Vector<2, ValueType>, 1, 0> yx;
+			Vector2Swizzle<ValueType, Vector<2, ValueType>, 0, 2> xz;
+
+			Vector2Swizzle<ValueType, Vector<2, ValueType>, 1, 2> yz;
 
 			/* 3-Element swizzle */
 			Vector3Swizzle<ValueType, Vector<3, ValueType>, 0, 1, 2> xyz;
-			Vector3Swizzle<ValueType, Vector<3, ValueType>, 2, 1, 0> zyx;
 		};
 	};
 
-	typedef Vector<3, float> Vector3;
+	typedef Vector<3, float>	Vector3;
+	typedef Vector<3, double>	DVector3;
 }

@@ -100,9 +100,9 @@
 #endif
 
 #ifdef _MSC_VER
-#define CIN_CALL __vectorcall
+#define CIN_MATH_CALL __vectorcall
 #else
-#define CIN_CALL
+#define CIN_MATH_CALL
 #endif
 
 #if defined(__clang__) || defined(__GNUC__)
@@ -187,33 +187,33 @@ namespace CinMath {
 	{
 		Type View[1];
 
-		CIN_MATH_INLINE Type& operator=(const Type x) noexcept
+		constexpr CIN_MATH_INLINE Type& operator=(const Type x) noexcept
 		{
 			View[Index] = x;
 			return View[Index];
 		}
 
-		CIN_MATH_INLINE operator Type() const noexcept
+		constexpr CIN_MATH_INLINE operator Type() const noexcept
 		{
 			return View[Index];
 		}
 
-		CIN_MATH_INLINE Type operator++(const int) noexcept
+		constexpr CIN_MATH_INLINE Type operator++(const int) noexcept
 		{
 			return View[Index]++;
 		}
 
-		CIN_MATH_INLINE Type operator++() noexcept
+		constexpr CIN_MATH_INLINE Type operator++() noexcept
 		{
 			return ++View[Index];
 		}
 
-		CIN_MATH_INLINE Type operator--(const int) noexcept
+		constexpr CIN_MATH_INLINE Type operator--(const int) noexcept
 		{
 			return View[Index]--;
 		}
 
-		CIN_MATH_INLINE Type operator--() noexcept
+		constexpr CIN_MATH_INLINE Type operator--() noexcept
 		{
 			return --View[Index];
 		}
@@ -224,62 +224,62 @@ namespace CinMath {
 	{
 		Type View[2];
 
-		CIN_MATH_INLINE VectorType operator=(const Type scalar) const noexcept
+		constexpr CIN_MATH_INLINE VectorType operator=(const Type scalar) const noexcept
 		{
 			return VectorType(View[SwizzleFirst] = scalar, View[SwizzleSecond] = scalar);
 		}
 
-		CIN_MATH_INLINE VectorType operator+(const Type scalar) const noexcept
+		constexpr CIN_MATH_INLINE VectorType operator+(const Type scalar) const noexcept
 		{
 			return VectorType(View[SwizzleFirst] + scalar, View[SwizzleSecond] + scalar);
 		}
 
-		CIN_MATH_INLINE VectorType operator-(const Type scalar) const noexcept
+		constexpr CIN_MATH_INLINE VectorType operator-(const Type scalar) const noexcept
 		{
 			return VectorType(View[SwizzleFirst] - scalar, View[SwizzleSecond] - scalar);
 		}
 
-		CIN_MATH_INLINE VectorType operator*(const Type scalar) const noexcept
+		constexpr CIN_MATH_INLINE VectorType operator*(const Type scalar) const noexcept
 		{
 			return VectorType(View[SwizzleFirst] * scalar, View[SwizzleSecond] * scalar);
 		}
 
-		CIN_MATH_INLINE VectorType operator+=(const Type scalar) noexcept
+		constexpr CIN_MATH_INLINE VectorType operator+=(const Type scalar) noexcept
 		{
 			return VectorType(View[SwizzleFirst] += scalar, View[SwizzleSecond] += scalar);
 		}
 
-		CIN_MATH_INLINE VectorType operator-=(const Type scalar) noexcept
+		constexpr CIN_MATH_INLINE VectorType operator-=(const Type scalar) noexcept
 		{
 			return VectorType(View[SwizzleFirst] -= scalar, View[SwizzleSecond] -= scalar);
 		}
 
-		CIN_MATH_INLINE VectorType operator*=(const Type scalar) noexcept
+		constexpr CIN_MATH_INLINE VectorType operator*=(const Type scalar) noexcept
 		{
 			return VectorType(View[SwizzleFirst] *= scalar, View[SwizzleSecond] *= scalar);
 		}
 
-		CIN_MATH_INLINE VectorType operator=(const VectorType& vector) noexcept
+		constexpr CIN_MATH_INLINE VectorType operator=(const VectorType& vector) noexcept
 		{
 			return VectorType(View[SwizzleFirst] = vector.x, View[SwizzleSecond] = vector.y);
 		}
 
-		CIN_MATH_INLINE VectorType operator+=(const VectorType& vector) noexcept
+		constexpr CIN_MATH_INLINE VectorType operator+=(const VectorType& vector) noexcept
 		{
 			return VectorType(View[SwizzleFirst] += vector.x, View[SwizzleSecond] += vector.y);
 		}
 
-		CIN_MATH_INLINE VectorType operator-=(const VectorType& vector) noexcept
+		constexpr CIN_MATH_INLINE VectorType operator-=(const VectorType& vector) noexcept
 		{
 			return VectorType(View[SwizzleFirst] -= vector.x, View[SwizzleSecond] -= vector.y);
 		}
 
-		CIN_MATH_INLINE VectorType operator*=(const VectorType& vector) noexcept
+		constexpr CIN_MATH_INLINE VectorType operator*=(const VectorType& vector) noexcept
 		{
 			return VectorType(View[SwizzleFirst] *= vector.x, View[SwizzleSecond] *= vector.y);
 		}
 
-		CIN_MATH_INLINE operator VectorType() const noexcept
+		constexpr CIN_MATH_INLINE operator VectorType() const noexcept
 		{
 			return VectorType(View[SwizzleFirst], View[SwizzleSecond]);
 		}
@@ -290,62 +290,62 @@ namespace CinMath {
 	{
 		Type View[3];
 
-		CIN_MATH_INLINE VectorType operator=(const Type scalar) noexcept
+		constexpr CIN_MATH_INLINE VectorType operator=(const Type scalar) noexcept
 		{
 			return VectorType(View[SwizzleFirst] = scalar, View[SwizzleSecond] = scalar, View[SwizzleThird] = scalar);
 		}
 
-		CIN_MATH_INLINE VectorType operator+(const Type scalar) noexcept
+		constexpr CIN_MATH_INLINE VectorType operator+(const Type scalar) noexcept
 		{
 			return VectorType(View[SwizzleFirst] + scalar, View[SwizzleSecond] + scalar, View[SwizzleThird] + scalar);
 		}
 
-		CIN_MATH_INLINE VectorType operator-(const Type scalar) noexcept
+		constexpr CIN_MATH_INLINE VectorType operator-(const Type scalar) noexcept
 		{
 			return VectorType(View[SwizzleFirst] - scalar, View[SwizzleSecond] - scalar, View[SwizzleThird] - scalar);
 		}
 
-		CIN_MATH_INLINE VectorType operator*(const Type scalar) noexcept
+		constexpr CIN_MATH_INLINE VectorType operator*(const Type scalar) noexcept
 		{
 			return VectorType(View[SwizzleFirst] * scalar, View[SwizzleSecond] * scalar, View[SwizzleThird] * scalar);
 		}
 
-		CIN_MATH_INLINE VectorType operator+=(const Type scalar) noexcept
+		constexpr CIN_MATH_INLINE VectorType operator+=(const Type scalar) noexcept
 		{
 			return VectorType(View[SwizzleFirst] += scalar, View[SwizzleSecond] += scalar, View[SwizzleThird] += scalar);
 		}
 
-		CIN_MATH_INLINE VectorType operator-=(const Type scalar) noexcept
+		constexpr CIN_MATH_INLINE VectorType operator-=(const Type scalar) noexcept
 		{
 			return VectorType(View[SwizzleFirst] -= scalar, View[SwizzleSecond] -= scalar, View[SwizzleThird] -= scalar);
 		}
 
-		CIN_MATH_INLINE VectorType operator*=(const Type scalar) noexcept
+		constexpr CIN_MATH_INLINE VectorType operator*=(const Type scalar) noexcept
 		{
 			return VectorType(View[SwizzleFirst] *= scalar, View[SwizzleSecond] *= scalar, View[SwizzleThird] *= scalar);
 		}
 
-		CIN_MATH_INLINE VectorType operator=(const VectorType& vector) noexcept
+		constexpr CIN_MATH_INLINE VectorType operator=(const VectorType& vector) noexcept
 		{
 			return VectorType(View[SwizzleFirst] = vector.x, View[SwizzleSecond] = vector.y, View[SwizzleThird] = vector.z);
 		}
 
-		CIN_MATH_INLINE VectorType operator+=(const VectorType& vector) noexcept
+		constexpr CIN_MATH_INLINE VectorType operator+=(const VectorType& vector) noexcept
 		{
 			return VectorType(View[SwizzleFirst] += vector.x, View[SwizzleSecond] += vector.y, View[SwizzleThird] += vector.z);
 		}
 
-		CIN_MATH_INLINE VectorType operator-=(const VectorType& vector) noexcept
+		constexpr CIN_MATH_INLINE VectorType operator-=(const VectorType& vector) noexcept
 		{
 			return VectorType(View[SwizzleFirst] -= vector.x, View[SwizzleSecond] -= vector.y), View[SwizzleThird] -= vector.z;
 		}
 
-		CIN_MATH_INLINE VectorType operator*=(const VectorType& vector) noexcept
+		constexpr CIN_MATH_INLINE VectorType operator*=(const VectorType& vector) noexcept
 		{
 			return VectorType(View[SwizzleFirst] *= vector.x, View[SwizzleSecond] *= vector.y, View[SwizzleThird] *= vector.z);
 		}
 
-		CIN_MATH_INLINE operator VectorType() const noexcept
+		constexpr CIN_MATH_INLINE operator VectorType() const noexcept
 		{
 			return VectorType(View[SwizzleFirst], View[SwizzleSecond], View[SwizzleThird]);
 		}
@@ -356,62 +356,62 @@ namespace CinMath {
 	{
 		Type View[4];
 	
-		CIN_MATH_INLINE VectorType operator=(const Type scalar) const noexcept
+		constexpr CIN_MATH_INLINE VectorType operator=(const Type scalar) const noexcept
 		{
 			return VectorType(View[SwizzleFirst] = scalar, View[SwizzleSecond] = scalar, View[SwizzleThird] = scalar, View[SwizzleFourth] = scalar);
 		}
 		
-		CIN_MATH_INLINE VectorType operator+(const Type scalar) const noexcept
+		constexpr CIN_MATH_INLINE VectorType operator+(const Type scalar) const noexcept
 		{
 			return VectorType(View[SwizzleFirst] + scalar, View[SwizzleSecond] + scalar, View[SwizzleThird] + scalar, View[SwizzleFourth] + scalar);
 		}
 		
-		CIN_MATH_INLINE VectorType operator-(const Type scalar) const noexcept
+		constexpr CIN_MATH_INLINE VectorType operator-(const Type scalar) const noexcept
 		{
 			return VectorType(View[SwizzleFirst] - scalar, View[SwizzleSecond] - scalar, View[SwizzleThird] - scalar, View[SwizzleFourth] - scalar);
 		}
 		
-		CIN_MATH_INLINE VectorType operator*(const Type scalar) const noexcept
+		constexpr CIN_MATH_INLINE VectorType operator*(const Type scalar) const noexcept
 		{
 			return VectorType(View[SwizzleFirst] * scalar, View[SwizzleSecond] * scalar, View[SwizzleThird] * scalar, View[SwizzleFourth] * scalar);
 		}
 		
-		CIN_MATH_INLINE VectorType operator+=(const Type scalar) noexcept
+		constexpr CIN_MATH_INLINE VectorType operator+=(const Type scalar) noexcept
 		{
 			return VectorType(View[SwizzleFirst] += scalar, View[SwizzleSecond] += scalar, View[SwizzleThird] += scalar, View[SwizzleFourth] += scalar);
 		}
 		
-		CIN_MATH_INLINE VectorType operator-=(const Type scalar) noexcept
+		constexpr CIN_MATH_INLINE VectorType operator-=(const Type scalar) noexcept
 		{
 			return VectorType(View[SwizzleFirst] -= scalar, View[SwizzleSecond] -= scalar, View[SwizzleThird] -= scalar, View[SwizzleFourth] -= scalar);
 		}
 		
-		CIN_MATH_INLINE VectorType operator*=(const Type scalar) noexcept
+		constexpr CIN_MATH_INLINE VectorType operator*=(const Type scalar) noexcept
 		{
 			return VectorType(View[SwizzleFirst] *= scalar, View[SwizzleSecond] *= scalar, View[SwizzleThird] *= scalar, View[SwizzleFourth] *= scalar);
 		}
 		
-		CIN_MATH_INLINE VectorType operator=(const VectorType& vector) noexcept
+		constexpr CIN_MATH_INLINE VectorType operator=(const VectorType& vector) noexcept
 		{
 			return VectorType(View[SwizzleFirst] = vector.x, View[SwizzleSecond] = vector.y, View[SwizzleThird] = vector.z, View[SwizzleFourth] = vector.w);
 		}
 		
-		CIN_MATH_INLINE VectorType operator+=(const VectorType& vector) noexcept
+		constexpr CIN_MATH_INLINE VectorType operator+=(const VectorType& vector) noexcept
 		{
 			return VectorType(View[SwizzleFirst] += vector.x, View[SwizzleSecond] += vector.y, View[SwizzleThird] += vector.z, View[SwizzleFourth] += vector.w);
 		}
 		
-		CIN_MATH_INLINE VectorType operator-=(const VectorType& vector) noexcept
+		constexpr CIN_MATH_INLINE VectorType operator-=(const VectorType& vector) noexcept
 		{
 			return VectorType(View[SwizzleFirst] -= vector.x, View[SwizzleSecond] -= vector.y, View[SwizzleThird] -= vector.z, View[SwizzleFourth] -= vector.w);
 		}
 		
-		CIN_MATH_INLINE VectorType operator*=(const VectorType& vector) noexcept
+		constexpr CIN_MATH_INLINE VectorType operator*=(const VectorType& vector) noexcept
 		{
 			return VectorType(View[SwizzleFirst] *= vector.x, View[SwizzleSecond] *= vector.y, View[SwizzleThird] *= vector.z, View[SwizzleFourth] *= vector.w);
 		}
 		
-		CIN_MATH_INLINE operator VectorType() const noexcept
+		constexpr CIN_MATH_INLINE operator VectorType() const noexcept
 		{
 			return VectorType(View[SwizzleFirst], View[SwizzleSecond], View[SwizzleThird], View[SwizzleFourth]);
 		}
@@ -443,6 +443,10 @@ namespace CinMath {
 	typedef float CinnamonFloat32Matrix2x2_t[2 * 2];
 	typedef float CinnamonFloat32Matrix3x3_t[3 * 3];
 	typedef float CinnamonFloat32Matrix4x4_t[4 * 4];
+
+	typedef double CinnamonFloat64Matrix2x2_t[2 * 2];
+	typedef double CinnamonFloat64Matrix3x3_t[3 * 3];
+	typedef double CinnamonFloat64Matrix4x4_t[4 * 4];
 	/* Quaternions */
 	typedef CinnamonFloat32Vector4_t CinnamonFloat32Quaternion_t;
 #elif ((CIN_INSTRUCTION_SET) & (CIN_INSTRUCTION_SET_AVX2_BIT)) || ((CIN_INSTRUCTION_SET) & (CIN_INSTRUCTION_SET_AVX_BIT))
@@ -456,6 +460,10 @@ namespace CinMath {
 	typedef __m128 CinnamonFloat32Matrix2x2_t;
 	typedef float CinnamonFloat32Matrix3x3_t[3 * 3];
 	typedef __m256 CinnamonFloat32Matrix4x4_t[2];
+
+	typedef double CinnamonFloat64Matrix2x2_t[2 * 2];
+	typedef double CinnamonFloat64Matrix3x3_t[3 * 3];
+	typedef double CinnamonFloat64Matrix4x4_t[4 * 4];
 	/* Quaternions */
 	typedef CinnamonFloat32Vector4_t CinnamonFloat32Quaternion_t;
 #elif (CIN_INSTRUCTION_SET) & (CIN_INSTRUCTION_SET_SSE2_BIT)
@@ -469,6 +477,10 @@ namespace CinMath {
 	typedef __m128 CinnamonFloat32Matrix2x2_t;
 	typedef float CinnamonFloat32Matrix3x3_t[3 * 3];
 	typedef __m128 CinnamonFloat32Matrix4x4_t[4];
+
+	typedef double CinnamonFloat64Matrix2x2_t[2 * 2];
+	typedef double CinnamonFloat64Matrix3x3_t[3 * 3];
+	typedef double CinnamonFloat64Matrix4x4_t[4 * 4];
 	/* Quaternions */
 	typedef CinnamonFloat32Vector4_t CinnamonFloat32Quaternion_t;
 #elif (CIN_INSTRUCTION_SET) & (CIN_INSTRUCTION_SET_SSE_BIT) /* 128 bit wide float registers only */
@@ -482,6 +494,10 @@ namespace CinMath {
 	typedef __m128  CinnamonFloat32Matrix2x2_t;
 	typedef float CinnamonFloat32Matrix3x3_t[3 * 3];
 	typedef __m128 CinnamonFloat32Matrix4x4_t[4];
+
+	typedef double CinnamonFloat64Matrix2x2_t[2 * 2];
+	typedef double CinnamonFloat64Matrix3x3_t[3 * 3];
+	typedef double CinnamonFloat64Matrix4x4_t[4 * 4];
 	/* Quaternions */
 	typedef CinnamonFloat32Vector4_t CinnamonFloat32Quaternion_t;
 #endif
@@ -539,6 +555,27 @@ namespace CinMath {
 	{
 		typedef CinnamonFloat32Matrix4x4_t Container;
 	};
+
+	/* Matrix 2x2 */
+	template<>
+	struct MatrixStorage<2, 2, double> final
+	{
+		typedef CinnamonFloat64Matrix2x2_t Container;
+	};
+
+	/* Matrix 3x3 */
+	template<>
+	struct MatrixStorage<3, 3, double> final
+	{
+		typedef CinnamonFloat64Matrix3x3_t Container;
+	};
+
+	/* Matrix 4x4 */
+	template<>
+	struct MatrixStorage<4, 4, double> final
+	{
+		typedef CinnamonFloat64Matrix4x4_t Container;
+	};
 }
 
 namespace CinMath {
@@ -560,6 +597,7 @@ namespace CinMath {
 #include "Matrix3.h"
 #include "Matrix4.h"
 
+#include "Angle.h"
 #include "Quaternion.h"
 
 #include "Transform.h"
@@ -573,6 +611,7 @@ namespace CinMath {
 #include "Matrix3.inl"
 #include "Matrix4.inl"
 
+#include "Angle.inl"
 #include "Quaternion.inl"
 
 #include "Transform.inl"
@@ -586,53 +625,263 @@ namespace CinMath {
 #endif
 
 #include <iostream>
-CIN_MATH_INLINE std::ostream& operator<<(std::ostream& stream, const CinMath::Vector2& vector) noexcept
+#include <iomanip> 		/* for std::setw */
+#include <string_view>	
+
+namespace CinMath
 {
-	stream << vector.x << ' ' << vector.y;
+	namespace Printing
+	{
+		struct DefaultVectorPrintSpecificer
+		{
+			static constexpr char Opening()	noexcept { return static_cast<char>('['); }
+			static constexpr char Closing()	noexcept { return static_cast<char>(']'); }
+		};
+
+		struct RoundVectorPrintSpecificer
+		{
+			static constexpr char Opening()	noexcept { return static_cast<char>('('); }
+			static constexpr char Closing()	noexcept { return static_cast<char>(')'); }
+		};
+
+		struct CurlyVectorPrintSpecificer
+		{
+			static constexpr char Opening()	noexcept { return static_cast<char>('{'); }
+			static constexpr char Closing()	noexcept { return static_cast<char>('}'); }
+		};
+
+		template<typename VectorType, typename VectorPrintSpecificer = DefaultVectorPrintSpecificer>
+		struct VectorPrinter
+		{
+			constexpr VectorPrinter(const VectorType& reference, [[maybe_unused]] const VectorPrintSpecificer) noexcept
+				:
+				Reference(reference),
+				Opening(VectorPrintSpecificer::Opening()),
+				Closing(VectorPrintSpecificer::Closing())
+			{}
+
+			const VectorType& Reference;
+			const char Opening;
+			const char Closing;
+		};
+
+		struct DefaultMatrixPrintSpecificer
+		{
+#ifdef _MSC_VER
+			static constexpr char UpwardsColumnFacingLeft()		noexcept { return static_cast<char>(0xDA); }
+			static constexpr char DownwardsColumnFacingLeft()	noexcept { return static_cast<char>(0xC0); }
+			static constexpr char UpwardsColumnFacingRight()	noexcept { return static_cast<char>(0xBF); }
+			static constexpr char DownwardsColumnFacingRight()	noexcept { return static_cast<char>(0xD9); }
+			static constexpr char Row()							noexcept { return static_cast<char>(0xB3); }
+#else
+			static constexpr char UpwardsColumnFacingLeft()		noexcept { return static_cast<char>(' '); }
+			static constexpr char DownwardsColumnFacingLeft()	noexcept { return static_cast<char>(' '); }
+			static constexpr char UpwardsColumnFacingRight()	noexcept { return static_cast<char>(' '); }
+			static constexpr char DownwardsColumnFacingRight()	noexcept { return static_cast<char>(' '); }
+			static constexpr char Row()							noexcept { return static_cast<char>('|'); }
+#endif
+		};
+
+		struct ThickMatrixPrintSpecificer
+		{
+			static constexpr char UpwardsColumnFacingLeft()		noexcept { return static_cast<char>(0xC9); }
+			static constexpr char DownwardsColumnFacingLeft()	noexcept { return static_cast<char>(0xC8); }
+			static constexpr char UpwardsColumnFacingRight()	noexcept { return static_cast<char>(0xBB); }
+			static constexpr char DownwardsColumnFacingRight()	noexcept { return static_cast<char>(0xBC); }
+			static constexpr char Row()							noexcept { return static_cast<char>(0xBA); }
+		};
+
+		struct NakedMatrixPrintSpecificer
+		{
+			static constexpr char UpwardsColumnFacingLeft()		noexcept { return static_cast<char>(' '); }
+			static constexpr char DownwardsColumnFacingLeft()	noexcept { return static_cast<char>(' '); }
+			static constexpr char UpwardsColumnFacingRight()	noexcept { return static_cast<char>(' '); }
+			static constexpr char DownwardsColumnFacingRight()	noexcept { return static_cast<char>(' '); }
+			static constexpr char Row()							noexcept { return static_cast<char>(' '); }
+		};
+
+		template<typename MatrixType, typename MatrixPrintSpecificer = DefaultMatrixPrintSpecificer>
+		struct MatrixPrinter
+		{
+			constexpr MatrixPrinter(const MatrixType& reference, [[maybe_unused]] const MatrixPrintSpecificer) noexcept
+				:
+				Reference(reference),
+				UpwardsColumnFacingLeft(MatrixPrintSpecificer::UpwardsColumnFacingLeft()),
+				DownwardsColumnFacingLeft(MatrixPrintSpecificer::DownwardsColumnFacingLeft()),
+				UpwardsColumnFacingRight(MatrixPrintSpecificer::UpwardsColumnFacingRight()),
+				DownwardsColumnFacingRight(MatrixPrintSpecificer::DownwardsColumnFacingRight())
+			{}
+
+			const MatrixType& Reference;
+			const char UpwardsColumnFacingLeft;
+			const char DownwardsColumnFacingLeft;
+			const char UpwardsColumnFacingRight;
+			const char DownwardsColumnFacingRight;
+		};
+
+		inline void SimplifyRealNumber(std::string& outNumber) noexcept
+		{
+			outNumber.erase(outNumber.find_last_not_of('0') + 1, std::string::npos);
+
+			if(outNumber.back() == '.')
+				outNumber.pop_back();
+		}
+
+		struct FloatingPointNumberRepresantationSize
+		{
+			size_t WholeNumberPartLength;
+			/* Separator (.) included */
+			size_t FractionNumberPartLength;
+		
+			static inline FloatingPointNumberRepresantationSize Calculate(const std::string_view number) noexcept
+			{
+				const std::string_view wholeNumberPart{ number.substr(0, number.find_first_of('.')) };
+				const std::string_view fractionPart{ number.substr(wholeNumberPart.size()) };
+		
+				return FloatingPointNumberRepresantationSize{ wholeNumberPart.size(), fractionPart.size() };
+			}
+		};
+
+		template<typename ValueType>
+		FloatingPointNumberRepresantationSize FindMaxWholeAndFractionPartSizes(const ValueType* begin, const ValueType* end)
+		{
+			FloatingPointNumberRepresantationSize max{ 0, 0 };
+			while(begin != end)
+			{
+				std::string number{ std::to_string(*begin) };
+				SimplifyRealNumber(number);
+
+				FloatingPointNumberRepresantationSize current{ FloatingPointNumberRepresantationSize::Calculate(number) };
+				if(current.WholeNumberPartLength > max.WholeNumberPartLength)
+					max.WholeNumberPartLength = current.WholeNumberPartLength;
+
+				if(current.FractionNumberPartLength > max.FractionNumberPartLength)
+					max.FractionNumberPartLength = current.FractionNumberPartLength;
+
+				++begin;
+			}
+
+			return max;
+		}
+	}
+}
+
+template<typename ValueType, typename PrintSpecifier = CinMath::Printing::DefaultVectorPrintSpecificer>
+CIN_MATH_INLINE std::ostream& operator<<(std::ostream& stream, const CinMath::Printing::VectorPrinter<CinMath::Vector<4, ValueType>, PrintSpecifier>& printer) noexcept
+{
+	const CinMath::Vector<4, ValueType>& vector{ printer.Reference };
+	stream << PrintSpecifier::Opening() << vector.raw[0] << ", " << vector.raw[1] << ", " << vector.raw[2] << ", " << vector.raw[3]  << PrintSpecifier::Closing() << '\n';
 	return stream;
 }
 
-CIN_MATH_INLINE std::ostream& operator<<(std::ostream& stream, const CinMath::Vector3& vector) noexcept
+template<typename ValueType, typename PrintSpecifier = CinMath::Printing::DefaultVectorPrintSpecificer>
+CIN_MATH_INLINE std::ostream& operator<<(std::ostream& stream, const CinMath::Printing::VectorPrinter<CinMath::Vector<3, ValueType>, PrintSpecifier>& printer) noexcept
 {
-	stream << vector.x << ' ' << vector.y << ' ' << vector.z;
+	const CinMath::Vector<3, ValueType>& vector{ printer.Reference };
+	stream << PrintSpecifier::Opening() << vector.raw[0] << ", " << vector.raw[1] << ", " << vector.raw[2] << PrintSpecifier::Closing() << '\n';
 	return stream;
 }
 
-CIN_MATH_INLINE std::ostream& operator<<(std::ostream& stream, const CinMath::Vector4& vector) noexcept
+template<typename ValueType, typename PrintSpecifier = CinMath::Printing::DefaultVectorPrintSpecificer>
+CIN_MATH_INLINE std::ostream& operator<<(std::ostream& stream, const CinMath::Printing::VectorPrinter<CinMath::Vector<2, ValueType>, PrintSpecifier>& printer) noexcept
 {
-	stream << vector.x << ' ' << vector.y << ' ' << vector.z << ' ' << vector.w;
+	const CinMath::Vector<2, ValueType>& vector{ printer.Reference };
+	stream << PrintSpecifier::Opening() << vector.raw[0] << ", " << vector.raw[1] << PrintSpecifier::Closing() << '\n';
 	return stream;
 }
 
-CIN_MATH_INLINE std::ostream& operator<<(std::ostream& stream, const CinMath::Matrix2& matrix) noexcept
+template<typename ValueType, typename PrintSpecifier = CinMath::Printing::DefaultMatrixPrintSpecificer>
+CIN_MATH_INLINE std::ostream& operator<<(std::ostream& stream, const CinMath::Printing::MatrixPrinter<CinMath::Matrix<2, 2, ValueType>, PrintSpecifier>& printer) noexcept
 {
-	stream
-		<< matrix[0] << ' ' << matrix[1] << '\n'
-		<< matrix[2] << ' ' << matrix[3];
+	const CinMath::Matrix<2, 2, ValueType>& matrix{ printer.Reference };
+	const auto max{ CinMath::Printing::FindMaxWholeAndFractionPartSizes(&matrix.m11, &matrix.m22) };
+	const size_t width{ (max.WholeNumberPartLength + 1) + (max.FractionNumberPartLength ? max.FractionNumberPartLength + 1 : 0) };
+
+	std::stringstream output;
+	output << '\n' << std::fixed << std::setprecision(max.FractionNumberPartLength) 
+		<< PrintSpecifier::UpwardsColumnFacingLeft() << std::setw(width * 2 + 1) << ' ' << PrintSpecifier::UpwardsColumnFacingRight() 	   << '\n'
+		<< PrintSpecifier::Row() << std::setw(width) << matrix[0]  << std::setw(width) << matrix[1] << ' ' << PrintSpecifier::Row() 	   << '\n'
+		<< PrintSpecifier::Row() << std::setw(width) << matrix[2]  << std::setw(width) << matrix[3] << ' ' << PrintSpecifier::Row() 	   << '\n'
+		<< PrintSpecifier::DownwardsColumnFacingLeft() << std::setw(width * 2 + 1) << ' ' << PrintSpecifier::DownwardsColumnFacingRight()  << '\n';
+
+	return stream << output.str();
+}
+
+template<typename ValueType, typename PrintSpecifier = CinMath::Printing::DefaultMatrixPrintSpecificer>
+CIN_MATH_INLINE std::ostream& operator<<(std::ostream& stream, const CinMath::Printing::MatrixPrinter<CinMath::Matrix<3, 3, ValueType>, PrintSpecifier>& printer) noexcept
+{
+	const CinMath::Matrix<3, 3, ValueType>& matrix{ printer.Reference };
+	const auto max{ CinMath::Printing::FindMaxWholeAndFractionPartSizes(&matrix.m11, &matrix.m33) };
+	const size_t width{ (max.WholeNumberPartLength + 1) + (max.FractionNumberPartLength ? max.FractionNumberPartLength + 1 : 0) };
+
+	std::stringstream output;
+	output << '\n' << std::fixed << std::setprecision(max.FractionNumberPartLength) 
+		<< PrintSpecifier::UpwardsColumnFacingLeft() << std::setw(width * 3 + 1) << ' ' << PrintSpecifier::UpwardsColumnFacingRight() << '\n'
+		<< PrintSpecifier::Row() << std::setw(width) << matrix[0]  << std::setw(width) << matrix[1]  << std::setw(width) << matrix[2] << ' ' << PrintSpecifier::Row() << '\n'
+		<< PrintSpecifier::Row() << std::setw(width) << matrix[3]  << std::setw(width) << matrix[4]  << std::setw(width) << matrix[5] << ' ' << PrintSpecifier::Row() << '\n'
+		<< PrintSpecifier::Row() << std::setw(width) << matrix[6]  << std::setw(width) << matrix[7]  << std::setw(width) << matrix[8] << ' ' << PrintSpecifier::Row() << '\n'
+		<< PrintSpecifier::DownwardsColumnFacingLeft() << std::setw(width * 3 + 1) << ' ' << PrintSpecifier::DownwardsColumnFacingRight() << '\n';
+
+	return stream << output.str();
+}
+
+template<typename ValueType, typename PrintSpecifier = CinMath::Printing::DefaultMatrixPrintSpecificer>
+CIN_MATH_INLINE std::ostream& operator<<(std::ostream& stream, const CinMath::Printing::MatrixPrinter<CinMath::Matrix<4, 4, ValueType>, PrintSpecifier>& printer) noexcept
+{
+	const CinMath::Matrix<4, 4, ValueType>& matrix{ printer.Reference };
+	const auto max{ CinMath::Printing::FindMaxWholeAndFractionPartSizes(&matrix.m11, &matrix.m44) };
+	const size_t width{ (max.WholeNumberPartLength + 1) + (max.FractionNumberPartLength ? max.FractionNumberPartLength + 1 : 0) };
+
+	std::stringstream output;
+	output << '\n' << std::fixed << std::setprecision(max.FractionNumberPartLength) 
+		<< PrintSpecifier::UpwardsColumnFacingLeft() << std::setw(width * 4 + 1) << ' ' << PrintSpecifier::UpwardsColumnFacingRight() << '\n'
+		<< PrintSpecifier::Row() << std::setw(width) << matrix[0]  << std::setw(width) << matrix[1]  << std::setw(width) << matrix[2]  << std::setw(width) << matrix[3]  << ' ' << PrintSpecifier::Row() << '\n'
+		<< PrintSpecifier::Row() << std::setw(width) << matrix[4]  << std::setw(width) << matrix[5]  << std::setw(width) << matrix[6]  << std::setw(width) << matrix[7]  << ' ' << PrintSpecifier::Row() << '\n'
+		<< PrintSpecifier::Row() << std::setw(width) << matrix[8]  << std::setw(width) << matrix[9]  << std::setw(width) << matrix[10] << std::setw(width) << matrix[11] << ' ' << PrintSpecifier::Row() << '\n'
+		<< PrintSpecifier::Row() << std::setw(width) << matrix[12] << std::setw(width) << matrix[13] << std::setw(width) << matrix[14] << std::setw(width) << matrix[15] << ' ' << PrintSpecifier::Row() << '\n'
+		<< PrintSpecifier::DownwardsColumnFacingLeft() << std::setw(width * 4 + 1) << ' ' << PrintSpecifier::DownwardsColumnFacingRight() << '\n';
+
+	return stream << output.str();
+}
+
+template<CinMath::Length_t length, typename ValueType>
+CIN_MATH_INLINE std::ostream& operator<<(std::ostream& stream, const CinMath::Vector<length, ValueType>& vector) noexcept
+{
+	stream << CinMath::Printing::VectorPrinter(vector, CinMath::Printing::DefaultVectorPrintSpecificer());
 	return stream;
 }
 
-CIN_MATH_INLINE std::ostream& operator<<(std::ostream& stream, const CinMath::Matrix3& matrix) noexcept
+template<typename ValueType, typename VectorType, std::size_t SwizzleFirst, std::size_t SwizzleSecond>
+CIN_MATH_INLINE std::ostream& operator<<(std::ostream& stream, const CinMath::Vector2Swizzle<ValueType, VectorType, SwizzleFirst, SwizzleSecond>& swizzle) noexcept
 {
-	stream
-		<< matrix[0] << ' ' << matrix[1] << ' ' << matrix[2] << '\n'
-		<< matrix[3] << ' ' << matrix[4] << ' ' << matrix[5] << '\n'
-		<< matrix[6] << ' ' << matrix[7] << ' ' << matrix[8];
+	stream << '[' << swizzle.View[0] << ", " << swizzle.View[1] << ']' << '\n';
 	return stream;
 }
 
-CIN_MATH_INLINE std::ostream& operator<<(std::ostream& stream, const CinMath::Matrix4& matrix) noexcept
+template<typename ValueType, typename VectorType, std::size_t SwizzleFirst, std::size_t SwizzleSecond, std::size_t SwizzleThird>
+CIN_MATH_INLINE std::ostream& operator<<(std::ostream& stream, const CinMath::Vector3Swizzle<ValueType, VectorType, SwizzleFirst, SwizzleSecond, SwizzleThird>& swizzle) noexcept
 {
-	stream
-		<< matrix[0] << ' ' << matrix[1] << ' ' << matrix[2] << ' ' << matrix[3] << '\n'
-		<< matrix[4] << ' ' << matrix[5] << ' ' << matrix[6] << ' ' << matrix[7] << '\n'
-		<< matrix[8] << ' ' << matrix[9] << ' ' << matrix[10] << ' ' << matrix[11] << '\n'
-		<< matrix[12] << ' ' << matrix[13] << ' ' << matrix[14] << ' ' << matrix[15];
+	stream << '[' << swizzle.View[0] << ", " << swizzle.View[1] << ", " << swizzle.View[2] << ']' << '\n';
 	return stream;
 }
 
-CIN_MATH_INLINE std::ostream& operator<<(std::ostream& stream, const CinMath::Quaternion& quaternion) noexcept
+template<typename ValueType, typename VectorType, std::size_t SwizzleFirst, std::size_t SwizzleSecond, std::size_t SwizzleThird, std::size_t SwizzleFourth>
+CIN_MATH_INLINE std::ostream& operator<<(std::ostream& stream, const CinMath::Vector4Swizzle<ValueType, VectorType, SwizzleFirst, SwizzleSecond, SwizzleThird, SwizzleFourth>& swizzle) noexcept
 {
-	stream << quaternion.a << ' ' << quaternion.b << ' ' << quaternion.c << ' ' << quaternion.d;
+	stream << '[' << swizzle.View[0] << ", " << swizzle.View[1] << ", " << swizzle.View[2] << ", " << swizzle.View[3] << ']' << '\n';
+	return stream;
+}
+
+template<CinMath::Length_t rows, CinMath::Length_t columns, typename ValueType>
+CIN_MATH_INLINE std::ostream& operator<<(std::ostream& stream, const CinMath::Matrix<rows, columns, ValueType>& matrix) noexcept
+{
+	stream << CinMath::Printing::MatrixPrinter(matrix, CinMath::Printing::DefaultMatrixPrintSpecificer());
+	return stream;
+}
+
+template<typename ValueType>
+CIN_MATH_INLINE std::ostream& operator<<(std::ostream& stream, const CinMath::TQuaternion<ValueType>& quaternion)
+{
+	stream << "[" << quaternion.raw[0] << ", (" << quaternion.raw[1] << "i, " << quaternion.raw[2] << "j, " << quaternion.raw[3] << "k)]\n";
 	return stream;
 }

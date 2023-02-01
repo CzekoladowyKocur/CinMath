@@ -1,9 +1,9 @@
 namespace CinMath {
 	template<typename ValueType>
-	class QuaternionBase final
+	class TQuaternion final
 	{
 	public:
-		consteval explicit QuaternionBase() noexcept
+		consteval explicit TQuaternion() noexcept
 			:
 			a(static_cast<ValueType>(0)),
 			b(static_cast<ValueType>(0)),
@@ -11,7 +11,7 @@ namespace CinMath {
 			d(static_cast<ValueType>(0))
 		{}
 
-		explicit QuaternionBase(
+		constexpr explicit TQuaternion(
 			const ValueType a,
 			const ValueType b,
 			const ValueType c,
@@ -23,7 +23,7 @@ namespace CinMath {
 			d(d)
 		{}
 
-		explicit QuaternionBase(
+		constexpr explicit TQuaternion(
 			const ValueType scalar,
 			const Vector<3, ValueType>& vector) noexcept
 			:
@@ -31,44 +31,62 @@ namespace CinMath {
 			vector(vector)
 		{}
 
-		CIN_MATH_INLINE operator ValueType* () noexcept
+		constexpr CIN_MATH_INLINE operator ValueType* () noexcept
+		{
+			return raw;
+		}
+	
+		constexpr CIN_MATH_INLINE operator const ValueType* () const noexcept
 		{
 			return raw;
 		}
 
-		CIN_MATH_INLINE operator const ValueType* () const noexcept
-		{
-			return raw;
-		}
-
-		CIN_MATH_INLINE ValueType& operator[](const Length_t index) noexcept
+		constexpr CIN_MATH_INLINE ValueType& operator[](const Length_t index) noexcept
 		{
 			return raw[index];
 		}
 
-		CIN_MATH_INLINE const ValueType operator[](const Length_t index) const noexcept
+		constexpr CIN_MATH_INLINE const ValueType operator[](const Length_t index) const noexcept
 		{
 			return raw[index];
 		}
 
-		CIN_MATH_INLINE constexpr operator Vector<4, ValueType>() const noexcept
+		constexpr CIN_MATH_INLINE operator Vector<4, ValueType>() const noexcept
 		{
 			return Vector<4, ValueType>
 			{
-				raw[0], raw[1], raw[2], raw[3],
+				raw[0], raw[1], raw[2], raw[3]
 			};
 		}
 
-		friend QuaternionBase<ValueType> CIN_CALL operator+(const QuaternionBase<ValueType>& quaternion) noexcept;
-		friend QuaternionBase<ValueType> CIN_CALL operator-(const QuaternionBase<ValueType>& quaternion) noexcept;
+		constexpr bool operator==(const TQuaternion<ValueType>& other) const noexcept
+		{
+			return 
+				raw[0] == other.raw[0] &&
+				raw[1] == other.raw[1] &&
+				raw[2] == other.raw[2] &&
+				raw[3] == other.raw[3];
+		}
 
-		friend QuaternionBase<ValueType> CIN_CALL operator+(const QuaternionBase<ValueType>& lhs, const QuaternionBase<ValueType>& rhs) noexcept;
-		friend QuaternionBase<ValueType> CIN_CALL operator-(const QuaternionBase<ValueType>& lhs, const QuaternionBase<ValueType>& rhs) noexcept;
-		friend QuaternionBase<ValueType> CIN_CALL operator*(const QuaternionBase<ValueType>& lhs, const QuaternionBase<ValueType>& rhs) noexcept;
-		friend QuaternionBase<ValueType> CIN_CALL operator/(const QuaternionBase<ValueType>& lhs, const QuaternionBase<ValueType>& rhs) noexcept;
+		constexpr bool operator!=(const TQuaternion<ValueType>& other) const noexcept
+		{
+			return 
+				raw[0] != other.raw[0] ||
+				raw[1] != other.raw[1] ||
+				raw[2] != other.raw[2] ||
+				raw[3] != other.raw[3];
+		}
 
-		friend QuaternionBase<ValueType> CIN_CALL operator*(const QuaternionBase<ValueType>& quaternion, const ValueType scalar) noexcept;
-		friend QuaternionBase<ValueType> CIN_CALL operator/(const QuaternionBase<ValueType>& quaternion, const ValueType scalar) noexcept;
+		friend TQuaternion<ValueType> CIN_MATH_CALL operator+(const TQuaternion<ValueType>& quaternion) noexcept;
+		friend TQuaternion<ValueType> CIN_MATH_CALL operator-(const TQuaternion<ValueType>& quaternion) noexcept;
+
+		friend TQuaternion<ValueType> CIN_MATH_CALL operator+(const TQuaternion<ValueType>& lhs, const TQuaternion<ValueType>& rhs) noexcept;
+		friend TQuaternion<ValueType> CIN_MATH_CALL operator-(const TQuaternion<ValueType>& lhs, const TQuaternion<ValueType>& rhs) noexcept;
+		friend TQuaternion<ValueType> CIN_MATH_CALL operator*(const TQuaternion<ValueType>& lhs, const TQuaternion<ValueType>& rhs) noexcept;
+		friend TQuaternion<ValueType> CIN_MATH_CALL operator/(const TQuaternion<ValueType>& lhs, const TQuaternion<ValueType>& rhs) noexcept;
+
+		friend TQuaternion<ValueType> CIN_MATH_CALL operator*(const TQuaternion<ValueType>& quaternion, const ValueType scalar) noexcept;
+		friend TQuaternion<ValueType> CIN_MATH_CALL operator/(const TQuaternion<ValueType>& quaternion, const ValueType scalar) noexcept;
 	public:
 		union
 		{
@@ -99,6 +117,6 @@ namespace CinMath {
 		};
 	};
 
-	typedef QuaternionBase<float>	Quaternion;
-	typedef QuaternionBase<double>	DQuaternion;
+	typedef TQuaternion<float>	Quaternion;
+	typedef TQuaternion<double>	DQuaternion;
 }

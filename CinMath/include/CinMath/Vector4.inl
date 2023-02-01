@@ -1,12 +1,12 @@
 #pragma once
 
 namespace CinMath {
-	CIN_MATH_INLINE Vector<4, float> CIN_CALL operator+(const Vector<4, float>& vector) noexcept
+	CIN_MATH_INLINE Vector<4, float> CIN_MATH_CALL operator+(const Vector<4, float>& vector) noexcept
 	{
 		return vector;
 	}
 
-	CIN_MATH_INLINE Vector<4, float> CIN_CALL operator-(const Vector<4, float>& vector) noexcept
+	CIN_MATH_INLINE Vector<4, float> CIN_MATH_CALL operator-(const Vector<4, float>& vector) noexcept
 	{
 		Vector<4, float> result;
 #if (CIN_INSTRUCTION_SET) & (CIN_INSTRUCTION_SET_SSE_BIT)
@@ -20,7 +20,7 @@ namespace CinMath {
 		return result;
 	}
 
-	CIN_MATH_INLINE void CIN_CALL operator+=(Vector<4, float>& lhs, const Vector<4, float>& rhs) noexcept
+	CIN_MATH_INLINE void CIN_MATH_CALL operator+=(Vector<4, float>& lhs, const Vector<4, float>& rhs) noexcept
 	{
 #if (CIN_INSTRUCTION_SET) & (CIN_INSTRUCTION_SET_SSE_BIT)
 		lhs.data = _mm_add_ps(lhs.data, rhs.data);
@@ -32,7 +32,7 @@ namespace CinMath {
 #endif
 	}
 
-	CIN_MATH_INLINE void CIN_CALL operator-=(Vector<4, float>& lhs, const Vector<4, float>& rhs) noexcept
+	CIN_MATH_INLINE void CIN_MATH_CALL operator-=(Vector<4, float>& lhs, const Vector<4, float>& rhs) noexcept
 	{
 #if (CIN_INSTRUCTION_SET) & (CIN_INSTRUCTION_SET_SSE_BIT)
 		lhs.data = _mm_sub_ps(lhs.data, rhs.data);
@@ -44,7 +44,7 @@ namespace CinMath {
 #endif
 	}
 
-	CIN_MATH_INLINE void CIN_CALL operator*=(Vector<4, float>& lhs, const Vector<4, float>& rhs) noexcept
+	CIN_MATH_INLINE void CIN_MATH_CALL operator*=(Vector<4, float>& lhs, const Vector<4, float>& rhs) noexcept
 	{
 #if (CIN_INSTRUCTION_SET) & (CIN_INSTRUCTION_SET_SSE_BIT)
 		lhs.data = _mm_mul_ps(lhs.data, rhs.data);
@@ -56,7 +56,7 @@ namespace CinMath {
 #endif
 	}
 
-	CIN_MATH_INLINE void CIN_CALL operator/=(Vector<4, float>& lhs, const Vector<4, float>& rhs) noexcept
+	CIN_MATH_INLINE void CIN_MATH_CALL operator/=(Vector<4, float>& lhs, const Vector<4, float>& rhs) noexcept
 	{
 #if (CIN_INSTRUCTION_SET) & (CIN_INSTRUCTION_SET_SSE_BIT)
 		lhs.data = _mm_div_ps(lhs.data, rhs.data);
@@ -68,7 +68,7 @@ namespace CinMath {
 #endif
 	}
 
-	CIN_MATH_INLINE void CIN_CALL operator+=(Vector<4, float>& lhs, const float rhs) noexcept
+	CIN_MATH_INLINE void CIN_MATH_CALL operator+=(Vector<4, float>& lhs, const float rhs) noexcept
 	{
 #if (CIN_INSTRUCTION_SET) & (CIN_INSTRUCTION_SET_SSE_BIT)
 		lhs.data = _mm_add_ps(lhs.data, __m128{ rhs, rhs, rhs, rhs});
@@ -80,7 +80,7 @@ namespace CinMath {
 #endif
 	}
 
-	CIN_MATH_INLINE void CIN_CALL operator-=(Vector<4, float>& lhs, const float rhs) noexcept
+	CIN_MATH_INLINE void CIN_MATH_CALL operator-=(Vector<4, float>& lhs, const float rhs) noexcept
 	{
 #if (CIN_INSTRUCTION_SET) & (CIN_INSTRUCTION_SET_SSE_BIT)
 		lhs.data = _mm_sub_ps(lhs.data, __m128{ rhs, rhs, rhs, rhs});
@@ -92,7 +92,7 @@ namespace CinMath {
 #endif
 	}
 
-	CIN_MATH_INLINE void CIN_CALL operator*=(Vector<4, float>& lhs, const float rhs) noexcept
+	CIN_MATH_INLINE void CIN_MATH_CALL operator*=(Vector<4, float>& lhs, const float rhs) noexcept
 	{
 #if (CIN_INSTRUCTION_SET) & (CIN_INSTRUCTION_SET_SSE_BIT)
 		lhs.data = _mm_mul_ps(lhs.data, __m128{ rhs, rhs, rhs, rhs});
@@ -104,7 +104,7 @@ namespace CinMath {
 #endif
 	}
 
-	CIN_MATH_INLINE void CIN_CALL operator/=(Vector<4, float>& lhs, const float rhs) noexcept
+	CIN_MATH_INLINE void CIN_MATH_CALL operator/=(Vector<4, float>& lhs, const float rhs) noexcept
 	{
 #if (CIN_INSTRUCTION_SET) & (CIN_INSTRUCTION_SET_SSE_BIT)
 		lhs.data = _mm_div_ps(lhs.data, __m128{ rhs, rhs, rhs, rhs});
@@ -116,7 +116,7 @@ namespace CinMath {
 #endif
 	}
 
-	CIN_MATH_INLINE Vector<4, float> CIN_CALL operator+(const Vector<4, float>& lhs, const Vector<4, float>& rhs) noexcept
+	CIN_MATH_INLINE Vector<4, float> CIN_MATH_CALL operator+(const Vector<4, float>& lhs, const Vector<4, float>& rhs) noexcept
 	{
 		Vector<4, float> result;
 #if (CIN_INSTRUCTION_SET) & (CIN_INSTRUCTION_SET_SSE_BIT)
@@ -130,7 +130,7 @@ namespace CinMath {
 		return result;
 	}
 
-	CIN_MATH_INLINE Vector<4, float> CIN_CALL operator-(const Vector<4, float>& lhs, const Vector<4, float>& rhs) noexcept
+	CIN_MATH_INLINE Vector<4, float> CIN_MATH_CALL operator-(const Vector<4, float>& lhs, const Vector<4, float>& rhs) noexcept
 	{
 		Vector<4, float> result;
 #if (CIN_INSTRUCTION_SET) & (CIN_INSTRUCTION_SET_SSE_BIT)
@@ -144,7 +144,7 @@ namespace CinMath {
 		return result;
 	}
 
-	CIN_MATH_INLINE Vector<4, float> CIN_CALL operator*(const Vector<4, float>& lhs, const Vector<4, float>& rhs) noexcept
+	CIN_MATH_INLINE Vector<4, float> CIN_MATH_CALL operator*(const Vector<4, float>& lhs, const Vector<4, float>& rhs) noexcept
 	{
 		Vector<4, float> result;
 #if (CIN_INSTRUCTION_SET) & (CIN_INSTRUCTION_SET_SSE_BIT)
@@ -158,7 +158,7 @@ namespace CinMath {
 		return result;
 	}
 
-	CIN_MATH_INLINE Vector<4, float> CIN_CALL operator/(const Vector<4, float>& lhs, const Vector<4, float>& rhs) noexcept
+	CIN_MATH_INLINE Vector<4, float> CIN_MATH_CALL operator/(const Vector<4, float>& lhs, const Vector<4, float>& rhs) noexcept
 	{
 		Vector<4, float> result;
 #if (CIN_INSTRUCTION_SET) & (CIN_INSTRUCTION_SET_SSE_BIT)
@@ -172,7 +172,7 @@ namespace CinMath {
 		return result;
 	}
 
-	CIN_MATH_INLINE Vector<4, float> CIN_CALL operator+(const Vector<4, float>& lhs, const float rhs) noexcept
+	CIN_MATH_INLINE Vector<4, float> CIN_MATH_CALL operator+(const Vector<4, float>& lhs, const float rhs) noexcept
 	{
 		Vector<4, float> result;
 #if (CIN_INSTRUCTION_SET) & (CIN_INSTRUCTION_SET_SSE_BIT)
@@ -186,7 +186,7 @@ namespace CinMath {
 		return result;
 	}
 
-	CIN_MATH_INLINE Vector<4, float> CIN_CALL operator-(const Vector<4, float>& lhs, const float rhs) noexcept
+	CIN_MATH_INLINE Vector<4, float> CIN_MATH_CALL operator-(const Vector<4, float>& lhs, const float rhs) noexcept
 	{
 		Vector<4, float> result;
 #if (CIN_INSTRUCTION_SET) & (CIN_INSTRUCTION_SET_SSE_BIT)
@@ -200,7 +200,7 @@ namespace CinMath {
 		return result;
 	}
 
-	CIN_MATH_INLINE Vector<4, float> CIN_CALL operator*(const Vector<4, float>& lhs, const float rhs) noexcept
+	CIN_MATH_INLINE Vector<4, float> CIN_MATH_CALL operator*(const Vector<4, float>& lhs, const float rhs) noexcept
 	{
 		Vector<4, float> result;
 #if (CIN_INSTRUCTION_SET) & (CIN_INSTRUCTION_SET_SSE_BIT)
@@ -214,7 +214,7 @@ namespace CinMath {
 		return result;
 	}
 
-	CIN_MATH_INLINE Vector<4, float> CIN_CALL operator/(const Vector<4, float>& lhs, const float rhs) noexcept
+	CIN_MATH_INLINE Vector<4, float> CIN_MATH_CALL operator/(const Vector<4, float>& lhs, const float rhs) noexcept
 	{
 		Vector<4, float> result;
 #if (CIN_INSTRUCTION_SET) & (CIN_INSTRUCTION_SET_SSE_BIT)
@@ -228,7 +228,7 @@ namespace CinMath {
 		return result;
 	}
 
-	CIN_MATH_INLINE Vector<4, float> CIN_CALL operator*(const Vector<4, float>& lhs, const Matrix<4, 4, float>& rhs) noexcept
+	CIN_MATH_INLINE Vector<4, float> CIN_MATH_CALL operator*(const Vector<4, float>& lhs, const Matrix<4, 4, float>& rhs) noexcept
 	{
 		Vector<4, float> result;
 #if (CIN_INSTRUCTION_SET) & (CIN_INSTRUCTION_SET_AVX_BIT)
@@ -266,6 +266,194 @@ namespace CinMath {
 		result.raw[2] = lhs[0] * rhs[8] + lhs[1] * rhs[9] + lhs[2] * rhs[10] + lhs[3] * rhs[11];
 		result.raw[3] = lhs[0] * rhs[12] + lhs[1] * rhs[13] + lhs[2] * rhs[14] + lhs[3] * rhs[15];
 #endif
+		return result;
+	}
+
+	CIN_MATH_INLINE Vector<4, double> CIN_MATH_CALL operator+(const Vector<4, double>& vector) noexcept
+	{
+		return vector;
+	}
+
+	CIN_MATH_INLINE Vector<4, double> CIN_MATH_CALL operator-(const Vector<4, double>& vector) noexcept
+	{
+		Vector<4, double> result;
+
+		result.raw[0] = -vector.raw[0];
+		result.raw[1] = -vector.raw[1];
+		result.raw[2] = -vector.raw[2];
+		result.raw[3] = -vector.raw[3];
+
+		return result;
+	}
+
+	CIN_MATH_INLINE void CIN_MATH_CALL operator+=(Vector<4, double>& lhs, const Vector<4, double>& rhs) noexcept
+	{
+		lhs.raw[0] += rhs.raw[0];
+		lhs.raw[1] += rhs.raw[1];
+		lhs.raw[2] += rhs.raw[2];
+		lhs.raw[3] += rhs.raw[3];
+	}
+	CIN_MATH_INLINE void CIN_MATH_CALL operator-=(Vector<4, double>& lhs, const Vector<4, double>& rhs) noexcept
+	{
+		lhs.raw[0] -= rhs.raw[0];
+		lhs.raw[1] -= rhs.raw[1];
+		lhs.raw[2] -= rhs.raw[2];
+		lhs.raw[3] -= rhs.raw[3];
+	}
+
+	CIN_MATH_INLINE void CIN_MATH_CALL operator*=(Vector<4, double>& lhs, const Vector<4, double>& rhs) noexcept
+	{
+		lhs.raw[0] *= rhs.raw[0];
+		lhs.raw[1] *= rhs.raw[1];
+		lhs.raw[2] *= rhs.raw[2];
+		lhs.raw[3] *= rhs.raw[3];
+	}
+
+	CIN_MATH_INLINE void CIN_MATH_CALL operator/=(Vector<4, double>& lhs, const Vector<4, double>& rhs) noexcept
+	{
+		lhs.raw[0] /= rhs.raw[0];
+		lhs.raw[1] /= rhs.raw[1];
+		lhs.raw[2] /= rhs.raw[2];
+		lhs.raw[3] /= rhs.raw[3];
+	}
+
+	CIN_MATH_INLINE void CIN_MATH_CALL operator+=(Vector<4, double>& lhs, const double rhs) noexcept
+	{
+		lhs.raw[0] += rhs;
+		lhs.raw[1] += rhs;
+		lhs.raw[2] += rhs;
+		lhs.raw[3] += rhs;
+	}
+
+	CIN_MATH_INLINE void CIN_MATH_CALL operator-=(Vector<4, double>& lhs, const double rhs) noexcept
+	{
+		lhs.raw[0] -= rhs;
+		lhs.raw[1] -= rhs;
+		lhs.raw[2] -= rhs;
+		lhs.raw[3] -= rhs;
+	}
+
+	CIN_MATH_INLINE void CIN_MATH_CALL operator*=(Vector<4, double>& lhs, const double rhs) noexcept
+	{
+		lhs.raw[0] *= rhs;
+		lhs.raw[1] *= rhs;
+		lhs.raw[2] *= rhs;
+		lhs.raw[3] *= rhs;
+	}
+
+	CIN_MATH_INLINE void CIN_MATH_CALL operator/=(Vector<4, double>& lhs, const double rhs) noexcept
+	{
+		lhs.raw[0] /= rhs;
+		lhs.raw[1] /= rhs;
+		lhs.raw[2] /= rhs;
+		lhs.raw[3] /= rhs;
+	}
+
+	CIN_MATH_INLINE Vector<4, double> CIN_MATH_CALL operator+(const Vector<4, double>& lhs, const Vector<4, double>& rhs) noexcept
+	{
+		Vector<4, double> result;
+
+		result.raw[0] = lhs.raw[0] + rhs.raw[0];
+		result.raw[1] = lhs.raw[1] + rhs.raw[1];
+		result.raw[2] = lhs.raw[2] + rhs.raw[2];
+		result.raw[3] = lhs.raw[3] + rhs.raw[3];
+
+		return result;
+	}
+
+	CIN_MATH_INLINE Vector<4, double> CIN_MATH_CALL operator-(const Vector<4, double>& lhs, const Vector<4, double>& rhs) noexcept
+	{
+		Vector<4, double> result;
+
+		result.raw[0] = lhs.raw[0] - rhs.raw[0];
+		result.raw[1] = lhs.raw[1] - rhs.raw[1];
+		result.raw[2] = lhs.raw[2] - rhs.raw[2];
+		result.raw[3] = lhs.raw[3] - rhs.raw[3];
+
+		return result;
+	}
+
+	CIN_MATH_INLINE Vector<4, double> CIN_MATH_CALL operator*(const Vector<4, double>& lhs, const Vector<4, double>& rhs) noexcept
+	{
+		Vector<4, double> result;
+
+		result.raw[0] = lhs.raw[0] * rhs.raw[0];
+		result.raw[1] = lhs.raw[1] * rhs.raw[1];
+		result.raw[2] = lhs.raw[2] * rhs.raw[2];
+		result.raw[3] = lhs.raw[3] * rhs.raw[3];
+
+		return result;
+	}
+
+	CIN_MATH_INLINE Vector<4, double> CIN_MATH_CALL operator/(const Vector<4, double>& lhs, const Vector<4, double>& rhs) noexcept
+	{
+		Vector<4, double> result;
+
+		result.raw[0] = lhs.raw[0] / rhs.raw[0];
+		result.raw[1] = lhs.raw[1] / rhs.raw[1];
+		result.raw[2] = lhs.raw[2] / rhs.raw[2];
+		result.raw[3] = lhs.raw[3] / rhs.raw[3];
+
+		return result;
+	}
+
+	CIN_MATH_INLINE Vector<4, double> CIN_MATH_CALL operator+(const Vector<4, double>& lhs, const double rhs) noexcept
+	{
+		Vector<4, double> result;
+		
+		result.raw[0] = lhs.raw[0] + rhs;
+		result.raw[1] = lhs.raw[1] + rhs;
+		result.raw[2] = lhs.raw[2] + rhs;
+		result.raw[3] = lhs.raw[3] + rhs;
+
+		return result;
+	}
+
+	CIN_MATH_INLINE Vector<4, double> CIN_MATH_CALL operator-(const Vector<4, double>& lhs, const double rhs) noexcept
+	{
+		Vector<4, double> result;
+
+		result.raw[0] = lhs.raw[0] - rhs;
+		result.raw[1] = lhs.raw[1] - rhs;
+		result.raw[2] = lhs.raw[2] - rhs;
+		result.raw[3] = lhs.raw[3] - rhs;
+
+		return result;
+	}
+
+	CIN_MATH_INLINE Vector<4, double> CIN_MATH_CALL operator*(const Vector<4, double>& lhs, const double rhs) noexcept
+	{
+		Vector<4, double> result;
+
+		result.raw[0] = lhs.raw[0] * rhs;
+		result.raw[1] = lhs.raw[1] * rhs;
+		result.raw[2] = lhs.raw[2] * rhs;
+		result.raw[3] = lhs.raw[3] * rhs;
+
+		return result;
+	}
+
+	CIN_MATH_INLINE Vector<4, double> CIN_MATH_CALL operator/(const Vector<4, double>& lhs, const double rhs) noexcept
+	{
+		Vector<4, double> result;
+
+		result.raw[0] = lhs.raw[0] / rhs;
+		result.raw[1] = lhs.raw[1] / rhs;
+		result.raw[2] = lhs.raw[2] / rhs;
+		result.raw[3] = lhs.raw[3] / rhs;
+
+		return result;
+	}
+
+	CIN_MATH_INLINE Vector<4, double> CIN_MATH_CALL operator*(const Vector<4, double>& lhs, const Matrix<4, 4, double>& rhs) noexcept
+	{
+		Vector<4, double> result;
+
+		result.raw[0] = lhs[0] * rhs[0] + lhs[1] * rhs[1] + lhs[2] * rhs[2] + lhs[3] * rhs[3];
+		result.raw[1] = lhs[0] * rhs[4] + lhs[1] * rhs[5] + lhs[2] * rhs[6] + lhs[3] * rhs[7];
+		result.raw[2] = lhs[0] * rhs[8] + lhs[1] * rhs[9] + lhs[2] * rhs[10] + lhs[3] * rhs[11];
+		result.raw[3] = lhs[0] * rhs[12] + lhs[1] * rhs[13] + lhs[2] * rhs[14] + lhs[3] * rhs[15];
+		
 		return result;
 	}
 }

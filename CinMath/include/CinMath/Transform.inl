@@ -8,7 +8,7 @@ namespace CinMath {
 	 * @return angle in radians
 	 */
 	template<typename ValueType>
-	CIN_MATH_INLINE ValueType ToRadians(const ValueType degrees) noexcept
+	constexpr CIN_MATH_INLINE ValueType ToRadians(const ValueType degrees) noexcept
 	{
 		static_assert(std::is_floating_point_v<ValueType>, "Floating point conversion only is supported");
 		return degrees * AtCompileTime(Constants::PI<ValueType> / static_cast<ValueType>(180U));
@@ -21,7 +21,7 @@ namespace CinMath {
 	 * @return angle in degrees
 	 */
 	template<typename ValueType>
-	CIN_MATH_INLINE ValueType ToDegrees(const ValueType radians) noexcept
+	constexpr CIN_MATH_INLINE ValueType ToDegrees(const ValueType radians) noexcept
 	{
 		static_assert(std::is_floating_point_v<ValueType>, "Floating point conversion only is supported");
 		return radians * AtCompileTime(static_cast<ValueType>(180U) / Constants::PI<ValueType>);
@@ -101,7 +101,7 @@ namespace CinMath {
 	 * @return conjugate of input quaternion
 	 */
 	template<typename ValueType>
-	CIN_MATH_INLINE QuaternionBase<ValueType> Conjugate(const QuaternionBase<ValueType>& quaternion) noexcept;
+	CIN_MATH_INLINE TQuaternion<ValueType> Conjugate(const TQuaternion<ValueType>& quaternion) noexcept;
 
 	/**
 	 * Calculates the norm (length) of a given quaternion
@@ -110,7 +110,7 @@ namespace CinMath {
 	 * @return norm of input quaternion
 	 */
 	template<typename ValueType>
-	CIN_MATH_INLINE ValueType Norm(const QuaternionBase<ValueType>& quaternion) noexcept;
+	CIN_MATH_INLINE ValueType Norm(const TQuaternion<ValueType>& quaternion) noexcept;
 
 	/**
 	 * Calculates the squared norm (length) of a given quaternion
@@ -119,7 +119,7 @@ namespace CinMath {
 	 * @return squared norm of input quaternion
 	 */
 	template<typename ValueType>
-	CIN_MATH_INLINE ValueType NormSquared(const QuaternionBase<ValueType>& quaternion) noexcept;
+	CIN_MATH_INLINE ValueType NormSquared(const TQuaternion<ValueType>& quaternion) noexcept;
 
 	/**
 	 * Normalizes a given quaternion
@@ -128,7 +128,7 @@ namespace CinMath {
 	 * @return Normalized input quaternion
 	 */
 	template<typename ValueType>
-	CIN_MATH_INLINE QuaternionBase<ValueType> Normalize(const QuaternionBase<ValueType>& quaternion) noexcept;
+	CIN_MATH_INLINE TQuaternion<ValueType> Normalize(const TQuaternion<ValueType>& quaternion) noexcept;
 
 	/**
 	 * Calculates the inverse of a given quaternion
@@ -137,7 +137,7 @@ namespace CinMath {
 	 * @return inverse of input quaternion
 	 */
 	template<typename ValueType>
-	CIN_MATH_INLINE QuaternionBase<ValueType> Inverse(const QuaternionBase<ValueType>& quaternion) noexcept;
+	CIN_MATH_INLINE TQuaternion<ValueType> Inverse(const TQuaternion<ValueType>& quaternion) noexcept;
 
 	/**
 	 * Rotates the vector by a given quaternion (in unit form)
@@ -147,17 +147,17 @@ namespace CinMath {
 	 * @return rotated input vector by input quaternion
 	 */
 	template<typename ValueType>
-	CIN_MATH_INLINE Vector<3, ValueType> Rotate(const Vector<3, ValueType>& vector, const QuaternionBase<ValueType>& rotation) noexcept;
+	CIN_MATH_INLINE Vector<3, ValueType> Rotate(const Vector<3, ValueType>& vector, const TQuaternion<ValueType>& rotation) noexcept;
 
 	/**
-	 * Calculates quaternion in unit form based off an axis and angle in radians.
+	 * Calculates quaternion in unit form based off an axis and angle specified in radians.
 	 * 
 	 * @param input vector, an arbitrary axis of rotation
 	 * @param input angle, the angle of rotation
 	 * @return quaternion of rotation in unit form
 	 */
 	template<typename ValueType>
-	CIN_MATH_INLINE QuaternionBase<ValueType> AxisAngleToQuaternion(const ValueType angle, const Vector<3, ValueType>& vector) noexcept;
+	CIN_MATH_INLINE TQuaternion<ValueType> AxisAngleToQuaternion(const Angle angle, const Vector<3, ValueType>& vector) noexcept;
 
 	/**
 	 * Calculates quaternion in unit form based off an axis angle. The function reads the x element of the vector as the rotation angle (in radians)
@@ -167,7 +167,7 @@ namespace CinMath {
 	 * @return quaternion of rotation in unit form
 	 */
 	template<typename ValueType>
-	CIN_MATH_INLINE QuaternionBase<ValueType> AxisAngleToQuaternion(const Vector<4, ValueType>& vector) noexcept;
+	CIN_MATH_INLINE TQuaternion<ValueType> AxisAngleToQuaternion(const Vector<4, ValueType>& vector) noexcept;
 
 	/**
 	 * Converts a given unit form quaternion to an axis angle
@@ -176,7 +176,7 @@ namespace CinMath {
 	 * @return axis angle vector, vector.x -> angle in radians, vector.yzw -> an arbitrary axis of rotation
 	 */
 	template<typename ValueType>
-	CIN_MATH_INLINE Vector<4, ValueType> QuaternionToAxisAngle(const QuaternionBase<ValueType>& quaternion) noexcept;
+	CIN_MATH_INLINE Vector<4, ValueType> QuaternionToAxisAngle(const TQuaternion<ValueType>& quaternion) noexcept;
 
 	/**
 	 * Translates a given matrix by a vector
@@ -227,7 +227,7 @@ namespace CinMath {
 	 * @return Rotated input matrix by the input angle around the input axis
 	 */
 	template<Length_t rows, Length_t columns, typename ValueType>
-	CIN_MATH_INLINE Matrix<rows, columns, ValueType> Rotate(const Matrix<rows, columns, ValueType>& matrix, const Vector<3, ValueType>& axis, const ValueType rotation) noexcept;
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> Rotate(const Matrix<rows, columns, ValueType>& matrix, const Vector<3, ValueType>& axis, const TAngle<ValueType> rotation) noexcept;
 
 	/**
 	 * Rotates an identity matrix by an angle (in radians) around an arbitrary axis
@@ -237,7 +237,7 @@ namespace CinMath {
 	 * @return Rotated identity matrix by the input angle around the input axis
 	 */
 	template<Length_t rows, Length_t columns, typename ValueType>
-	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateIdentity(const Vector<3, ValueType>& axis, const ValueType rotation) noexcept;
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateIdentity(const Vector<3, ValueType>& axis, const TAngle<ValueType> rotation) noexcept;
 
 	/**
 	 * Rotates a given matrix by an angle (in radians) around the x axis
@@ -247,7 +247,7 @@ namespace CinMath {
 	 * @return Rotated input matrix by the input angle around the x axis
 	 */
 	template<Length_t rows, Length_t columns, typename ValueType>
-	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateX(const Matrix<rows, columns, ValueType>& matrix, const ValueType rotation) noexcept;
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateX(const Matrix<rows, columns, ValueType>& matrix, const TAngle<ValueType> rotation) noexcept;
 
 	/**
 	 * Rotates an identity matrix by an angle (in radians) around the x axis
@@ -256,7 +256,7 @@ namespace CinMath {
 	 * @return Rotated identity matrix by the input angle around the x axis
 	 */
 	template<Length_t rows, Length_t columns, typename ValueType>
-	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateXIdentity(const ValueType rotation) noexcept;
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateXIdentity(const TAngle<ValueType> rotation) noexcept;
 
 	/**
 	 * Rotates a given matrix by an angle (in radians) around the y axis
@@ -266,7 +266,7 @@ namespace CinMath {
 	 * @return Rotated input matrix by the input angle around the y axis
 	 */
 	template<Length_t rows, Length_t columns, typename ValueType>
-	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateY(const Matrix<rows, columns, ValueType>& matrix, const ValueType rotation) noexcept;
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateY(const Matrix<rows, columns, ValueType>& matrix, const TAngle<ValueType> rotation) noexcept;
 
 	/**
 	 * Rotates an identity matrix by an angle (in radians) around the y axis
@@ -275,7 +275,7 @@ namespace CinMath {
 	 * @return Rotated identity matrix by the input angle around the y axis
 	 */
 	template<Length_t rows, Length_t columns, typename ValueType>
-	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateYIdentity(const ValueType rotation) noexcept;
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateYIdentity(const TAngle<ValueType> rotation) noexcept;
 
 	/**
 	 * Rotates a given matrix by an angle (in radians) around the z axis
@@ -285,7 +285,7 @@ namespace CinMath {
 	 * @return Rotated input matrix by the input angle around the z axis
 	 */
 	template<Length_t rows, Length_t columns, typename ValueType>
-	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateZ(const Matrix<rows, columns, ValueType>& matrix, const ValueType rotation) noexcept;
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateZ(const Matrix<rows, columns, ValueType>& matrix, const TAngle<ValueType> rotation) noexcept;
 
 	/**
 	 * Rotates an identity matrix by an angle (in radians) around the z axis
@@ -294,7 +294,7 @@ namespace CinMath {
 	 * @return Rotated identity matrix by the input angle around the z axis
 	 */
 	template<Length_t rows, Length_t columns, typename ValueType>
-	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateZIdentity(const ValueType rotation) noexcept;
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateZIdentity(const TAngle<ValueType> rotation) noexcept;
 
 	/**
 	 * Calculates the perspective projection
@@ -472,25 +472,7 @@ namespace CinMath {
 		{
 			CIN_MATH_INLINE static ValueType implementation(const Vector<4, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept
 			{
-#if (CIN_INSTRUCTION_SET) & (CIN_INSTRUCTION_SET_SSE_BIT) & 0
-				const __m128 m0{ _mm_mul_ps(lhs.data, rhs.data) };
-				const __m128 a0{ _mm_add_ps(m0, _mm_shuffle_ps(m0, m0, 0b00'00'01'00)) };
-
-				return 0.0f;
-
-
-				/*
-				r = _mm_shuffle_ps(r, temp, 0b01'00'00'00);
-				r = _mm_add_ps(r, temp);
-				temp = _mm_shuffle_ps(temp, r, 0b00'11'00'00);
-				temp = _mm_add_ps(temp, r);
-				r = _mm_shuffle_ps(temp, temp, 0b10'10'10'10);
-
-				return r.m128_f32[0];
-				*/
-#else
 				return lhs.raw[0] * rhs.raw[0] + lhs.raw[1] * rhs.raw[1] + lhs.raw[2] * rhs.raw[2] + lhs.raw[3] * rhs.raw[3];
-#endif
 			}
 		};
 
@@ -508,6 +490,17 @@ namespace CinMath {
 
 				return result;
 			}
+
+			CIN_MATH_INLINE static Vector<3, double> implementation(const Vector<3, double>& lhs, const Vector<3, double>& rhs) noexcept
+			{
+				Vector<3, double> result;
+
+				result.raw[0] = lhs[1] * rhs[2] - lhs[2] * rhs[1];
+				result.raw[1] = lhs[2] * rhs[0] - lhs[0] * rhs[2];
+				result.raw[2] = lhs[0] * rhs[1] - lhs[1] * rhs[0];
+
+				return result;
+			}
 		};
 
 		template<typename ValueType>
@@ -518,13 +511,24 @@ namespace CinMath {
 				Vector<4, float> result;
 #if (CIN_INSTRUCTION_SET) & (CIN_INSTRUCTION_SET_SSE_BIT)
 				result.data = _mm_sub_ps(
-					_mm_mul_ps(_mm_shuffle_ps(lhs.data, lhs.data, 0b00'00'10'01), _mm_shuffle_ps(rhs.data, rhs.data, 0b00'01'00'10)),
-					_mm_mul_ps(_mm_shuffle_ps(lhs.data, lhs.data, 0b00'01'00'10), _mm_shuffle_ps(rhs.data, rhs.data, 0b00'00'10'01)));
+				_mm_mul_ps(_mm_shuffle_ps(lhs.data, lhs.data, 0b00'00'10'01), _mm_shuffle_ps(rhs.data, rhs.data, 0b00'01'00'10)),
+				_mm_mul_ps(_mm_shuffle_ps(lhs.data, lhs.data, 0b00'01'00'10), _mm_shuffle_ps(rhs.data, rhs.data, 0b00'00'10'01)));
 #else
 				result.raw[0] = lhs[1] * rhs[2] - lhs[2] * rhs[1];
 				result.raw[1] = lhs[2] * rhs[0] - lhs[0] * rhs[2];
 				result.raw[2] = lhs[0] * rhs[1] - lhs[1] * rhs[0];
 #endif
+				return result;
+			}
+
+			CIN_MATH_INLINE static Vector<4, double> implementation(const Vector<4, double>& lhs, const Vector<4, double>& rhs) noexcept
+			{
+				Vector<4, double> result;
+				
+				result.raw[0] = lhs[1] * rhs[2] - lhs[2] * rhs[1];
+				result.raw[1] = lhs[2] * rhs[0] - lhs[0] * rhs[2];
+				result.raw[2] = lhs[0] * rhs[1] - lhs[1] * rhs[0];
+
 				return result;
 			}
 		};
@@ -571,11 +575,12 @@ namespace CinMath {
 			CIN_MATH_INLINE static Matrix<4, 4, float> implementation(const Vector<4, float>& translation)
 			{
 				assert(translation.w == 0.0f);
-				return Matrix<4, 4, float> {
+				return Matrix<4, 4, float> 
+				{
 					1.0f, 0.0f, 0.0f, 0.0f,
-						0.0f, 1.0f, 0.0f, 0.0f,
-						0.0f, 0.0f, 1.0f, 0.0f,
-						translation.raw[0], translation.raw[1], translation.raw[2], 1.0f
+					0.0f, 1.0f, 0.0f, 0.0f,
+					0.0f, 0.0f, 1.0f, 0.0f,
+					translation.raw[0], translation.raw[1], translation.raw[2], 1.0f
 				};
 			}
 		};
@@ -606,7 +611,7 @@ namespace CinMath {
 				} * matrix;
 			}
 
-			CIN_MATH_INLINE static Matrix<4, 4, float> implementation(const Matrix<4, 4, float>& matrix, const QuaternionBase<float>& quaternion) noexcept
+			CIN_MATH_INLINE static Matrix<4, 4, float> implementation(const Matrix<4, 4, float>& matrix, const TQuaternion<float>& quaternion) noexcept
 			{
 				const auto normalizedQuaternion{ Normalize(quaternion) };
 
@@ -675,12 +680,28 @@ namespace CinMath {
 		template<Length_t rows, Length_t columns, typename ValueType>
 		struct MatrixRotateXIdentity final
 		{
-			CIN_MATH_INLINE static Matrix<4, 4, float> implementation(const ValueType rotation) noexcept
+			CIN_MATH_INLINE static Matrix<4, 4, float> implementation(const float rotation) noexcept
 			{
 				const float s{ std::sin(rotation) };
 				const float c{ std::cos(rotation) };
 
 				return Matrix<4, 4, float>
+				{
+					{
+						1.0f, 0.0f, 0.0f, 0.0f,
+						0.0f, c,	-s,	  0.0f,
+						0.0f, s,	 c,	  0.0f,
+						0.0f, 0.0f, 0.0f, 1.0f
+					}
+				};
+			}
+
+			CIN_MATH_INLINE static Matrix<4, 4, double> implementation(const double rotation) noexcept
+			{
+				const double s{ std::sin(rotation) };
+				const double c{ std::cos(rotation) };
+
+				return Matrix<4, 4, double>
 				{
 					{
 						1.0f, 0.0f, 0.0f, 0.0f,
@@ -708,7 +729,7 @@ namespace CinMath {
 						-s, 0.0f, c, 0.0f,
 						0.0f, 0.0f, 0.0f, 1.0f
 					}
-				} *matrix;
+				} * matrix;
 			}
 		};
 
@@ -778,7 +799,27 @@ namespace CinMath {
 			CIN_MATH_INLINE static Matrix<4, 4, float> implementation(const Matrix<4, 4, float>& matrix, const Vector<3, float>& scale) noexcept
 			{
 				Matrix<4, 4, float> result;
-#if (CIN_INSTRUCTION_SET) & (CIN_INSTRUCTION_SET_SSE)
+#if (CIN_INSTRUCTION_SET) & (CIN_INSTRUCTION_SET_AVX)
+				result.raw[0] = matrix.raw[0] * scale.x;
+				result.raw[1] = matrix.raw[1] * scale.x;
+				result.raw[2] = matrix.raw[2] * scale.x;
+				result.raw[3] = matrix.raw[3] * scale.x;
+
+				result.raw[4] = matrix.raw[4] * scale.y;
+				result.raw[5] = matrix.raw[5] * scale.y;
+				result.raw[6] = matrix.raw[6] * scale.y;
+				result.raw[7] = matrix.raw[7] * scale.y;
+
+				result.raw[8] = matrix.raw[8] * scale.z;
+				result.raw[9] = matrix.raw[9] * scale.z;
+				result.raw[10] = matrix.raw[10] * scale.z;
+				result.raw[11] = matrix.raw[11] * scale.z;
+
+				result.raw[12] = matrix.raw[12];
+				result.raw[13] = matrix.raw[13];
+				result.raw[14] = matrix.raw[14];
+				result.raw[15] = matrix.raw[15];
+#elif (CIN_INSTRUCTION_SET) & (CIN_INSTRUCTION_SET_SSE)
 				result.data[0] = _mm_mul_ps(matrix.data[0], _mm_set_ps(scale.x, scale.x, scale.x, scale.x));
 				result.data[1] = _mm_mul_ps(matrix.data[1], _mm_set_ps(scale.y, scale.y, scale.y, scale.y));
 				result.data[2] = _mm_mul_ps(matrix.data[2], _mm_set_ps(scale.z, scale.z, scale.z, scale.z));
@@ -824,6 +865,60 @@ namespace CinMath {
 				result.raw[2] = matrix.raw[1];
 				result.raw[3] = matrix.raw[3];
 #endif
+				return result;
+			}
+
+			CIN_MATH_INLINE static Matrix<2, 2, double> implementation(const Matrix<2, 2, double>& matrix) noexcept
+			{
+				Matrix<2, 2, double> result;
+
+				result.raw[0] = matrix.raw[0];
+				result.raw[1] = matrix.raw[2];
+				result.raw[2] = matrix.raw[1];
+				result.raw[3] = matrix.raw[3];
+
+				return result;
+			}
+		};
+
+		template<typename ValueType>
+		struct MatrixTranspose<3, 3, ValueType> final
+		{
+			CIN_MATH_INLINE static Matrix<3, 3, float> implementation(const Matrix<3, 3, float>& matrix) noexcept
+			{
+				Matrix<3, 3, float> result;
+
+				result.raw[0] = matrix[0];
+				result.raw[1] = matrix[3];
+				result.raw[2] = matrix[6];
+
+				result.raw[3] = matrix[1];
+				result.raw[4] = matrix[4];
+				result.raw[5] = matrix[7];
+
+				result.raw[6] = matrix[2];
+				result.raw[7] = matrix[5];
+				result.raw[8] = matrix[8];
+
+				return result;
+			}
+
+			CIN_MATH_INLINE static Matrix<3, 3, double> implementation(const Matrix<3, 3, double>& matrix) noexcept
+			{
+				Matrix<3, 3, double> result;
+
+				result.raw[0] = matrix[0];
+				result.raw[1] = matrix[3];
+				result.raw[2] = matrix[6];
+
+				result.raw[3] = matrix[1];
+				result.raw[4] = matrix[4];
+				result.raw[5] = matrix[7];
+
+				result.raw[6] = matrix[2];
+				result.raw[7] = matrix[5];
+				result.raw[8] = matrix[8];
+
 				return result;
 			}
 		};
@@ -898,6 +993,33 @@ namespace CinMath {
 #endif
 				return result;
 			}
+
+			CIN_MATH_INLINE static Matrix<4, 4, double> implementation(const Matrix<4, 4, double>& matrix) noexcept
+			{
+				Matrix<4, 4, double> result;
+
+				result.raw[0] = matrix.raw[0];
+				result.raw[1] = matrix.raw[4];
+				result.raw[2] = matrix.raw[8];
+				result.raw[3] = matrix.raw[12];
+
+				result.raw[4] = matrix.raw[1];
+				result.raw[5] = matrix.raw[5];
+				result.raw[6] = matrix.raw[9];
+				result.raw[7] = matrix.raw[13];
+
+				result.raw[8] = matrix.raw[2];
+				result.raw[9] = matrix.raw[6];
+				result.raw[10] = matrix.raw[10];
+				result.raw[11] = matrix.raw[14];
+
+				result.raw[12] = matrix.raw[3];
+				result.raw[13] = matrix.raw[7];
+				result.raw[14] = matrix.raw[11];
+				result.raw[15] = matrix.raw[15];
+
+				return result;
+			}
 		};
 
 		template<typename ValueType>
@@ -907,12 +1029,25 @@ namespace CinMath {
 			{
 				return  matrix[0] * matrix[3] - matrix[2] * matrix[1];
 			}
+
+			CIN_MATH_INLINE static double implementation(const Matrix<2, 2, double>& matrix) noexcept
+			{
+				return  matrix[0] * matrix[3] - matrix[2] * matrix[1];
+			}
 		};
 
 		template<typename ValueType>
 		struct MatrixDeterminant<3, 3, ValueType> final
 		{
 			CIN_MATH_INLINE static float implementation(const Matrix<3, 3, float>& matrix) noexcept
+			{
+				return
+					+ matrix.raw[0] * (matrix.raw[4] * matrix.raw[8] - matrix.raw[7] * matrix.raw[5])
+					- matrix.raw[3] * (matrix.raw[1] * matrix.raw[8] - matrix.raw[7] * matrix.raw[2])
+					+ matrix.raw[6] * (matrix.raw[1] * matrix.raw[5] - matrix.raw[4] * matrix.raw[2]);
+			}
+
+			CIN_MATH_INLINE static double implementation(const Matrix<3, 3, double>& matrix) noexcept
 			{
 				return
 					+ matrix.raw[0] * (matrix.raw[4] * matrix.raw[8] - matrix.raw[7] * matrix.raw[5])
@@ -942,6 +1077,25 @@ namespace CinMath {
 				
 				return matrix[0] * m00 - matrix[1] * m01 + matrix[2] * m02 - matrix[3] * m03;
 			}
+
+			CIN_MATH_INLINE static double implementation(const Matrix<4, 4, double>& matrix) noexcept
+			{
+				const double e00{ matrix[10] * matrix[15] - matrix[14] * matrix[11] };
+				const double e01{ matrix[9] * matrix[15] - matrix[13] * matrix[11] };
+				const double e02{ matrix[9] * matrix[14] - matrix[13] * matrix[10] };
+
+				const double e03{ matrix[8] * matrix[15] - matrix[12] * matrix[11] };
+				const double e04{ matrix[8] * matrix[14] - matrix[12] * matrix[10] };
+				const double e05{ matrix[8] * matrix[13] - matrix[12] * matrix[9] };
+
+				const double m00{ matrix[5] * e00 - matrix[6] * e01 + matrix[7] * e02 };
+				const double m01{ matrix[4] * e00 - matrix[6] * e03 + matrix[7] * e04 };
+
+				const double m02{ matrix[4] * e01 - matrix[5] * e03 + matrix[7] * e05 };
+				const double m03{ matrix[4] * e02 - matrix[5] * e04 + matrix[6] * e05 };
+
+				return matrix[0] * m00 - matrix[1] * m01 + matrix[2] * m02 - matrix[3] * m03;
+			}
 		};
 
 		template<typename ValueType>
@@ -951,6 +1105,19 @@ namespace CinMath {
 			{
 				Matrix<2, 2, float> result;
 				const float oneOverDeterminant{ 1.0f / (matrix[0] * matrix[3] - matrix[2] * matrix[1]) };
+
+				result.raw[0] = matrix[3] * (+oneOverDeterminant);
+				result.raw[1] = matrix[1] * (-oneOverDeterminant);
+				result.raw[2] = matrix[2] * (-oneOverDeterminant);
+				result.raw[3] = matrix[0] * (+oneOverDeterminant);
+
+				return result;
+			}
+
+			CIN_MATH_INLINE static Matrix<2, 2, double> implementation(const Matrix<2, 2, double>& matrix) noexcept
+			{
+				Matrix<2, 2, double> result;
+				const double oneOverDeterminant{ 1.0f / (matrix[0] * matrix[3] - matrix[2] * matrix[1]) };
 
 				result.raw[0] = matrix[3] * (+oneOverDeterminant);
 				result.raw[1] = matrix[1] * (-oneOverDeterminant);
@@ -983,6 +1150,26 @@ namespace CinMath {
 
 				return result;
 			}
+
+			CIN_MATH_INLINE static Matrix<3, 3, double> implementation(const Matrix<3, 3, double>& matrix) noexcept
+			{
+				Matrix<3, 3, double> result;
+				const double oneOverDeterminant{ 1.0f / MatrixDeterminant<3, 3, double>::implementation(matrix) };
+
+				result.raw[0] = +(matrix.raw[4] * matrix.raw[8] - matrix.raw[7] * matrix.raw[5]) * oneOverDeterminant;
+				result.raw[1] = -(matrix.raw[1] * matrix.raw[8] - matrix.raw[7] * matrix.raw[2]) * oneOverDeterminant;
+				result.raw[2] = +(matrix.raw[1] * matrix.raw[5] - matrix.raw[4] * matrix.raw[2]) * oneOverDeterminant;
+
+				result.raw[3] = -(matrix.raw[3] * matrix.raw[8] - matrix.raw[6] * matrix.raw[5]) * oneOverDeterminant;
+				result.raw[4] = +(matrix.raw[0] * matrix.raw[8] - matrix.raw[6] * matrix.raw[2]) * oneOverDeterminant;
+				result.raw[5] = -(matrix.raw[0] * matrix.raw[5] - matrix.raw[3] * matrix.raw[2]) * oneOverDeterminant;
+
+				result.raw[6] = +(matrix.raw[3] * matrix.raw[7] - matrix.raw[6] * matrix.raw[4]) * oneOverDeterminant;
+				result.raw[7] = -(matrix.raw[0] * matrix.raw[7] - matrix.raw[6] * matrix.raw[1]) * oneOverDeterminant;
+				result.raw[8] = +(matrix.raw[0] * matrix.raw[4] - matrix.raw[3] * matrix.raw[1]) * oneOverDeterminant;
+
+				return result;
+			}
 		};
 
 		template<typename ValueType>
@@ -990,139 +1177,305 @@ namespace CinMath {
 		{
 			CIN_MATH_INLINE static Matrix<4, 4, float> implementation(const Matrix<4, 4, float>& matrix) noexcept
 			{
-				/* TODO: Unimplemented */
+				/*					   | D11 D12 D13 D14 |
+				*			   1	   | D21 D22 D23 D24 |
+				* inv(A) = -------- *  | D31 D32 D33 D34 |
+				*			det(A)	   | D41 D42 D43 D44 |
+				* 
+				* Dij = (-1)^i+j * det(Aij)
+				*/
+				
+				/* Verify the inverse exists */
+				assert(Determinant(matrix) != 0.0f);
 				Matrix<4, 4, float> result;
-				assert(false);
-#if 0
-				__m128 minor0, minor1, minor2, minor3;
-				__m128 row0,
-					row1{ 0.0f, 0.0f, 0.0f, 0.0f },
-					row2{ 0.0f, 0.0f, 0.0f, 0.0f },
-					row3{ 0.0f, 0.0f, 0.0f, 0.0f };
+				const float oneOverDeterminant{ 1.0f / MatrixDeterminant<4, 4, float>::implementation(matrix) };
+				
+				const float D11
+				{
+					+ matrix.raw[5] * (matrix.raw[10] * matrix.raw[15] - matrix.raw[14] * matrix.raw[11])
+					- matrix.raw[9] * (matrix.raw[6] * matrix.raw[15] - matrix.raw[14] * matrix.raw[7])
+					+ matrix.raw[13] * (matrix.raw[6] * matrix.raw[11] - matrix.raw[10] * matrix.raw[7])
+				};
 
-				__m128 det;
-				__m128 tmp1{ 0.0f, 0.0f, 0.0f, 0.0f };
+				const float D12
+				{ -(
+					+ matrix.raw[4] * (matrix.raw[10] * matrix.raw[15] - matrix.raw[14] * matrix.raw[11])
+					- matrix.raw[8] * (matrix.raw[6] * matrix.raw[15] - matrix.raw[14] * matrix.raw[7])
+					+ matrix.raw[12] * (matrix.raw[6] * matrix.raw[11] - matrix.raw[10] * matrix.raw[7])
+				) };
 
-				float* src = const_cast<float*>(matrix.operator const float* ());
-				float* dst = result.raw;
+				const float D13
+				{
+					+ matrix.raw[4] * (matrix.raw[9] * matrix.raw[15] - matrix.raw[13] * matrix.raw[11])
+					- matrix.raw[8] * (matrix.raw[5] * matrix.raw[15] - matrix.raw[13] * matrix.raw[7])
+					+ matrix.raw[12] * (matrix.raw[5] * matrix.raw[11] - matrix.raw[9] * matrix.raw[7])
+				};
 
-				tmp1 = _mm_loadh_pi(_mm_loadl_pi(tmp1, (__m64*)(src)), (__m64*)(src + 4));
-				row1 = _mm_loadh_pi(_mm_loadl_pi(row1, (__m64*)(src + 8)), (__m64*)(src + 12));
+				const float D14
+				{ -(
+					+ matrix.raw[4] * (matrix.raw[9] * matrix.raw[14] - matrix.raw[13] * matrix.raw[10])
+					- matrix.raw[8] * (matrix.raw[5] * matrix.raw[14] - matrix.raw[13] * matrix.raw[6])
+					+ matrix.raw[12] * (matrix.raw[5] * matrix.raw[10] - matrix.raw[9] * matrix.raw[6])
+				) };
 
-				row0 = _mm_shuffle_ps(tmp1, row1, 0x88);
-				row1 = _mm_shuffle_ps(row1, tmp1, 0xDD);
+				const float D21
+				{ -(
+					+ matrix.raw[1] * (matrix.raw[10] * matrix.raw[15] - matrix.raw[14] * matrix.raw[11])
+					- matrix.raw[9] * (matrix.raw[2] * matrix.raw[15] - matrix.raw[14] * matrix.raw[3])
+					+ matrix.raw[13] * (matrix.raw[2] * matrix.raw[11] - matrix.raw[10] * matrix.raw[3])
+				) };
 
-				tmp1 = _mm_loadh_pi(_mm_loadl_pi(tmp1, (__m64*)(src + 2)), (__m64*)(src + 6));
-				row3 = _mm_loadh_pi(_mm_loadl_pi(row3, (__m64*)(src + 10)), (__m64*)(src + 14));
+				const float D22
+				{
+					+ matrix.raw[0] * (matrix.raw[10] * matrix.raw[15] - matrix.raw[14] * matrix.raw[11])
+					- matrix.raw[8] * (matrix.raw[2] * matrix.raw[15] - matrix.raw[14] * matrix.raw[3])
+					+ matrix.raw[12] * (matrix.raw[2] * matrix.raw[11] - matrix.raw[10] * matrix.raw[3])
+				};
 
-				row2 = _mm_shuffle_ps(tmp1, row3, 0x88);
-				row3 = _mm_shuffle_ps(row3, tmp1, 0xDD);
+				const float D23
+				{ -(
+					+ matrix.raw[0] * (matrix.raw[9] * matrix.raw[15] - matrix.raw[13] * matrix.raw[11])
+					- matrix.raw[8] * (matrix.raw[1] * matrix.raw[15] - matrix.raw[13] * matrix.raw[3])
+					+ matrix.raw[12] * (matrix.raw[1] * matrix.raw[11] - matrix.raw[9] * matrix.raw[3])
+				) };
 
-				tmp1 = _mm_mul_ps(row2, row3);
-				tmp1 = _mm_shuffle_ps(tmp1, tmp1, 0xB1);
+				const float D24
+				{
+					+ matrix.raw[0] * (matrix.raw[9] * matrix.raw[14] - matrix.raw[13] * matrix.raw[10])
+					- matrix.raw[8] * (matrix.raw[1] * matrix.raw[14] - matrix.raw[13] * matrix.raw[2])
+					+ matrix.raw[12] * (matrix.raw[1] * matrix.raw[10] - matrix.raw[9] * matrix.raw[2])
+				};
 
-				minor0 = _mm_mul_ps(row1, tmp1);
-				minor1 = _mm_mul_ps(row0, tmp1);
+				const float D31
+				{
+						+matrix.raw[1] * (matrix.raw[6] * matrix.raw[15] - matrix.raw[14] * matrix.raw[7])
+						- matrix.raw[5] * (matrix.raw[2] * matrix.raw[15] - matrix.raw[14] * matrix.raw[3])
+						+ matrix.raw[13] * (matrix.raw[2] * matrix.raw[7] - matrix.raw[6] * matrix.raw[3])
+				};
 
-				tmp1 = _mm_shuffle_ps(tmp1, tmp1, 0x4E);
+				const float D32
+				{ -(
+					+ matrix.raw[0] * (matrix.raw[6] * matrix.raw[15] - matrix.raw[14] * matrix.raw[7])
+					- matrix.raw[4] * (matrix.raw[2] * matrix.raw[15] - matrix.raw[14] * matrix.raw[3])
+					+ matrix.raw[12] * (matrix.raw[2] * matrix.raw[7] - matrix.raw[6] * matrix.raw[3])
+				) };
 
-				minor0 = _mm_sub_ps(_mm_mul_ps(row1, tmp1), minor0);
-				minor1 = _mm_sub_ps(_mm_mul_ps(row0, tmp1), minor1);
-				minor1 = _mm_shuffle_ps(minor1, minor1, 0x4E);
+				const float D33
+				{
+					+ matrix.raw[0] * (matrix.raw[5] * matrix.raw[15] - matrix.raw[13] * matrix.raw[7])
+					- matrix.raw[4] * (matrix.raw[1] * matrix.raw[15] - matrix.raw[13] * matrix.raw[3])
+					+ matrix.raw[12] * (matrix.raw[1] * matrix.raw[7] - matrix.raw[5] * matrix.raw[3])
+				};
 
-				tmp1 = _mm_mul_ps(row1, row2);
-				tmp1 = _mm_shuffle_ps(tmp1, tmp1, 0xB1);
+				const float D34
+				{ -(
+					+ matrix.raw[0] * (matrix.raw[5] * matrix.raw[14] - matrix.raw[13] * matrix.raw[6])
+					- matrix.raw[4] * (matrix.raw[1] * matrix.raw[14] - matrix.raw[13] * matrix.raw[2])
+					+ matrix.raw[12] * (matrix.raw[1] * matrix.raw[6] - matrix.raw[5] * matrix.raw[2])
+				) };
 
-				minor0 = _mm_add_ps(_mm_mul_ps(row3, tmp1), minor0);
-				minor3 = _mm_mul_ps(row0, tmp1);
+				const float D41
+				{ -(
+					+ matrix.raw[1] * (matrix.raw[6] * matrix.raw[11] - matrix.raw[10] * matrix.raw[7])
+					- matrix.raw[5] * (matrix.raw[2] * matrix.raw[11] - matrix.raw[10] * matrix.raw[3])
+					+ matrix.raw[9] * (matrix.raw[2] * matrix.raw[7] - matrix.raw[6] * matrix.raw[3])
+				) };
 
-				tmp1 = _mm_shuffle_ps(tmp1, tmp1, 0x4E);
+				const float D42
+				{
+					+ matrix.raw[0] * (matrix.raw[6] * matrix.raw[11] - matrix.raw[10] * matrix.raw[7])
+					- matrix.raw[4] * (matrix.raw[2] * matrix.raw[11] - matrix.raw[10] * matrix.raw[3])
+					+ matrix.raw[8] * (matrix.raw[2] * matrix.raw[7] - matrix.raw[6] * matrix.raw[3])
+				};
 
-				minor0 = _mm_sub_ps(minor0, _mm_mul_ps(row3, tmp1));
-				minor3 = _mm_sub_ps(_mm_mul_ps(row0, tmp1), minor3);
-				minor3 = _mm_shuffle_ps(minor3, minor3, 0x4E);
+				const float D43
+				{ -(
+					+ matrix.raw[0] * (matrix.raw[5] * matrix.raw[11] - matrix.raw[9] * matrix.raw[7])
+					- matrix.raw[4] * (matrix.raw[1] * matrix.raw[11] - matrix.raw[9] * matrix.raw[3])
+					+ matrix.raw[8] * (matrix.raw[1] * matrix.raw[7] - matrix.raw[5] * matrix.raw[3])
+				) };
 
-				tmp1 = _mm_mul_ps(_mm_shuffle_ps(row1, row1, 0x4E), row3);
-				tmp1 = _mm_shuffle_ps(tmp1, tmp1, 0xB1);
-				row2 = _mm_shuffle_ps(row2, row2, 0x4E);
+				const float D44
+				{
+					+ matrix.raw[0] * (matrix.raw[5] * matrix.raw[10] - matrix.raw[9] * matrix.raw[6])
+					- matrix.raw[4] * (matrix.raw[1] * matrix.raw[10] - matrix.raw[9] * matrix.raw[2])
+					+ matrix.raw[8] * (matrix.raw[1] * matrix.raw[6] - matrix.raw[5] * matrix.raw[2])
+				};
 
-				minor0 = _mm_add_ps(_mm_mul_ps(row2, tmp1), minor0);
-				minor2 = _mm_mul_ps(row0, tmp1);
+				/* Construct already transposed */
+				//const Matrix<4, 4, float> A			const Matrix<4, 4, float> A_transposed
+				//{										{
+				//	D11, D12, D13, D14,						D11, D21, D31, D41,
+				//	D21, D22, D23, D24,		  ==> 			D12, D22, D32, D42,		
+				//	D31, D32, D33, D34,						D13, D23, D33, D43,
+				//	D41, D42, D43, D44						D14, D24, D34, D44
+				//};									};
 
-				tmp1 = _mm_shuffle_ps(tmp1, tmp1, 0x4E);
+				const Matrix<4, 4, float> A_transposed
+				{
+					D11, D21, D31, D41,
+					D12, D22, D32, D42,
+					D13, D23, D33, D43,
+					D14, D24, D34, D44
+				};
 
-				minor0 = _mm_sub_ps(minor0, _mm_mul_ps(row2, tmp1));
-				minor2 = _mm_sub_ps(_mm_mul_ps(row0, tmp1), minor2);
-				minor2 = _mm_shuffle_ps(minor2, minor2, 0x4E);
+				return A_transposed * oneOverDeterminant;
+			}
 
-				tmp1 = _mm_mul_ps(row0, row1);
-				tmp1 = _mm_shuffle_ps(tmp1, tmp1, 0xB1);
+			CIN_MATH_INLINE static Matrix<4, 4, double> implementation(const Matrix<4, 4, double>& matrix) noexcept
+			{
+				/*					   | D11 D12 D13 D14 |
+				*			   1	   | D21 D22 D23 D24 |
+				* inv(A) = -------- *  | D31 D32 D33 D34 |
+				*			det(A)	   | D41 D42 D43 D44 |
+				*
+				* Dij = (-1)^i+j * det(Aij)
+				*/
 
-				minor2 = _mm_add_ps(_mm_mul_ps(row3, tmp1), minor2);
-				minor3 = _mm_sub_ps(_mm_mul_ps(row2, tmp1), minor3);
+				/* Verify the inverse exists */
+				assert(Determinant(matrix) != 0.0f);
+				Matrix<4, 4, double> result;
+				const double oneOverDeterminant{ 1.0f / MatrixDeterminant<4, 4, double>::implementation(matrix) };
 
-				tmp1 = _mm_shuffle_ps(tmp1, tmp1, 0x4E);
+				const double D11
+				{
+					+matrix.raw[5] * (matrix.raw[10] * matrix.raw[15] - matrix.raw[14] * matrix.raw[11])
+					- matrix.raw[9] * (matrix.raw[6] * matrix.raw[15] - matrix.raw[14] * matrix.raw[7])
+					+ matrix.raw[13] * (matrix.raw[6] * matrix.raw[11] - matrix.raw[10] * matrix.raw[7])
+				};
 
-				minor2 = _mm_sub_ps(_mm_mul_ps(row3, tmp1), minor2);
-				minor3 = _mm_sub_ps(minor3, _mm_mul_ps(row2, tmp1));
+				const double D12
+				{ -(
+					+matrix.raw[4] * (matrix.raw[10] * matrix.raw[15] - matrix.raw[14] * matrix.raw[11])
+					- matrix.raw[8] * (matrix.raw[6] * matrix.raw[15] - matrix.raw[14] * matrix.raw[7])
+					+ matrix.raw[12] * (matrix.raw[6] * matrix.raw[11] - matrix.raw[10] * matrix.raw[7])
+				) };
 
-				tmp1 = _mm_mul_ps(row0, row3);
-				tmp1 = _mm_shuffle_ps(tmp1, tmp1, 0xB1);
+				const double D13
+				{
+					+matrix.raw[4] * (matrix.raw[9] * matrix.raw[15] - matrix.raw[13] * matrix.raw[11])
+					- matrix.raw[8] * (matrix.raw[5] * matrix.raw[15] - matrix.raw[13] * matrix.raw[7])
+					+ matrix.raw[12] * (matrix.raw[5] * matrix.raw[11] - matrix.raw[9] * matrix.raw[7])
+				};
 
-				minor1 = _mm_sub_ps(minor1, _mm_mul_ps(row2, tmp1));
-				minor2 = _mm_add_ps(_mm_mul_ps(row1, tmp1), minor2);
+				const double D14
+				{ -(
+					+matrix.raw[4] * (matrix.raw[9] * matrix.raw[14] - matrix.raw[13] * matrix.raw[10])
+					- matrix.raw[8] * (matrix.raw[5] * matrix.raw[14] - matrix.raw[13] * matrix.raw[6])
+					+ matrix.raw[12] * (matrix.raw[5] * matrix.raw[10] - matrix.raw[9] * matrix.raw[6])
+				) };
 
-				tmp1 = _mm_shuffle_ps(tmp1, tmp1, 0x4E);
+				const double D21
+				{ -(
+					+matrix.raw[1] * (matrix.raw[10] * matrix.raw[15] - matrix.raw[14] * matrix.raw[11])
+					- matrix.raw[9] * (matrix.raw[2] * matrix.raw[15] - matrix.raw[14] * matrix.raw[3])
+					+ matrix.raw[13] * (matrix.raw[2] * matrix.raw[11] - matrix.raw[10] * matrix.raw[3])
+				) };
 
-				minor1 = _mm_add_ps(_mm_mul_ps(row2, tmp1), minor1);
-				minor2 = _mm_sub_ps(minor2, _mm_mul_ps(row1, tmp1));
+				const double D22
+				{
+					+matrix.raw[0] * (matrix.raw[10] * matrix.raw[15] - matrix.raw[14] * matrix.raw[11])
+					- matrix.raw[8] * (matrix.raw[2] * matrix.raw[15] - matrix.raw[14] * matrix.raw[3])
+					+ matrix.raw[12] * (matrix.raw[2] * matrix.raw[11] - matrix.raw[10] * matrix.raw[3])
+				};
 
-				tmp1 = _mm_mul_ps(row0, row2);
-				tmp1 = _mm_shuffle_ps(tmp1, tmp1, 0xB1);
+				const double D23
+				{ -(
+					+matrix.raw[0] * (matrix.raw[9] * matrix.raw[15] - matrix.raw[13] * matrix.raw[11])
+					- matrix.raw[8] * (matrix.raw[1] * matrix.raw[15] - matrix.raw[13] * matrix.raw[3])
+					+ matrix.raw[12] * (matrix.raw[1] * matrix.raw[11] - matrix.raw[9] * matrix.raw[3])
+				) };
 
-				minor1 = _mm_add_ps(_mm_mul_ps(row3, tmp1), minor1);
-				minor3 = _mm_sub_ps(minor3, _mm_mul_ps(row1, tmp1));
+				const double D24
+				{
+					+matrix.raw[0] * (matrix.raw[9] * matrix.raw[14] - matrix.raw[13] * matrix.raw[10])
+					- matrix.raw[8] * (matrix.raw[1] * matrix.raw[14] - matrix.raw[13] * matrix.raw[2])
+					+ matrix.raw[12] * (matrix.raw[1] * matrix.raw[10] - matrix.raw[9] * matrix.raw[2])
+				};
 
-				tmp1 = _mm_shuffle_ps(tmp1, tmp1, 0x4E);
+				const double D31
+				{
+						+matrix.raw[1] * (matrix.raw[6] * matrix.raw[15] - matrix.raw[14] * matrix.raw[7])
+						- matrix.raw[5] * (matrix.raw[2] * matrix.raw[15] - matrix.raw[14] * matrix.raw[3])
+						+ matrix.raw[13] * (matrix.raw[2] * matrix.raw[7] - matrix.raw[6] * matrix.raw[3])
+				};
 
-				minor1 = _mm_sub_ps(minor1, _mm_mul_ps(row3, tmp1));
-				minor3 = _mm_add_ps(_mm_mul_ps(row1, tmp1), minor3);
+				const double D32
+				{ -(
+					+matrix.raw[0] * (matrix.raw[6] * matrix.raw[15] - matrix.raw[14] * matrix.raw[7])
+					- matrix.raw[4] * (matrix.raw[2] * matrix.raw[15] - matrix.raw[14] * matrix.raw[3])
+					+ matrix.raw[12] * (matrix.raw[2] * matrix.raw[7] - matrix.raw[6] * matrix.raw[3])
+				) };
 
-				det = _mm_mul_ps(row0, minor0);
-				det = _mm_add_ps(_mm_shuffle_ps(det, det, 0x4E), det);
-				det = _mm_add_ss(_mm_shuffle_ps(det, det, 0xB1), det);
+				const double D33
+				{
+					+matrix.raw[0] * (matrix.raw[5] * matrix.raw[15] - matrix.raw[13] * matrix.raw[7])
+					- matrix.raw[4] * (matrix.raw[1] * matrix.raw[15] - matrix.raw[13] * matrix.raw[3])
+					+ matrix.raw[12] * (matrix.raw[1] * matrix.raw[7] - matrix.raw[5] * matrix.raw[3])
+				};
 
-				tmp1 = _mm_rcp_ss(det);
+				const double D34
+				{ -(
+					+matrix.raw[0] * (matrix.raw[5] * matrix.raw[14] - matrix.raw[13] * matrix.raw[6])
+					- matrix.raw[4] * (matrix.raw[1] * matrix.raw[14] - matrix.raw[13] * matrix.raw[2])
+					+ matrix.raw[12] * (matrix.raw[1] * matrix.raw[6] - matrix.raw[5] * matrix.raw[2])
+				) };
 
-				det = _mm_sub_ss(_mm_add_ss(tmp1, tmp1), _mm_mul_ss(det, _mm_mul_ss(tmp1, tmp1)));
-				det = _mm_shuffle_ps(det, det, 0x00);
+				const double D41
+				{ -(
+					+matrix.raw[1] * (matrix.raw[6] * matrix.raw[11] - matrix.raw[10] * matrix.raw[7])
+					- matrix.raw[5] * (matrix.raw[2] * matrix.raw[11] - matrix.raw[10] * matrix.raw[3])
+					+ matrix.raw[9] * (matrix.raw[2] * matrix.raw[7] - matrix.raw[6] * matrix.raw[3])
+				) };
 
-				minor0 = _mm_mul_ps(det, minor0);
-				_mm_storel_pi((__m64*)(dst), minor0);
-				_mm_storeh_pi((__m64*)(dst + 2), minor0);
+				const double D42
+				{
+					+matrix.raw[0] * (matrix.raw[6] * matrix.raw[11] - matrix.raw[10] * matrix.raw[7])
+					- matrix.raw[4] * (matrix.raw[2] * matrix.raw[11] - matrix.raw[10] * matrix.raw[3])
+					+ matrix.raw[8] * (matrix.raw[2] * matrix.raw[7] - matrix.raw[6] * matrix.raw[3])
+				};
 
-				minor1 = _mm_mul_ps(det, minor1);
-				_mm_storel_pi((__m64*)(dst + 4), minor1);
-				_mm_storeh_pi((__m64*)(dst + 6), minor1);
+				const double D43
+				{ -(
+					+matrix.raw[0] * (matrix.raw[5] * matrix.raw[11] - matrix.raw[9] * matrix.raw[7])
+					- matrix.raw[4] * (matrix.raw[1] * matrix.raw[11] - matrix.raw[9] * matrix.raw[3])
+					+ matrix.raw[8] * (matrix.raw[1] * matrix.raw[7] - matrix.raw[5] * matrix.raw[3])
+				) };
 
-				minor2 = _mm_mul_ps(det, minor2);
-				_mm_storel_pi((__m64*)(dst + 8), minor2);
-				_mm_storeh_pi((__m64*)(dst + 10), minor2);
+				const double D44
+				{
+					+matrix.raw[0] * (matrix.raw[5] * matrix.raw[10] - matrix.raw[9] * matrix.raw[6])
+					- matrix.raw[4] * (matrix.raw[1] * matrix.raw[10] - matrix.raw[9] * matrix.raw[2])
+					+ matrix.raw[8] * (matrix.raw[1] * matrix.raw[6] - matrix.raw[5] * matrix.raw[2])
+				};
 
-				minor3 = _mm_mul_ps(det, minor3);
-				_mm_storel_pi((__m64*)(dst + 12), minor3);
-				_mm_storeh_pi((__m64*)(dst + 14), minor3);
-#endif
-				return result;
+				/* Construct already transposed */
+				//const Matrix<4, 4, double> A			const Matrix<4, 4, double> A_transposed
+				//{										{
+				//	D11, D12, D13, D14,						D11, D21, D31, D41,
+				//	D21, D22, D23, D24,		  ==> 			D12, D22, D32, D42,		
+				//	D31, D32, D33, D34,						D13, D23, D33, D43,
+				//	D41, D42, D43, D44						D14, D24, D34, D44
+				//};									};
+
+				const Matrix<4, 4, double> A_transposed
+				{
+					D11, D21, D31, D41,
+					D12, D22, D32, D42,
+					D13, D23, D33, D43,
+					D14, D24, D34, D44
+				};
+
+				return A_transposed * oneOverDeterminant;
 			}
 		};
 
 		template<typename ValueType>
 		struct QuaternionConugate final
 		{
-			CIN_MATH_INLINE static QuaternionBase<ValueType> implementation(const QuaternionBase<ValueType>& quaternion) noexcept
+			CIN_MATH_INLINE static TQuaternion<ValueType> implementation(const TQuaternion<ValueType>& quaternion) noexcept
 			{
-				QuaternionBase<ValueType> result;
+				TQuaternion<ValueType> result;
 
 				result.raw[0] = +quaternion.raw[0];
 				result.raw[1] = -quaternion.raw[1];
@@ -1136,7 +1489,7 @@ namespace CinMath {
 		template<typename ValueType>
 		struct QuaternionNorm final
 		{
-			CIN_MATH_INLINE static ValueType implementation(const QuaternionBase<ValueType>& quaternion) noexcept
+			CIN_MATH_INLINE static ValueType implementation(const TQuaternion<ValueType>& quaternion) noexcept
 			{
 				return std::sqrt(
 					+ quaternion.raw[0] * quaternion.raw[0]
@@ -1149,7 +1502,7 @@ namespace CinMath {
 		template<typename ValueType>
 		struct QuaternionNormSquared final
 		{
-			CIN_MATH_INLINE static ValueType implementation(const QuaternionBase<ValueType>& quaternion) noexcept
+			CIN_MATH_INLINE static ValueType implementation(const TQuaternion<ValueType>& quaternion) noexcept
 			{
 				return
 					+ quaternion.raw[0] * quaternion.raw[0]
@@ -1162,9 +1515,9 @@ namespace CinMath {
 		template<typename ValueType>
 		struct QuaternionNormalize final
 		{
-			CIN_MATH_INLINE static QuaternionBase<ValueType> implementation(const QuaternionBase<ValueType>& quaternion) noexcept
+			CIN_MATH_INLINE static TQuaternion<ValueType> implementation(const TQuaternion<ValueType>& quaternion) noexcept
 			{
-				QuaternionBase<ValueType> result;
+				TQuaternion<ValueType> result;
 				const ValueType norm{ Norm(quaternion) };
 
 				result.raw[0] = quaternion.raw[0] / norm;
@@ -1179,7 +1532,7 @@ namespace CinMath {
 		template<typename ValueType>
 		struct QuaternionInverse final
 		{
-			CIN_MATH_INLINE static QuaternionBase<ValueType> implementation(const QuaternionBase<ValueType>& quaternion) noexcept
+			CIN_MATH_INLINE static TQuaternion<ValueType> implementation(const TQuaternion<ValueType>& quaternion) noexcept
 			{
 				return Conjugate(quaternion) / NormSquared(quaternion);
 			}
@@ -1188,7 +1541,7 @@ namespace CinMath {
 		template<typename ValueType>
 		struct QuaternionRotate final
 		{
-			CIN_MATH_INLINE static QuaternionBase<float> implementation(const Vector<3, float>& vector, const QuaternionBase<float>& rotation) noexcept
+			CIN_MATH_INLINE static TQuaternion<float> implementation(const Vector<3, float>& vector, const TQuaternion<float>& rotation) noexcept
 			{
 				assert(false);
 			}
@@ -1197,22 +1550,22 @@ namespace CinMath {
 		template<typename ValueType>
 		struct QuaternionAxisAngleToQuaternion final
 		{
-			CIN_MATH_INLINE static QuaternionBase<float> implementation(const float radianAngle, const Vector<3, float>& axisAngle) noexcept
+			CIN_MATH_INLINE static TQuaternion<float> implementation(const Angle angle, const Vector<3, float>& axisAngle) noexcept
 			{
-				const float halfRadianAngle{ radianAngle * 0.5f };
+				const float halfRadianAngle{ angle.ToRadians() * 0.5f };
 
-				QuaternionBase<float> result;
+				TQuaternion<float> result;
 				result.scalar = std::cos(halfRadianAngle);
 				result.vector = Normalize(axisAngle) * std::sin(halfRadianAngle);
 
 				return result;
 			}
 
-			CIN_MATH_INLINE static QuaternionBase<float> implementation(const Vector<4, float>& axisAngle) noexcept
+			CIN_MATH_INLINE static TQuaternion<float> implementation(const Vector<4, float>& axisAngle) noexcept
 			{
 				const float halfTheta{ axisAngle.x * 0.5f };
 
-				QuaternionBase<float> result;
+				TQuaternion<float> result;
 				result.scalar = std::cos(halfTheta);
 				result.vector = (Normalize<3, float>(axisAngle.yzw) * std::sin(halfTheta));
 
@@ -1223,7 +1576,7 @@ namespace CinMath {
 		template<typename ValueType>
 		struct QuaternionQuaternionToAxisAngle final
 		{
-			CIN_MATH_INLINE static Vector<4, float> implementation(const QuaternionBase<float>& quaternion) noexcept
+			CIN_MATH_INLINE static Vector<4, float> implementation(const TQuaternion<float>& quaternion) noexcept
 			{
 				const float theta{ 2.0f * std::acos(quaternion.scalar) };
 				const float halfSinTheta{ std::sin(theta) * 0.5f };
@@ -1239,12 +1592,12 @@ namespace CinMath {
 		template<typename ValueType>
 		struct QuaternionUnitForm final
 		{
-			CIN_MATH_INLINE static QuaternionBase<float> implementation(const QuaternionBase<float>& quaternion) noexcept
+			CIN_MATH_INLINE static TQuaternion<float> implementation(const TQuaternion<float>& quaternion) noexcept
 			{
 				const float halfAngle{ quaternion.scalar * 0.5f };
 				const Vector<3, float> normalizedAxis{ Normalize(quaternion.vector) };
 				
-				QuaternionBase<float> result;
+				TQuaternion<float> result;
 				result.scalar = std::cos(halfAngle);
 				result.vector = normalizedAxis * std::sin(halfAngle);
 
@@ -1316,55 +1669,55 @@ namespace CinMath {
 	}
 
 	template<typename ValueType>
-	CIN_MATH_INLINE QuaternionBase<ValueType> Conjugate(const QuaternionBase<ValueType>& quaternion) noexcept
+	CIN_MATH_INLINE TQuaternion<ValueType> Conjugate(const TQuaternion<ValueType>& quaternion) noexcept
 	{
 		return Implementation::QuaternionConugate<ValueType>::implementation(quaternion);
 	}
 
 	template<typename ValueType>
-	CIN_MATH_INLINE ValueType Norm(const QuaternionBase<ValueType>& quaternion) noexcept
+	CIN_MATH_INLINE ValueType Norm(const TQuaternion<ValueType>& quaternion) noexcept
 	{
 		return Implementation::QuaternionNorm<ValueType>::implementation(quaternion);
 	}
 
 	template<typename ValueType>
-	CIN_MATH_INLINE ValueType NormSquared(const QuaternionBase<ValueType>& quaternion) noexcept
+	CIN_MATH_INLINE ValueType NormSquared(const TQuaternion<ValueType>& quaternion) noexcept
 	{
 		return Implementation::QuaternionNormSquared<ValueType>::implementation(quaternion);
 	}
 
 	template<typename ValueType>
-	CIN_MATH_INLINE QuaternionBase<ValueType> Normalize(const QuaternionBase<ValueType>& quaternion) noexcept
+	CIN_MATH_INLINE TQuaternion<ValueType> Normalize(const TQuaternion<ValueType>& quaternion) noexcept
 	{
 		return Implementation::QuaternionNormalize<ValueType>::implementation(quaternion);
 	}
 
 	template<typename ValueType>
-	CIN_MATH_INLINE QuaternionBase<ValueType> Inverse(const QuaternionBase<ValueType>& quaternion) noexcept
+	CIN_MATH_INLINE TQuaternion<ValueType> Inverse(const TQuaternion<ValueType>& quaternion) noexcept
 	{
 		return Implementation::QuaternionInverse<ValueType>::implementation(quaternion);
 	}
 
 	template<typename ValueType>
-	CIN_MATH_INLINE Vector<3, ValueType> Rotate(const Vector<3, ValueType>& vector, const QuaternionBase<ValueType>& rotation) noexcept
+	CIN_MATH_INLINE Vector<3, ValueType> Rotate(const Vector<3, ValueType>& vector, const TQuaternion<ValueType>& rotation) noexcept
 	{
 		return Implementation::QuaternionRotate<ValueType>::implementation(vector, rotation);
 	}
 
 	template<typename ValueType>
-	CIN_MATH_INLINE QuaternionBase<ValueType> AxisAngleToQuaternion(const ValueType angle, const Vector<3, ValueType>& vector) noexcept
+	CIN_MATH_INLINE TQuaternion<ValueType> AxisAngleToQuaternion(const Angle angle, const Vector<3, ValueType>& vector) noexcept
 	{
 		return Implementation::QuaternionAxisAngleToQuaternion<ValueType>::implementation(angle, vector);
 	}
 
 	template<typename ValueType>
-	CIN_MATH_INLINE QuaternionBase<ValueType> AxisAngleToQuaternion(const Vector<4, ValueType>& vector) noexcept
+	CIN_MATH_INLINE TQuaternion<ValueType> AxisAngleToQuaternion(const Vector<4, ValueType>& vector) noexcept
 	{
 		return Implementation::QuaternionAxisAngleToQuaternion<ValueType>::implementation(vector);
 	}
 
 	template<typename ValueType>
-	CIN_MATH_INLINE Vector<4, ValueType> QuaternionToAxisAngle(const QuaternionBase<ValueType>& quaternion) noexcept
+	CIN_MATH_INLINE Vector<4, ValueType> QuaternionToAxisAngle(const TQuaternion<ValueType>& quaternion) noexcept
 	{
 		return Implementation::QuaternionQuaternionToAxisAngle<ValueType>::implementation(quaternion);
 	}
@@ -1400,51 +1753,51 @@ namespace CinMath {
 	}
 
 	template<Length_t rows, Length_t columns, typename ValueType>
-	CIN_MATH_INLINE Matrix<rows, columns, ValueType> Rotate(const Matrix<rows, columns, ValueType>& matrix, const QuaternionBase<ValueType>& quaternion) noexcept
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> Rotate(const Matrix<rows, columns, ValueType>& matrix, const TQuaternion<ValueType>& quaternion) noexcept
 	{
 		return Implementation::MatrixRotate<rows, columns, ValueType>::implementation(matrix, quaternion);
 	}
 
 	template<Length_t rows, Length_t columns, typename ValueType>
-	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateIdentity(const Vector<3, ValueType>& axis, const ValueType rotation) noexcept
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateIdentity(const Vector<3, ValueType>& axis, const TAngle<ValueType> rotation) noexcept
 	{
-		return Implementation::MatrixRotateIdentity<rows, columns, ValueType>::implementation(axis, rotation);
+		return Implementation::MatrixRotateIdentity<rows, columns, ValueType>::implementation(axis, rotation.ToRadians());
 	}
 
 	template<Length_t rows, Length_t columns, typename ValueType>
-	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateX(const Matrix<rows, columns, ValueType>& matrix, const ValueType rotation) noexcept
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateX(const Matrix<rows, columns, ValueType>& matrix, const TAngle<ValueType> rotation) noexcept
 	{
-		return Implementation::MatrixRotateX<rows, columns, ValueType>::implementation(matrix, rotation);
+		return Implementation::MatrixRotateX<rows, columns, ValueType>::implementation(matrix, rotation.ToRadians());
 	}
 
 	template<Length_t rows, Length_t columns, typename ValueType>
-	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateXIdentity(const ValueType rotation) noexcept
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateXIdentity(const TAngle<ValueType> rotation) noexcept
 	{
-		return Implementation::MatrixRotateXIdentity<rows, columns, ValueType>::implementation(rotation);
+		return Implementation::MatrixRotateXIdentity<rows, columns, ValueType>::implementation(rotation.ToRadians());
 	}
 
 	template<Length_t rows, Length_t columns, typename ValueType>
-	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateY(const Matrix<rows, columns, ValueType>& matrix, const ValueType rotation) noexcept
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateY(const Matrix<rows, columns, ValueType>& matrix, const TAngle<ValueType> rotation) noexcept
 	{
-		return Implementation::MatrixRotateY<rows, columns, ValueType>::implementation(matrix, rotation);
+		return Implementation::MatrixRotateY<rows, columns, ValueType>::implementation(matrix, rotation.ToRadians());
 	}
 
 	template<Length_t rows, Length_t columns, typename ValueType>
-	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateYIdentity(const ValueType rotation) noexcept
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateYIdentity(const TAngle<ValueType> rotation) noexcept
 	{
-		return Implementation::MatrixRotateYIdentity<rows, columns, ValueType>::implementation(rotation);
+		return Implementation::MatrixRotateYIdentity<rows, columns, ValueType>::implementation(rotation.ToRadians());
 	}
 
 	template<Length_t rows, Length_t columns, typename ValueType>
-	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateZ(const Matrix<rows, columns, ValueType>& matrix, const ValueType rotation) noexcept
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateZ(const Matrix<rows, columns, ValueType>& matrix, const TAngle<ValueType> rotation) noexcept
 	{
-		return Implementation::MatrixRotateZ<rows, columns, ValueType>::implementation(rotation);
+		return Implementation::MatrixRotateZ<rows, columns, ValueType>::implementation(rotation.ToRadians());
 	}
 
 	template<Length_t rows, Length_t columns, typename ValueType>
-	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateZIdentity(const ValueType rotation) noexcept
+	CIN_MATH_INLINE Matrix<rows, columns, ValueType> RotateZIdentity(const TAngle<ValueType> rotation) noexcept
 	{
-		return Implementation::MatrixRotateZIdentity<rows, columns, ValueType>::implementation(rotation);
+		return Implementation::MatrixRotateZIdentity<rows, columns, ValueType>::implementation(rotation.ToRadians());
 	}
 
 	template<Length_t rows, Length_t columns, typename ValueType>
