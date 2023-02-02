@@ -100,7 +100,11 @@
 #endif
 
 #ifdef _MSC_VER
+#if (CIN_INSTRUCTION_SET != CIN_INSTRUCTION_SET_DEFAULT)
 #define CIN_MATH_CALL __vectorcall
+#else
+#define CIN_MATH_CALL
+#endif
 #else
 #define CIN_MATH_CALL
 #endif

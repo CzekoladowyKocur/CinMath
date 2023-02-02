@@ -1,9 +1,10 @@
 {
   "context": {
-    "executable": "./CinMathBenchmark",
+    "date": "2023-02-02T20:26:36+01:00",
+    "host_name": "DESKTOP-HDTS980",
+    "executable": "CinMathBenchmark.exe",
     "num_cpus": 8,
-    "mhz_per_cpu": 5000,
-    "cpu_scaling_enabled": true,
+    "mhz_per_cpu": 3600,
     "caches": [
       {
         "type": "Data",
@@ -30,7 +31,7 @@
         "num_sharing": 8
       }
     ],
-    "load_avg": [1.63037,1.83398,1.42969],
+    "load_avg": [],
     "library_build_type": "release"
   },
   "benchmarks": [
@@ -43,11 +44,11 @@
       "repetitions": 1,
       "repetition_index": 0,
       "threads": 1,
-      "iterations": 271091,
-      "real_time": 2.5826201091164539e+03,
-      "cpu_time": 2.5802900760261314e+03,
+      "iterations": 56000000,
+      "real_time": 1.1538258928567304e+01,
+      "cpu_time": 1.1439732142857142e+01,
       "time_unit": "ns",
-      "items_per_second": 3.8755332560906714e+08
+      "items_per_second": 8.7414634146341458e+07
     }
   ]
 }
