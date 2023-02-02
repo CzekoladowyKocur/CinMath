@@ -1,5 +1,5 @@
 # CinMath is an inline, templated header only C++20 linear algebra and mathematics library. 
-### In order to easily work with GLSL, the operations are **column-major**. The library supports arithmetic operations on vectors, matrices and quaternions. It also provides basic transformation functions.
+### In order to easily work with GLSL, the operations are performed in a **column-major** fashion. The library supports arithmetic operations on vectors, matrices and quaternions. It also provides basic transformation functions.
 
 ### CinMath utilizes SIMD intrinsics (single instruction multiple data) - both 128 bit wide and 256 bit wide registers can be used to parallelize non-dependant computations.
 
