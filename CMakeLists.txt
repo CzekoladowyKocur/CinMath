@@ -16,6 +16,16 @@ FetchContent_Declare(googlebenchmark
         GIT_TAG v1.6.0)              
 FetchContent_MakeAvailable(googletest googlebenchmark)
 
+if(MSVC)
+  target_compile_options(gtest PRIVATE "/w")
+  target_compile_options(gmock PRIVATE "/w")
+  target_compile_options(benchmark PRIVATE "/w")
+else()
+  target_compile_options(gtest PRIVATE "-w")
+  target_compile_options(gmock PRIVATE "-w")
+  target_compile_options(benchmark PRIVATE "-w")
+endif()
+
 project(CinMathBenchmark
     VERSION 1.0
     DESCRIPTION "Cin Math Benchmark"
@@ -23,9 +33,8 @@ project(CinMathBenchmark
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
     add_compile_options(/W4 /WX)
-else()
-    add_definitions(-w)
-    add_compile_options(-mavx)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+    add_compile_options(-Wall -Werror -mavx)
 endif()
 
 add_executable(CinMathBenchmark

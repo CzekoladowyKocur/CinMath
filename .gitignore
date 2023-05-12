@@ -2,3 +2,5 @@ build/
 *.vscode
 *.vcxproj
 *.sln
+*.cache
+cache/

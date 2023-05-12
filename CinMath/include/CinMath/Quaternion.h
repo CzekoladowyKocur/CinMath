@@ -3,7 +3,7 @@ namespace CinMath {
 	class TQuaternion final
 	{
 	public:
-		consteval explicit TQuaternion() noexcept
+		constexpr explicit TQuaternion() noexcept
 			:
 			a(static_cast<ValueType>(0)),
 			b(static_cast<ValueType>(0)),
@@ -77,16 +77,16 @@ namespace CinMath {
 				raw[3] != other.raw[3];
 		}
 
-		friend TQuaternion<ValueType> CIN_MATH_CALL operator+(const TQuaternion<ValueType>& quaternion) noexcept;
-		friend TQuaternion<ValueType> CIN_MATH_CALL operator-(const TQuaternion<ValueType>& quaternion) noexcept;
+		template<typename T> friend TQuaternion<T> operator+(const TQuaternion<T>& quaternion) noexcept;
+		template<typename T> friend TQuaternion<T> operator-(const TQuaternion<T>& quaternion) noexcept;
 
-		friend TQuaternion<ValueType> CIN_MATH_CALL operator+(const TQuaternion<ValueType>& lhs, const TQuaternion<ValueType>& rhs) noexcept;
-		friend TQuaternion<ValueType> CIN_MATH_CALL operator-(const TQuaternion<ValueType>& lhs, const TQuaternion<ValueType>& rhs) noexcept;
-		friend TQuaternion<ValueType> CIN_MATH_CALL operator*(const TQuaternion<ValueType>& lhs, const TQuaternion<ValueType>& rhs) noexcept;
-		friend TQuaternion<ValueType> CIN_MATH_CALL operator/(const TQuaternion<ValueType>& lhs, const TQuaternion<ValueType>& rhs) noexcept;
+		template<typename T> friend TQuaternion<T> operator+(const TQuaternion<T>& lhs, const TQuaternion<T>& rhs) noexcept;
+		template<typename T> friend TQuaternion<T> operator-(const TQuaternion<T>& lhs, const TQuaternion<T>& rhs) noexcept;
+		template<typename T> friend TQuaternion<T> operator*(const TQuaternion<T>& lhs, const TQuaternion<T>& rhs) noexcept;
+		template<typename T> friend TQuaternion<T> operator/(const TQuaternion<T>& lhs, const TQuaternion<T>& rhs) noexcept;
 
-		friend TQuaternion<ValueType> CIN_MATH_CALL operator*(const TQuaternion<ValueType>& quaternion, const ValueType scalar) noexcept;
-		friend TQuaternion<ValueType> CIN_MATH_CALL operator/(const TQuaternion<ValueType>& quaternion, const ValueType scalar) noexcept;
+		template<typename T> friend TQuaternion<T> operator*(const TQuaternion<T>& quaternion, const T scalar) noexcept;
+		template<typename T> friend TQuaternion<T> operator/(const TQuaternion<T>& quaternion, const T scalar) noexcept;
 	public:
 		union
 		{

@@ -1544,6 +1544,7 @@ namespace CinMath {
 			CIN_MATH_INLINE static TQuaternion<float> implementation(const Vector<3, float>& vector, const TQuaternion<float>& rotation) noexcept
 			{
 				assert(false);
+				return TQuaternion<float>{};
 			}
 		};
 
