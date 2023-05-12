@@ -366,12 +366,12 @@ namespace CinMath {
 
 		constexpr RadiansProxy operator""_rad(const unsigned long long int radians) noexcept
 		{
-			return RadiansProxy{ static_cast<const long double>(radians) };
+			return RadiansProxy{ static_cast<double>(radians) };
 		}
 
 		constexpr DegreesProxy operator""_deg(const unsigned long long int degrees) noexcept
 		{
-			return DegreesProxy{ static_cast<const long double>(degrees) };
+			return DegreesProxy{ static_cast<double>(degrees) };
 		}
 	}
 
