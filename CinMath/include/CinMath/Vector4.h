@@ -7,7 +7,7 @@ namespace CinMath {
 	public:
 		using UnderlyingType = ValueType;
 	public:
-		consteval explicit Vector<4, ValueType>() noexcept
+		constexpr explicit Vector<4, ValueType>() noexcept
 			:
 			x(static_cast<ValueType>(0)),
 			y(static_cast<ValueType>(0)),
@@ -76,30 +76,30 @@ namespace CinMath {
 			return Vector<4, double>{ static_cast<double>(x), static_cast<double>(y), static_cast<double>(z), static_cast<double>(w) };
 		}
 
-		[[nodiscard]] friend Vector<4, ValueType> CIN_MATH_CALL operator+(const Vector<4, ValueType>& vector) noexcept;
-		[[nodiscard]] friend Vector<4, ValueType> CIN_MATH_CALL operator-(const Vector<4, ValueType>& vector) noexcept;
-		
-		friend void CIN_MATH_CALL operator+=(Vector<4, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
-		friend void CIN_MATH_CALL operator-=(Vector<4, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
-		friend void CIN_MATH_CALL operator*=(Vector<4, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
-		friend void CIN_MATH_CALL operator/=(Vector<4, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
+		template<typename T> friend Vector<4, T> operator+(const Vector<4, T>& vector) noexcept;
+		template<typename T> friend Vector<4, T> operator-(const Vector<4, T>& vector) noexcept;
 
-		friend void CIN_MATH_CALL operator+=(Vector<4, ValueType>& lhs, const ValueType scalar) noexcept;
-		friend void CIN_MATH_CALL operator-=(Vector<4, ValueType>& lhs, const ValueType scalar) noexcept;
-		friend void CIN_MATH_CALL operator*=(Vector<4, ValueType>& lhs, const ValueType scalar) noexcept;
-		friend void CIN_MATH_CALL operator/=(Vector<4, ValueType>& lhs, const ValueType scalar) noexcept;
+		template<typename T> friend void operator+=(Vector<4, T>& lhs, const Vector<4, T>& rhs) noexcept;
+		template<typename T> friend void operator-=(Vector<4, T>& lhs, const Vector<4, T>& rhs) noexcept;
+		template<typename T> friend void operator*=(Vector<4, T>& lhs, const Vector<4, T>& rhs) noexcept;
+		template<typename T> friend void operator/=(Vector<4, T>& lhs, const Vector<4, T>& rhs) noexcept;
 
-		[[nodiscard]] friend Vector<4, ValueType> CIN_MATH_CALL operator+(const Vector<4, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
-		[[nodiscard]] friend Vector<4, ValueType> CIN_MATH_CALL operator-(const Vector<4, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
-		[[nodiscard]] friend Vector<4, ValueType> CIN_MATH_CALL operator*(const Vector<4, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
-		[[nodiscard]] friend Vector<4, ValueType> CIN_MATH_CALL operator/(const Vector<4, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
-		 
-		[[nodiscard]] friend Vector<4, ValueType> CIN_MATH_CALL operator+(const Vector<4, ValueType>& lhs, const ValueType scalar) noexcept;
-		[[nodiscard]] friend Vector<4, ValueType> CIN_MATH_CALL operator-(const Vector<4, ValueType>& lhs, const ValueType scalar) noexcept;
-		[[nodiscard]] friend Vector<4, ValueType> CIN_MATH_CALL operator*(const Vector<4, ValueType>& lhs, const ValueType scalar) noexcept;
-		[[nodiscard]] friend Vector<4, ValueType> CIN_MATH_CALL operator/(const Vector<4, ValueType>& lhs, const ValueType scalar) noexcept;
-		
-		[[nodiscard]] friend Vector<4, ValueType> CIN_MATH_CALL operator*(const Vector<4, ValueType>& lhs, const Matrix<4, 4, ValueType>& rhs) noexcept;
+		template<typename T> friend void operator+=(Vector<4, T>& lhs, const T scalar) noexcept;
+		template<typename T> friend void operator-=(Vector<4, T>& lhs, const T scalar) noexcept;
+		template<typename T> friend void operator*=(Vector<4, T>& lhs, const T scalar) noexcept;
+		template<typename T> friend void operator/=(Vector<4, T>& lhs, const T scalar) noexcept;
+
+		template<typename T> friend Vector<4, T> operator+(const Vector<4, T>& lhs, const Vector<4, T>& rhs) noexcept;
+		template<typename T> friend Vector<4, T> operator-(const Vector<4, T>& lhs, const Vector<4, T>& rhs) noexcept;
+		template<typename T> friend Vector<4, T> operator*(const Vector<4, T>& lhs, const Vector<4, T>& rhs) noexcept;
+		template<typename T> friend Vector<4, T> operator/(const Vector<4, T>& lhs, const Vector<4, T>& rhs) noexcept;
+
+		template<typename T> friend Vector<4, T> operator+(const Vector<4, T>& lhs, const T scalar) noexcept;
+		template<typename T> friend Vector<4, T> operator-(const Vector<4, T>& lhs, const T scalar) noexcept;
+		template<typename T> friend Vector<4, T> operator*(const Vector<4, T>& lhs, const T scalar) noexcept;
+		template<typename T> friend Vector<4, T> operator/(const Vector<4, T>& lhs, const T scalar) noexcept;
+
+		template<typename T> friend Vector<4, T> operator*(const Vector<4, T>& lhs, const Matrix<4, 4, T>& rhs) noexcept;
 	public:
 		union
 		{

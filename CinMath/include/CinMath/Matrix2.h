@@ -7,7 +7,7 @@ namespace CinMath {
 	public:
 		using UnderlyingType = ValueType;
 	public:
-		consteval explicit Matrix<2, 2, ValueType>() noexcept
+		constexpr explicit Matrix<2, 2, ValueType>() noexcept
 			:
 			m11(static_cast<ValueType>(0)),
 			m12(static_cast<ValueType>(0)),
@@ -111,26 +111,26 @@ namespace CinMath {
 			};
 		}
 
-		[[nodiscard]] friend Matrix<2, 2, ValueType> CIN_MATH_CALL operator+(const Matrix<2, 2, ValueType>& vector) noexcept;
-		[[nodiscard]] friend Matrix<2, 2, ValueType> CIN_MATH_CALL operator-(const Matrix<2, 2, ValueType>& vector) noexcept;
+		template<typename T> friend Matrix<2, 2, T> operator+(const Matrix<2, 2, T>& vector) noexcept;
+		template<typename T> friend Matrix<2, 2, T> operator-(const Matrix<2, 2, T>& vector) noexcept;
 
-		friend void CIN_MATH_CALL operator+=(Matrix<2, 2, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
-		friend void CIN_MATH_CALL operator-=(Matrix<2, 2, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
-		friend void CIN_MATH_CALL operator*=(Matrix<2, 2, ValueType>& lhs, const Vector<4, ValueType>& rhs) noexcept;
+		template<typename T> friend void operator+=(Matrix<2, 2, T>& lhs, const Vector<4, T>& rhs) noexcept;
+		template<typename T> friend void operator-=(Matrix<2, 2, T>& lhs, const Vector<4, T>& rhs) noexcept;
+		template<typename T> friend void operator*=(Matrix<2, 2, T>& lhs, const Vector<4, T>& rhs) noexcept;
 
-		friend void CIN_MATH_CALL operator+=(Matrix<2, 2, ValueType>& lhs, const ValueType scalar) noexcept;
-		friend void CIN_MATH_CALL operator-=(Matrix<2, 2, ValueType>& lhs, const ValueType scalar) noexcept;
-		friend void CIN_MATH_CALL operator*=(Matrix<2, 2, ValueType>& lhs, const ValueType scalar) noexcept;
-		friend void CIN_MATH_CALL operator/=(Matrix<2, 2, ValueType>& lhs, const ValueType scalar) noexcept;
+		template<typename T> friend void operator+=(Matrix<2, 2, T>& lhs, const T scalar) noexcept;
+		template<typename T> friend void operator-=(Matrix<2, 2, T>& lhs, const T scalar) noexcept;
+		template<typename T> friend void operator*=(Matrix<2, 2, T>& lhs, const T scalar) noexcept;
+		template<typename T> friend void operator/=(Matrix<2, 2, T>& lhs, const T scalar) noexcept;
 
-		[[nodiscard]] friend Matrix<2, 2, ValueType> CIN_MATH_CALL operator+(const Matrix<2, 2, ValueType>& lhs, const Matrix<2, 2, ValueType>& rhs) noexcept;
-		[[nodiscard]] friend Matrix<2, 2, ValueType> CIN_MATH_CALL operator-(const Matrix<2, 2, ValueType>& lhs, const Matrix<2, 2, ValueType>& rhs) noexcept;
-		[[nodiscard]] friend Matrix<2, 2, ValueType> CIN_MATH_CALL operator*(const Matrix<2, 2, ValueType>& lhs, const Matrix<2, 2, ValueType>& rhs) noexcept;
+		template<typename T> friend Matrix<2, 2, T> operator+(const Matrix<2, 2, T>& lhs, const Matrix<2, 2, T>& rhs) noexcept;
+		template<typename T> friend Matrix<2, 2, T> operator-(const Matrix<2, 2, T>& lhs, const Matrix<2, 2, T>& rhs) noexcept;
+		template<typename T> friend Matrix<2, 2, T> operator*(const Matrix<2, 2, T>& lhs, const Matrix<2, 2, T>& rhs) noexcept;
 
-		[[nodiscard]] friend Matrix<2, 2, ValueType> CIN_MATH_CALL operator+(const Matrix<2, 2, ValueType>& lhs, const ValueType scalar) noexcept;
-		[[nodiscard]] friend Matrix<2, 2, ValueType> CIN_MATH_CALL operator-(const Matrix<2, 2, ValueType>& lhs, const ValueType scalar) noexcept;
-		[[nodiscard]] friend Matrix<2, 2, ValueType> CIN_MATH_CALL operator*(const Matrix<2, 2, ValueType>& lhs, const ValueType scalar) noexcept;
-		[[nodiscard]] friend Matrix<2, 2, ValueType> CIN_MATH_CALL operator/(const Matrix<2, 2, ValueType>& lhs, const ValueType scalar) noexcept;
+		template<typename T> friend Matrix<2, 2, T> operator+(const Matrix<2, 2, T>& lhs, const T scalar) noexcept;
+		template<typename T> friend Matrix<2, 2, T> operator-(const Matrix<2, 2, T>& lhs, const T scalar) noexcept;
+		template<typename T> friend Matrix<2, 2, T> operator*(const Matrix<2, 2, T>& lhs, const T scalar) noexcept;
+		template<typename T> friend Matrix<2, 2, T> operator/(const Matrix<2, 2, T>& lhs, const T scalar) noexcept;
 	public:
 		union
 		{

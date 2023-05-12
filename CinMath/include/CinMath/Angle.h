@@ -16,7 +16,7 @@ namespace CinMath {
 	template<typename ValueType>
 	struct TRadians 
 	{
-		consteval explicit TRadians() noexcept
+		constexpr explicit TRadians() noexcept
 			:
 			Value(static_cast<ValueType>(0))
 		{}
@@ -71,16 +71,23 @@ namespace CinMath {
 			return Value != angle.ToRadians();
 		}
 
-		friend constexpr void operator+=(TRadians<ValueType>& lhs, const TRadians<ValueType>& rhs) noexcept;
-		friend constexpr void operator-=(TRadians<ValueType>& lhs, const TRadians<ValueType>& rhs) noexcept;
-		friend constexpr void operator*=(TRadians<ValueType>& lhs, const TRadians<ValueType>& rhs) noexcept;
-		friend constexpr void operator/=(TRadians<ValueType>& lhs, const TRadians<ValueType>& rhs) noexcept;
+		template<typename T> friend constexpr void operator+=(TRadians<T>& lhs, const TRadians<T>& rhs) noexcept;
+		template<typename T> friend constexpr void operator-=(TRadians<T>& lhs, const TRadians<T>& rhs) noexcept;
+		template<typename T> friend constexpr void operator*=(TRadians<T>& lhs, const TRadians<T>& rhs) noexcept;
+		template<typename T> friend constexpr void operator/=(TRadians<T>& lhs, const TRadians<T>& rhs) noexcept;
 
-		friend constexpr TRadians<ValueType> operator+(const TRadians<ValueType>& lhs, const TRadians<ValueType>& rhs) noexcept;
-		friend constexpr TRadians<ValueType> operator-(const TRadians<ValueType>& lhs, const TRadians<ValueType>& rhs) noexcept;
-		friend constexpr TRadians<ValueType> operator*(const TRadians<ValueType>& lhs, const TRadians<ValueType>& rhs) noexcept;
-		friend constexpr TRadians<ValueType> operator/(const TRadians<ValueType>& lhs, const TRadians<ValueType>& rhs) noexcept;
-	private:
+		template<typename T> friend constexpr TRadians<T> operator+(const TRadians<T>& lhs, const TRadians<T>& rhs) noexcept;
+		template<typename T> friend constexpr TRadians<T> operator-(const TRadians<T>& lhs, const TRadians<T>& rhs) noexcept;
+		template<typename T> friend constexpr TRadians<T> operator*(const TRadians<T>& lhs, const TRadians<T>& rhs) noexcept;
+		template<typename T> friend constexpr TRadians<T> operator/(const TRadians<T>& lhs, const TRadians<T>& rhs) noexcept;
+
+		static constexpr TRadians FromValue(const ValueType value) noexcept
+		{
+			TRadians result;
+			result.Value = value;
+			return result;
+		}
+	public:
 		ValueType Value;
 		friend struct TDegrees<ValueType>;
 
@@ -99,7 +106,7 @@ namespace CinMath {
 	template<typename ValueType>
 	struct TDegrees
 	{
-		consteval explicit TDegrees() noexcept
+		constexpr explicit TDegrees() noexcept
 			:
 			Value(static_cast<ValueType>(0))
 		{}
@@ -160,16 +167,23 @@ namespace CinMath {
 			return Value != angle.ToDegrees();
 		}
 
-		friend constexpr void operator+=(TDegrees<ValueType>& lhs, const TDegrees<ValueType>& rhs) noexcept;
-		friend constexpr void operator-=(TDegrees<ValueType>& lhs, const TDegrees<ValueType>& rhs) noexcept;
-		friend constexpr void operator*=(TDegrees<ValueType>& lhs, const TDegrees<ValueType>& rhs) noexcept;
-		friend constexpr void operator/=(TDegrees<ValueType>& lhs, const TDegrees<ValueType>& rhs) noexcept;
+		template<typename T> friend constexpr void operator+=(TDegrees<T>& lhs, const TDegrees<T>& rhs) noexcept;
+		template<typename T> friend constexpr void operator-=(TDegrees<T>& lhs, const TDegrees<T>& rhs) noexcept;
+		template<typename T> friend constexpr void operator*=(TDegrees<T>& lhs, const TDegrees<T>& rhs) noexcept;
+		template<typename T> friend constexpr void operator/=(TDegrees<T>& lhs, const TDegrees<T>& rhs) noexcept;
+		
+		template<typename T> friend constexpr TDegrees<T> operator+(const TDegrees<T>& lhs, const TDegrees<T>& rhs) noexcept;
+		template<typename T> friend constexpr TDegrees<T> operator-(const TDegrees<T>& lhs, const TDegrees<T>& rhs) noexcept;
+		template<typename T> friend constexpr TDegrees<T> operator*(const TDegrees<T>& lhs, const TDegrees<T>& rhs) noexcept;
+		template<typename T> friend constexpr TDegrees<T> operator/(const TDegrees<T>& lhs, const TDegrees<T>& rhs) noexcept;
 
-		friend constexpr TDegrees<ValueType> operator+(const TDegrees<ValueType>& lhs, const TDegrees<ValueType>& rhs) noexcept;
-		friend constexpr TDegrees<ValueType> operator-(const TDegrees<ValueType>& lhs, const TDegrees<ValueType>& rhs) noexcept;
-		friend constexpr TDegrees<ValueType> operator*(const TDegrees<ValueType>& lhs, const TDegrees<ValueType>& rhs) noexcept;
-		friend constexpr TDegrees<ValueType> operator/(const TDegrees<ValueType>& lhs, const TDegrees<ValueType>& rhs) noexcept;
-	private:
+		static constexpr TDegrees FromValue(const ValueType value) noexcept
+		{
+			TDegrees result;
+			result.Value = value;
+			return result;
+		}
+	public:
 		ValueType Value;
 		friend struct TRadians<ValueType>;
 

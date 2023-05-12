@@ -123,41 +123,41 @@ namespace CinMath {
 
 	[[nodiscard]] constexpr CIN_MATH_INLINE TDegrees<float> operator+(const TDegrees<float>& lhs, const TDegrees<float>& rhs) noexcept
 	{
-		return TDegrees<float>{ lhs.operator float() + rhs.operator float() };
+		return TDegrees<float>::FromValue(lhs.operator float() + rhs.operator float());
 	}
 
 	[[nodiscard]] constexpr CIN_MATH_INLINE TDegrees<float> operator-(const TDegrees<float>& lhs, const TDegrees<float>& rhs) noexcept
 	{
-		return TDegrees<float>{ lhs.operator float() - rhs.operator float() };
+		return TDegrees<float>::FromValue(lhs.operator float() - rhs.operator float());
 	}
 
 	[[nodiscard]] constexpr CIN_MATH_INLINE TDegrees<float> operator*(const TDegrees<float>& lhs, const TDegrees<float>& rhs) noexcept
 	{
-		return TDegrees<float>{ lhs.operator float() * rhs.operator float() };
+		return TDegrees<float>::FromValue(lhs.operator float() * rhs.operator float());
 	}
 
 	[[nodiscard]] constexpr CIN_MATH_INLINE TDegrees<float> operator/(const TDegrees<float>& lhs, const TDegrees<float>& rhs) noexcept
 	{
-		return TDegrees<float>{ lhs.operator float() / rhs.operator float() };
+		return TDegrees<float>::FromValue(lhs.operator float() / rhs.operator float());
 	}
 
 	[[nodiscard]] constexpr CIN_MATH_INLINE  TDegrees<double> operator+(const TDegrees<double>& lhs, const TDegrees<double>& rhs) noexcept
 	{
-		return TDegrees<double>{ lhs.operator double() + rhs.operator double() };
+		return TDegrees<double>::FromValue(lhs.operator double() + rhs.operator double());
 	}
 
 	[[nodiscard]] constexpr CIN_MATH_INLINE TDegrees<double> operator-(const TDegrees<double>& lhs, const TDegrees<double>& rhs) noexcept
 	{
-		return TDegrees<double>{ lhs.operator double() - rhs.operator double() };
+		return TDegrees<double>::FromValue(lhs.operator double() - rhs.operator double());
 	}
 
 	[[nodiscard]] constexpr CIN_MATH_INLINE TDegrees<double> operator*(const TDegrees<double>& lhs, const TDegrees<double>& rhs) noexcept
 	{
-		return TDegrees<double>{ lhs.operator double() * rhs.operator double() };
+		return TDegrees<double>::FromValue(lhs.operator double() * rhs.operator double());
 	}
 
 	[[nodiscard]] constexpr CIN_MATH_INLINE TDegrees<double> operator/(const TDegrees<double>& lhs, const TDegrees<double>& rhs) noexcept
 	{
-		return TDegrees<double>{ lhs.operator double() / rhs.operator double() };
+		return TDegrees<double>::FromValue(lhs.operator double() / rhs.operator double());
 	}
 }
