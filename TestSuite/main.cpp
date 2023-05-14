@@ -59,6 +59,9 @@ static void TestPrinting() noexcept;
 template<typename ValueType>
 static void TestOther() noexcept;
 
+template<typename ValueType>
+static void TestProjection() noexcept;
+
 #define TEST(TestName) Test##TestName<float>(); Test##TestName<double>()
 
 template<typename ValueType>
@@ -116,6 +119,7 @@ int main([[maybe_unused]] const int argc, [[maybe_unused]] const char** argv) no
 	
 	/* Other */
 	TEST(Other);
+	TEST(Projection);
 #if TEST_PRINTING
 	TEST(Printing);
 #endif
@@ -3150,6 +3154,26 @@ void TestOther() noexcept
 		const auto readableForm{ CinMath::Inverse(matrix) * static_cast<ValueType>(226) };
 		const bool success{ ApproximateMatrix<4, 4, ValueType>(readableForm, expected) };
 		TEST_ASSERT(success);
+	}
+}
+
+template<typename ValueType>
+static void TestProjection() noexcept
+{
+	if constexpr (std::is_same_v<ValueType, float>)
+	{
+		using MatrixType = CinMath::Matrix<4, 4, ValueType>;
+		MatrixType result = CinMath::OrthographicProjection(-2.0f, 2.0f, -1.0f, 1.0f);
+
+		constexpr MatrixType expected
+		{
+			static_cast<ValueType>(0.5),	static_cast<ValueType>(0),		static_cast<ValueType>(0), static_cast<ValueType>(0),
+			static_cast<ValueType>(0),		static_cast<ValueType>(1.0),	static_cast<ValueType>(0), static_cast<ValueType>(0),
+			static_cast<ValueType>(0),		static_cast<ValueType>(0),		static_cast<ValueType>(-1.0), static_cast<ValueType>(0),
+			static_cast<ValueType>(0),		static_cast<ValueType>(0),		static_cast<ValueType>(0), static_cast<ValueType>(1.0)
+		};
+
+		TEST_ASSERT(expected == result);
 	}
 }
 

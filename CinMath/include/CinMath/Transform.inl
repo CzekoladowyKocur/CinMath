@@ -298,6 +298,17 @@ namespace CinMath {
 
 	/**
 	 * Calculates the perspective projection
+	 *
+	 * @param orthoLeft orthographic left
+	 * @param orthoRight orthographic right
+	 * @param orthoBottom orthographic bottom
+	 * @param orthoTop orthographic top
+	 */
+	template<typename ValueType>
+	CIN_MATH_INLINE Matrix<4, 4, ValueType> OrthographicProjection(const ValueType orthoLeft, const ValueType orthoRight, const ValueType orthoBottom, const ValueType orthoTop) noexcept;
+
+	/**
+	 * Calculates the perspective projection
 	 * 
 	 * @param FOV Field of view
 	 * @param aspectRatio Aspect ratio
@@ -388,6 +399,9 @@ namespace CinMath {
 
 		template<typename ValueType>
 		struct QuaternionQuaternionToAxisAngle;
+
+		template<typename ValueType>
+		struct OrthographicProjection;
 
 		template<typename ValueType>
 		struct PerspectiveProjection;
@@ -1607,6 +1621,21 @@ namespace CinMath {
 		};
 
 		template<typename ValueType>
+		struct OrthographicProjection final
+		{
+			CIN_MATH_INLINE static Matrix<4, 4, float> implementation(const ValueType orthoLeft, const ValueType orthoRight, const ValueType orthoBottom, const ValueType orthoTop) noexcept
+			{
+				return Matrix<4, 4, float>
+				{
+					2.0f / (orthoRight - orthoLeft), 0.0f, 0.0f, 0.0f,
+					0.0f, 2.0f / (orthoTop - orthoBottom), 0.0f, 0.0f,
+					0.0f, 0.0f, -1.0f, 0.0f,
+					-(orthoRight + orthoLeft) / (orthoRight - orthoLeft), -(orthoTop + orthoBottom) / (orthoTop - orthoBottom), 0.0f, 1.0f
+				};
+			}
+		};
+
+		template<typename ValueType>
 		struct PerspectiveProjection final
 		{
 			CIN_MATH_INLINE static Matrix<4, 4, float> implementation(const ValueType FOV, const ValueType aspectRatio, const ValueType nearClip, const ValueType farClip) noexcept
@@ -1805,6 +1834,12 @@ namespace CinMath {
 	CIN_MATH_INLINE Matrix<rows, columns, ValueType> Scale(const Matrix<rows, columns, ValueType>& matrix, const Vector<3, ValueType>& scale) noexcept
 	{
 		return Implementation::MatrixScale<rows, columns, ValueType>::implementation(matrix, scale);
+	}
+
+	template<typename ValueType>
+	CIN_MATH_INLINE Matrix<4, 4, ValueType> OrthographicProjection(const ValueType orthoLeft, const ValueType orthoRight, const ValueType orthoBottom, const ValueType orthoTop) noexcept
+	{
+		return Implementation::OrthographicProjection<ValueType>::implementation(orthoLeft, orthoRight, orthoBottom, orthoTop);
 	}
 
 	template<typename ValueType>
